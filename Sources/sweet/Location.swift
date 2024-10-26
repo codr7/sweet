@@ -1,6 +1,9 @@
-struct Location: CustomStringConvertible {
-    let source: String
+struct Location: CustomStringConvertible, Equatable {
+    static func == (l: Location, r: Location) -> Bool {
+        l.source == r.source && l.line == r.line && l.column == r.column
+    }
 
+    let source: String
     var column: Int
     var description: String { "\(source)@\(line):\(column)" }
     var line: Int
@@ -9,5 +12,10 @@ struct Location: CustomStringConvertible {
         self.source = source
         self.line = line
         self.column = column
+    }
+
+    mutating func nextLine() {
+        line += 1
+        column = 1
     }
 }
