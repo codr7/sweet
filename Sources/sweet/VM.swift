@@ -1,10 +1,8 @@
-typealias Op = UInt128;
 typealias PC = UInt32;
 typealias Register = UInt32;
 
 struct packages {
 }
-
 class VM {    
     var code: [Op] = []
     var registers: [Value] = []
