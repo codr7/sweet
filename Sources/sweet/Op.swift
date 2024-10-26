@@ -19,9 +19,5 @@ struct OpCode: OptionSet {
         opCodes[rawValue] = self
     }
     
-    init(rawValue: UInt8) {
-        assertionFailure("Not supported")
-        self.id = "n/a"
-        self.rawValue = rawValue
-    }
+    init(rawValue: UInt8) { fatalError("Not supported") }
 }
