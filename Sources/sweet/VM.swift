@@ -5,8 +5,9 @@ struct packages {
 }
 class VM {    
     var code: [Op] = []
+    let reader = readers.OneOf(readers.Whitespace.instance)
     var registers: [Value] = []
-
+    
     let core = packages.Core("core");
 
     init() {}

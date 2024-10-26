@@ -1,5 +1,7 @@
 extension readers {
     struct Whitespace: Reader {
+        static let instance = Whitespace()
+        
         @discardableResult
         func read(_ input: inout Input,
                   _ output: inout Output,
