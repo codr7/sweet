@@ -1,3 +1,5 @@
 * add VM registers/frames/set/get
 ** linear allocation
 ** store full index in frames/registers
+
+* add stop op
