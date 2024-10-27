@@ -26,10 +26,10 @@ class BaseType<T> {
     let _parents: [any ValueType]
     let typeId: TypeId
 
-    var dump: ValueType.Dump? = {(_ vm: VM, _ value: Value) -> String in "\(value.data)" }
+    var dump: ValueType.Dump? = {(vm, value) in "\(value.data)" }
     var eq: ValueType.Eq? = nil
     var findId: ValueType.FindId? = nil
-    var toBit: ValueType.ToBit? = {(_ value: Value) -> Bit in true }
+    var toBit: ValueType.ToBit? = {(value) in true }
 
     init(_ id: String, _ parents: [any ValueType] = []) {
         self.id = id
