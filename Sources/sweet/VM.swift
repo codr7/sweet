@@ -1,6 +1,11 @@
 class VM {    
     var code: [Op] = []
-    let reader = readers.OneOf(readers.Whitespace.instance)
+
+    let reader = readers.OneOf(
+      readers.Whitespace.instance,
+      readers.Id.instance
+    )
+    
     var pc: PC = 0
     var registers: [Value] = []
     var tags: [Value] = []

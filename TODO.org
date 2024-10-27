@@ -1,5 +1,3 @@
-* add id reader
-
 * add swap macro
 ** add macros
 ** add Swap op
