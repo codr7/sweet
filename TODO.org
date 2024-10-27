@@ -1,11 +1,5 @@
-* finish SetRegister op
-** fix compilation
-
-* try converting ValueType to class
-
-* add VM registers/frames/set/get
-** linear allocation
-** store full index in frames/registers
+* add VM frames
+** add begin/end_frame()
 
 * make type methods overridable
 ** switch to vars
@@ -13,6 +7,8 @@
 * add Swap op
 
 * add swap macro
+
+* fib
 
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols
