@@ -45,3 +45,5 @@ class Package: Sequence {
         Iterator(self)
     }
 }
+
+struct packages {}

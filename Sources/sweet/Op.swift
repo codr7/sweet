@@ -1,23 +1,46 @@
 typealias Op = UInt128;
 
-var opCodeCount = 0
-var opCodes: [UInt8:OpCode] = [:]
+enum OpCode: UInt8 {
+    case setRegister
+    case stop
+}
 
-struct OpCode: OptionSet {
-    let id: String
-    let rawValue: UInt8
+struct ops {
+    static let opCodeWidth: UInt8 = 8;
+    static let registerWidth: UInt8 = 32;
+    static let tagWidth: UInt8 = 32;
 
-    static let setRegister = OpCode("SetRegister")
-    static let stop = OpCode("Stop")
+    static func encode<T>(_ value: T, _ offset: UInt8, _ width: UInt8) -> Op
+      where T: BinaryInteger {
+        (Op(value) & ((Op(1) << width) - 1)) << offset
+    }
 
-    static func find(_ rawValue: UInt8) -> OpCode? { opCodes[rawValue] }
-    
-    init(_ id: String) {
-        self.id = id
-        rawValue = 1 << opCodeCount
-        opCodeCount += 1
-        opCodes[rawValue] = self
+    static func decode(_ op: Op, _ offset: UInt8, _ width: UInt8) -> Op {
+        (op >> offset) & ((Op(1) << width) - 1)
+    }
+
+
+    static func encode(_ value: OpCode) -> Op { encode(value.rawValue, 0, opCodeWidth) }
+
+    static func decode(_ op: Op) -> OpCode {
+        OpCode(rawValue: UInt8(decode(op, 0, opCodeWidth)))!
     }
     
-    init(rawValue: UInt8) { fatalError("Not supported") }
+
+    static func encodeRegister(_ value: Register, _ offset: UInt8) -> Op {
+        encode(value, offset, registerWidth)
+    }
+
+    static func decodeRegister(_ op: Op, _ offset: UInt8) -> Register {
+        Register(decode(op, offset, registerWidth))
+    }
+
+    
+    static func encodeTag(_ value: Tag, _ offset: UInt8) -> Op {
+        encode(value, offset, tagWidth)
+    }
+
+    static func decodeTag(_ op: Op, _ offset: UInt8) -> Register {
+        Tag(decode(op, offset, registerWidth))
+    }
 }
