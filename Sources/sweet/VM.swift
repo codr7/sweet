@@ -6,10 +6,16 @@ class VM {
     var tags: [Value] = []
 
     let core = packages.Core("core")
-    let user = Package("user")
+    var user = Package("user")
+    var currentPackage: Package
     
-    init() {}
+    init() {
+        currentPackage = user
+        core.setup(self)
+        user.setup(self)
+    }
 
+    @discardableResult
     func emit(_ op: Op) -> PC {
         let result = emit_pc
         code.append(op)

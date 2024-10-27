@@ -1,5 +1,6 @@
-* add Form emit
-** add forms.Id
+* rename all type files to XType.swift
+
+* add id reader
 
 * add swap macro
 ** add macros

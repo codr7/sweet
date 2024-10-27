@@ -7,9 +7,6 @@ class BaseType<T> {
     static func == (l: BaseType<T>, r: BaseType<T>) -> Bool { l.id == r.id }   
     static func findId(_ id: TypeId) -> ValueType? { typeLookup[id] }
 
-    var eq: ValueType.Eq? = nil
-    var toBit: ValueType.ToBit? = nil
-
     lazy var parents: [any ValueType] = {
         var result: Set<TypeId> = [typeId]
         for pt in _parents { result.formUnion(pt.parents.map({$0.typeId})) }
@@ -28,8 +25,12 @@ class BaseType<T> {
     let id: String
     let _parents: [any ValueType]
     let typeId: TypeId
+
     var dump: ValueType.Dump? = {(_ vm: VM, _ value: Value) -> String in "\(value.data)" }
-    
+    var eq: ValueType.Eq? = nil
+    var findId: ValueType.FindId? = nil
+    var toBit: ValueType.ToBit? = {(_ value: Value) -> Bit in true }
+
     init(_ id: String, _ parents: [any ValueType] = []) {
         self.id = id
         self._parents = parents

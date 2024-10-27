@@ -9,8 +9,10 @@ struct Value: Equatable {
         self.data = data
     }
 
-    func cast<T>(_ type: BaseType<T>) -> T { data as! T }
+    func cast<TT, T>(_ _: TT) -> T where TT: BaseType<T> { data as! T }
     func dump(_ vm: VM) -> String { type.dump!(vm, self) }
+    func emit(_ vm: VM, _ result: Register) { type.emit(vm, self, result) } 
     func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
+    func findId(_ id: String) -> Value? { type.findId!(self, id) }
     func toBit() -> Bit { type.toBit!(self) }
 }

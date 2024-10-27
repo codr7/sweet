@@ -1,11 +1,18 @@
 extension packages {
     class Core: Package {
-        static let nil_type = NilType("Nil", [])
+        static let nilType = NilType("Nil", [])
+        static let anyType = AnyType("Any")
+        static let metaType = MetaType("Meta", [anyType])
 
-        let NIL = Value(Core.nil_type, ())
+        static let packageType = PackageType("Package", [anyType])
         
-        init(_ id: String) {
-            super.init(id)
+        let NIL = Value(Core.nilType, ())
+        
+        override func setup(_ vm: VM) {
+            bind(Core.anyType)
+            bind(Core.metaType)
+            bind(Core.nilType)
+            bind(Core.packageType)
         }
     }
 }
