@@ -1,9 +1,9 @@
-* make type methods overridable
-** switch to vars
-
-* add Swap op
+* add Form emit
+** add forms.Id
 
 * add swap macro
+** add macros
+** add Swap op
 
 * fib
 

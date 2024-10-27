@@ -1,7 +1,5 @@
 struct Value: Equatable {
-    static func == (l: Value, r: Value) -> Bool {
-        l.type.equals(r.type) && l.type.equals(l, r)
-    }
+    static func == (l: Value, r: Value) -> Bool { l.eq(r) }
 
     let data: Any
     let type: any ValueType
@@ -12,7 +10,7 @@ struct Value: Equatable {
     }
 
     func cast<T>(_ type: BaseType<T>) -> T { data as! T }
-    func dump(_ vm: VM) -> String { type.dump(vm, self) }
-    func equals(_ other: Value) -> Bool { type.equals(self, other) }
-    func toBit() -> Bit { type.toBit(self) }
+    func dump(_ vm: VM) -> String { type.dump!(vm, self) }
+    func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
+    func toBit() -> Bit { type.toBit!(self) }
 }

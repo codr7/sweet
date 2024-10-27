@@ -1,27 +1,30 @@
 var nextTypeId: TypeId = 0
+var typeLookup: [TypeId:ValueType] = [:]
 
 class BaseType<T> {    
     typealias Data = T
 
-    static func == (l: BaseType<T>, r: BaseType<T>) -> Bool {
-        l.id == r.id
-    }
-
-    lazy var hierarchy: Set<TypeId> = {
+    static func == (l: BaseType<T>, r: BaseType<T>) -> Bool { l.id == r.id }   
+    static func findId(_ id: TypeId) -> ValueType? { typeLookup[id] }
+    
+    lazy var parents: [any ValueType] = {
         var result: Set<TypeId> = [typeId]
-        for pt in parents { result.formUnion(pt.hierarchy) }
-        return result
+        for pt in _parents { result.formUnion(pt.parents.map({$0.typeId})) }
+        let ps = Array(result.map({BaseType<T>.findId($0)!}))
+        let wps = ps.sorted(by:{$0.parents.count > $1.parents.count})
+        
+        return ps
     }()
 
     let id: String
-    let parents: [any ValueType]
+    let _parents: [any ValueType]
     let typeId: TypeId
+    var dump: ValueType.Dump? = {(_ vm: VM, _ value: Value) -> String in "\(value.data)" }
     
     init(_ id: String, _ parents: [any ValueType] = []) {
         self.id = id
-        self.parents = parents
+        self._parents = parents
         self.typeId = nextTypeId
         nextTypeId += 1
     }
-
 }
