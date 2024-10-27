@@ -8,15 +8,7 @@ protocol ValueType {
 }
 
 extension ValueType {
-    static func == (l: any ValueType, r: any ValueType) -> Bool {
-        l.id == r.id
-    }
-
-    func dump(_ vm: VM, _ value: Value) -> String {
-        "\(value.data)"        
-    }
-
-    func equals(_ other: any ValueType) -> Bool {
-        return other.id == id
-    }
+    static func == (l: any ValueType, r: any ValueType) -> Bool { l.id == r.id }
+    func dump(_ vm: VM, _ value: Value) -> String { "\(value.data)" }
+    func equals(_ other: any ValueType) -> Bool { other.id == id }
 }

@@ -9,7 +9,7 @@ class VM {
     let user = Package("user")
     
     init() {}
-    
+
     func emit(_ op: Op) -> PC {
         let result = emit_pc
         code.append(op)

@@ -1,6 +1,3 @@
-* add VM frames
-** add begin/end_frame()
-
 * make type methods overridable
 ** switch to vars
 
