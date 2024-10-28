@@ -1,5 +1,5 @@
 extension VM {
-    func eval(_ startPc: PC) {
+    func eval(_ startPc: PC) throws(EvalError) {
         pc = startPc
         
         NEXT:
@@ -24,3 +24,5 @@ extension VM {
         }
     }
 }
+
+class EvalError: BaseError {}

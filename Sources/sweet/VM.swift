@@ -22,12 +22,12 @@ class VM {
 
     @discardableResult
     func emit(_ op: Op) -> PC {
-        let result = emit_pc
+        let result = emitPc
         code.append(op)
         return result
     }
 
-    var emit_pc: PC { get {PC(code.count)} }
+    var emitPc: PC { get {PC(code.count)} }
 
     var nextRegister: Register {
         let result = registers.count
@@ -35,6 +35,12 @@ class VM {
         return Register(result)
     }
 
+    func read(_ input: inout Input, _ location: inout Location) -> [Form] {
+        var result: [Form] = []
+        while reader.read(&input, &result, &location) {}
+        return result
+    }
+    
     func register(_ i: Register, _ value: Value) { registers[Int(i)] = value }
     func register(_ i: Register) -> Value { registers[Int(i)] }
 

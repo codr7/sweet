@@ -17,6 +17,12 @@ class BaseForm {
     func getValue(_ vm: VM) -> Value? { nil }
 }
 
+extension [Form] {
+    func emit(_ vm: VM, _ result: Register) throws(EmitError) {
+        for f in self { try f.emit(vm, result) }
+    }
+}
+
 class EmitError: BaseError {}
 
 struct forms {}
