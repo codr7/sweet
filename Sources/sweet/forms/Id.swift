@@ -26,7 +26,7 @@ extension forms {
 
         func dump() -> String { value }
         
-        func emit(_ vm: VM, _ result: Register) throws(EmitError) {
+        func emit(_ vm: VM, _ result: Register) throws {
             let v = Id.find(vm, vm.currentPackage, value);
             if v == nil { throw EmitError("Unknown id: \(value)", location) }
             v!.emit(vm, result)

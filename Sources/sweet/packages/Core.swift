@@ -3,15 +3,19 @@ extension packages {
         static let nilType = NilType("Nil", [])
         static let anyType = AnyType("Any")
 
+        static let bitType = BitType("Bit", [anyType])
         static let macroType = MacroType("Macro", [anyType])
         static let metaType = MetaType("Meta", [anyType])
         static let packageType = PackageType("Package", [anyType])
         static let registerType = RegisterType("Register", [anyType])
         
         static let NIL = Value(Core.nilType, ())
+        static let T = Value(Core.bitType, true)
+        static let F = Value(Core.bitType, false)
         
         override func setup(_ vm: VM) {
             bind(Core.anyType)
+            bind(Core.bitType)
             bind(Core.macroType)
             bind(Core.metaType)
             bind(Core.nilType)
@@ -19,47 +23,52 @@ extension packages {
             bind(Core.registerType)
 
             self["_"] = Core.NIL
+            self["T"] = Core.T
+            self["F"] = Core.F
 
-            bindMacro("swap", ["left1", "right1"],
-                      {(vm, arguments, result, location) throws(EmitError) in
+            bindMacro("import!", ["source", "id1?"],
+                      {(vm, arguments, result, location) in
+                          vm.register(result, Core.NIL)
+                          let sf = arguments.first!
+                          try sf.eval(vm, result)
+                          let s = vm.register(result)
+                          
+                          if s.type != Core.packageType {
+                              throw EmitError("Expected package: \(s.dump(vm))",
+                                              sf.location)
+                          }
+
+                          let ids: [String] = try arguments[1...].map {f in
+                              let id = f.cast(forms.Id.self)
+
+                              if id == nil {
+                                  throw EmitError("Expected id: \(f)", f.location)
+                              }
+
+                              return id!.value
+                          }
+                          
+                          vm.currentPackage.importFrom(s.cast(Core.packageType), ids)
+                      })
+
+            bindMacro("swap!", ["left1", "right1"],
+                      {(vm, arguments, result, location) in
                           for i in stride(from: 0, to: arguments.count, by: 2) {
                               let lf = arguments[i]
-                              let lid = lf.cast(forms.Id.self)
+                              let lr = lf.getRegister(vm)
 
-                              if lid == nil {
-                                  throw EmitError("Expected id: \(lf)", lf.location)
+                              if lr == nil {
+                                  throw EmitError("Expected register: \(lf)", lf.location)
                               }
 
-                              let lv = vm.currentPackage[lid!.value]
-
-                              if lv == nil {
-                                  throw EmitError("Misssing value: \(lf)", lf.location)
-                              }
-
-                              if lv!.type != packages.Core.registerType {
-                                  throw EmitError("Expected register: \(lv!)", lf.location)
-                              }
-                                                            
-                              let lr = lv!.cast(Core.registerType)
                               let rf = arguments[i]
-                              let rid = rf.cast(forms.Id.self)
+                              let rr = rf.getRegister(vm)
 
-                              if rid == nil {
-                                  throw EmitError("Expected id: \(rf)", rf.location)
-                              }
-                              
-                              let rv = vm.currentPackage[rid!.value]
-
-                              if rv == nil {
-                                  throw EmitError("Missing target: \(rf)", rf.location)
+                              if rr == nil {
+                                  throw EmitError("Expected register: \(rf)", rf.location)
                               }
 
-                              if rv!.type != packages.Core.registerType {
-                                  throw EmitError("Expected register: \(rv!)", lf.location)
-                              }
-
-                              let rr = rv!.cast(Core.registerType)
-                              vm.emit(ops.SwapRegisters.make(lr, rr))
+                              vm.emit(ops.SwapRegisters.make(lr!, rr!))
                           }
                       })
         }

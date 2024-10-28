@@ -21,9 +21,10 @@ class REPL {
                     let fs = vm.read(&input, &location)
                     let startPc = vm.emitPc
                     try fs.emit(vm, result)
+                    vm.emit(ops.Stop.make())
                     vm.register(result, packages.Core.NIL)
                     try vm.eval(startPc)
-                    print("\(vm.register(result))\n")
+                    print("\(vm.register(result).dump(vm))\n")
                     input.reset()
                 } catch {
                     print("\(error)\n")

@@ -1,6 +1,7 @@
 typealias Op = UInt128;
 
 enum OpCode: UInt8 {
+    case Goto
     case SetRegister
     case SwapRegisters
     case Stop
@@ -8,6 +9,7 @@ enum OpCode: UInt8 {
 
 struct ops {
     static let opCodeWidth: UInt8 = 8;
+    static let pcWidth: UInt8 = 32;
     static let registerWidth: UInt8 = 32;
     static let tagWidth: UInt8 = 32;
 
@@ -28,6 +30,15 @@ struct ops {
     }
     
 
+    static func encodePc(_ value: PC, _ offset: UInt8) -> Op {
+        encode(value, offset, pcWidth)
+    }
+
+    static func decodePc(_ op: Op, _ offset: UInt8) -> PC {
+        PC(decode(op, offset, pcWidth))
+    }
+
+    
     static func encodeRegister(_ value: Register, _ offset: UInt8) -> Op {
         encode(value, offset, registerWidth)
     }

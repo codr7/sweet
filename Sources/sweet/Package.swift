@@ -1,4 +1,4 @@
-class Package: Sequence {
+class Package: CustomStringConvertible, Sequence {
     static func == (l: Package, r: Package) -> Bool { l.id == r.id }
     
     typealias Bindings = [String:Value]
@@ -20,7 +20,8 @@ class Package: Sequence {
             return next()
         }
     }
-    
+
+    var description: String {id}
     let id: String
     var bindings: Bindings = [:]
     let parent: Package?
@@ -42,7 +43,7 @@ class Package: Sequence {
     }
 
     func setup(_ vm: VM) {}
-    
+
     func bind(_ value: Macro) {
         self[value.id] = Value(packages.Core.macroType, value)
     }
@@ -59,7 +60,13 @@ class Package: Sequence {
         self[id] = Value(packages.Core.macroType, Macro(id, arguments, body))
     }
 
-    public func makeIterator() -> Iterator { Iterator(self) }
+    var ids: [String] { Array(bindings.keys) }
+    
+    func importFrom(_ source: Package, _ ids: [String]) {
+        for id in ids { bindings[id] = source[id] }
+    }
+      
+    func makeIterator() -> Iterator { Iterator(self) }
 }
 
 struct packages {}

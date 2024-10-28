@@ -1,8 +1,5 @@
 * rename Id.swift to IdForm.swift
 
-* add import macro
-** add Package.import
-
 * add Call form
 
 * add Bit type

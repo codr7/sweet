@@ -7,6 +7,8 @@ extension VM {
             let op = code[Int(pc)]
 
             switch ops.decode(op) {
+            case .Goto:
+                pc = ops.Goto.pc(op)
             case .SetRegister:
                 register(ops.SetRegister.target(op), tag(ops.SetRegister.value(op)))
                 pc += 1

@@ -2,23 +2,44 @@ protocol Form: CustomStringConvertible {
     var location: Location {get}
     func cast<T>(_ type: T.Type) -> T?
     func dump() -> String
-    func emit(_ vm: VM, _ result: Register) throws(EmitError)
+    func emit(_ vm: VM, _ result: Register) throws
+    func eval(_ vm: VM, _ result: Register) throws
+    func getRegister(_ vm: VM) -> Register?
     func getValue(_ vm: VM) -> Value?
 }
 
 extension Form {
     var description: String { dump() }
+
+    func eval(_ vm: VM, _ result: Register) throws {
+        let skipPc = vm.emit(ops.Stop.make())
+        let startPc = vm.pc
+        try emit(vm, result)
+        vm.emit(ops.Stop.make())
+        vm.code[skipPc] = ops.Goto.make(startPc)
+        try vm.eval(startPc)
+    }
 }
 
 class BaseForm {
     let location: Location
     init(_ location: Location) { self.location = location }
     func cast<T>(_ type: T.Type) -> T? {self as? T}
+
+    func getRegister(_ vm: VM) -> Register? {
+        let id = cast(forms.Id.self)
+        if id == nil { return nil }
+        let v = vm.currentPackage[id!.value]
+        if v == nil { return nil }
+        if v!.type != packages.Core.registerType { return nil }
+        return v!.cast(packages.Core.registerType)
+    }
+    
     func getValue(_ vm: VM) -> Value? { nil }
 }
 
 extension [Form] {
-    func emit(_ vm: VM, _ result: Register) throws(EmitError) {
+    func emit(_ vm: VM, _ result: Register) throws {
         for f in self { try f.emit(vm, result) }
     }
 }

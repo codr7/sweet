@@ -1,7 +1,7 @@
 typealias Bit = Bool
-typealias PC = UInt32;
-typealias Register = UInt32;
-typealias Tag = UInt32;
-typealias TypeId = UInt32
+typealias PC = Int;
+typealias Register = Int;
+typealias Tag = Int;
+typealias TypeId = Int
 
 
