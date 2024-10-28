@@ -31,7 +31,7 @@ class VM {
 
     var nextRegister: Register {
         let result = registers.count
-        registers.append(core.NIL)
+        registers.append(packages.Core.NIL)
         return Register(result)
     }
 

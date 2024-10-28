@@ -1,8 +1,9 @@
 typealias Op = UInt128;
 
 enum OpCode: UInt8 {
-    case setRegister
-    case stop
+    case SetRegister
+    case SwapRegisters
+    case Stop
 }
 
 struct ops {

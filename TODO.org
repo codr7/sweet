@@ -1,6 +1,12 @@
-* add swap macro
-** add macros
-** add Swap op
+* add Call form
+
+* add Bit type
+** bind T/F
+
+* add Literal Form
+
+* add Int reader
+** add Int type
 
 * fib
 

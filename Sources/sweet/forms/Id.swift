@@ -24,7 +24,7 @@ extension forms {
             super.init(location)
         }
 
-        func dump(_ vm: VM) -> String { value }
+        func dump() -> String { value }
         
         func emit(_ vm: VM, _ result: Register) throws(EmitError) {
             let v = Id.find(vm, vm.currentPackage, value);

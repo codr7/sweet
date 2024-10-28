@@ -1,8 +1,12 @@
-protocol Form {
+protocol Form: CustomStringConvertible {
     var location: Location {get}
-    func dump(_ vm: VM) -> String
+    func dump() -> String
     func emit(_ vm: VM, _ result: Register) throws(EmitError)
     func getValue(_ vm: VM) -> Value?
+}
+
+extension Form {
+    var description: String { dump() }
 }
 
 class BaseForm {

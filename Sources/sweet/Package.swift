@@ -43,6 +43,10 @@ class Package: Sequence {
 
     func setup(_ vm: VM) {}
     
+    func bind(_ value: Macro) {
+        self[value.id] = Value(packages.Core.macroType, value)
+    }
+
     func bind(_ value: Package) {
         self[value.id] = Value(packages.Core.packageType, value)
     }
@@ -50,7 +54,11 @@ class Package: Sequence {
     func bind(_ value: ValueType) {
         self[value.id] = Value(packages.Core.metaType, value)
     }
-    
+
+    func bindMacro(_ id: String, _ arguments: [String], _ body: @escaping Macro.Body) {
+        self[id] = Value(packages.Core.macroType, Macro(id, arguments, body))
+    }
+
     public func makeIterator() -> Iterator { Iterator(self) }
 }
 

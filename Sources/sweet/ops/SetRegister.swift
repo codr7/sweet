@@ -11,7 +11,7 @@ extension ops {
         static func make(_ vm: VM, _ target: Register, _ value: Value) -> Op {
             let vt = vm.tag(value)
             
-            return encode(OpCode.setRegister) +
+            return encode(OpCode.SetRegister) +
               encodeRegister(target, targetStart) +
               encodeTag(vt, valueStart); 
         }
