@@ -21,10 +21,12 @@ protocol ValueType {
 }
 
 extension ValueType {
-    static func == (l: any ValueType, r: any ValueType) -> Bool { l.id == r.id }
     func equals(_ other: any ValueType) -> Bool { other.id == id }
 
     func emit(_ vm: VM, _ target: Value, _ result: Register) {
         vm.emit(ops.SetRegister.make(vm, result, target));
     }
 }
+
+func ==(l: any ValueType, r: any ValueType) -> Bool { l.id == r.id }
+func !=(l: any ValueType, r: any ValueType) -> Bool { l.id != r.id }
