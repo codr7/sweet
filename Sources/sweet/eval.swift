@@ -19,6 +19,10 @@ extension VM {
                 try t.call(self, arguments, r, l)
             case .Goto:
                 pc = ops.Goto.pc(op)
+            case .Return:
+                let c = calls.removeLast()
+                for (r, v) in c.frame { registers[r] = v }
+                pc = c.returnPc
             case .SetRegister:
                 let t = ops.SetRegister.target(op)
                 let v = tags[ops.SetRegister.value(op)] as! Value

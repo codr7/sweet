@@ -1,4 +1,4 @@
-* add vm.endCall (wipl)
+* backup/restore SweetMethod registers before/after call
 
 * add PrepareClosure op
 * remove VM.frames/beginFrame/endFrame?

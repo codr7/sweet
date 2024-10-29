@@ -3,6 +3,7 @@ typealias Op = UInt128;
 enum OpCode: UInt8 {
     case Call
     case Goto
+    case Return
     case SetRegister
     case SwapRegisters
     case Stop

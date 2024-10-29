@@ -22,13 +22,6 @@ class VM {
         user.initBindings(self)
     }
 
-    func beginCall(_ target: SweetMethod,
-                   _ returnPc: PC,
-                   _ result: Register,
-                   _ location: Location) {
-        calls.append(Call(target, returnPc, result, location))
-    }
-    
     @discardableResult
     func emit(_ op: Op) -> PC {
         let result = emitPc
@@ -37,6 +30,8 @@ class VM {
     }
 
     var emitPc: PC { code.count }
+
+    func endCall() -> Call { calls.removeLast() }
 
     var nextRegister: Register {
         let result = registers.count
