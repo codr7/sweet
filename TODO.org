@@ -1,5 +1,3 @@
-* add Literal Form
-
 * add Int reader
 ** add Int type
 
@@ -14,3 +12,7 @@
 ** https://developer.apple.com/documentation/swift/numeric-protocols
 
 .sweet
+
+if let nickname {
+    print("Hey, \(nickname)")
+}

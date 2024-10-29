@@ -24,12 +24,12 @@ extension forms {
             super.init(location)
         }
 
-        func dump() -> String { value }
+        func dump(_ vm: VM) -> String { value }
         
         func emit(_ vm: VM, _ result: Register) throws {
             let v = Id.find(vm, vm.currentPackage, value);
             if v == nil { throw EmitError("Unknown id: \(value)", location) }
-            try v!.emit(vm, result)
+            try v!.emit(vm, result, location)
         }
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }

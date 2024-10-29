@@ -9,7 +9,7 @@ extension forms {
             super.init(location)
         }
 
-        func dump() -> String { "\(left):\(right)" }
+        func dump(_ vm: VM) -> String { "\(left.dump(vm)):\(right.dump(vm))" }
         
         func emit(_ vm: VM, _ result: Register) throws {
             let lr = result

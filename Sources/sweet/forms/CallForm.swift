@@ -7,7 +7,9 @@ extension forms {
             super.init(location)
         }
 
-        func dump() -> String { "(\(arguments.map({"\($0)"}).joined(separator: " ")))" }
+        func dump(_ vm: VM) -> String {
+            "(\(arguments.map({"\($0.dump(vm))"}).joined(separator: " ")))"
+        }
         
         func emit(_ vm: VM, _ result: Register) throws {
             var t = arguments.first!

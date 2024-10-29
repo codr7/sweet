@@ -16,11 +16,15 @@ struct Value: Equatable {
  
     func cast<TT, T>(_ _: TT) -> T where TT: BaseType<T> { data as! T }
     func dump(_ vm: VM) -> String { type.dump!(vm, self) }
-    func emit(_ vm: VM, _ result: Register) throws { try type.emit(vm, self, result) } 
+
+    func emit(_ vm: VM, _ result: Register, _ location: Location) throws {
+        try type.emit(vm, self, result, location)
+    } 
 
     func emitCall(_ vm: VM,
                   _ arguments: [Form],
-                  _ result: Register) throws { try type.emit(vm, self, result) }
+                  _ result: Register,
+                  _ location: Location) throws { try type.emit(vm, self, result, location) }
     
     func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
     func findId(_ id: String) -> Value? { type.findId!(self, id) }

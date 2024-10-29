@@ -6,5 +6,13 @@ extension packages.Core {
             let t = self
             eq = {(value1, value2) -> Bool in value1.cast(t).id == value2.cast(t).id}
         }
+
+            func emitCall(_ vm: VM,
+                  _ target: Value,
+                  _ arguments: [Form],
+                  _ result: Register,
+                  _ location: Location) throws {
+                try target.cast(self).emit(vm, arguments, result, location)
+            }
     }
 }

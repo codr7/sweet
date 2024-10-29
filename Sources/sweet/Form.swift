@@ -1,7 +1,7 @@
-protocol Form: CustomStringConvertible {
+protocol Form {
     var location: Location {get}
     func cast<T>(_ type: T.Type) -> T?
-    func dump() -> String
+    func dump(_ vm: VM) -> String
     func emit(_ vm: VM, _ result: Register) throws
     func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
@@ -11,8 +11,6 @@ protocol Form: CustomStringConvertible {
 }
 
 extension Form {
-    var description: String { dump() }
-
     func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws {
         let tr = vm.nextRegister
         try arguments.first!.emit(vm, tr)
