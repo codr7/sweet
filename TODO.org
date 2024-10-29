@@ -1,5 +1,3 @@
-* add call reader
-
 * add Literal Form
 
 * add Int reader

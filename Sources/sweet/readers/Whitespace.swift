@@ -3,10 +3,11 @@ extension readers {
         static let instance = Whitespace()
         
         @discardableResult
-        func read(_ input: inout Input,
+        func read(_ vm: VM,
+                  _ input: inout Input,
                   _ output: inout Output,
                   _ location: inout Location) -> Bool {
-            let startLocation = location;
+            let startLocation = location
             
             while let c = input.popChar() {
                 if c.isNewline {

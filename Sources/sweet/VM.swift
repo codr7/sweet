@@ -3,6 +3,7 @@ class VM {
 
     let reader = readers.OneOf(
       readers.Whitespace.instance,
+      readers.Call.instance,
       readers.Id.instance
     )
     
@@ -41,12 +42,18 @@ class VM {
         return result
     }
     
-    func read(_ input: inout Input, _ location: inout Location) -> [Form] {
+    func read(_ input: inout Input,
+              _ output: inout [Form],
+              _ location: inout Location) throws -> Bool {
+        try reader.read(self, &input, &output, &location)
+    }
+
+    func read(_ input: inout Input, _ location: inout Location) throws -> [Form] {
         var result: [Form] = []
-        while reader.read(&input, &result, &location) {}
+        while try read(&input, &result, &location) {}
         return result
     }
-    
+
     func setRegister(_ i: Register, _ value: Value) { registers[Int(i)] = value }
     func register(_ i: Register) -> Value { registers[Int(i)] }
 

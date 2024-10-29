@@ -4,10 +4,11 @@ extension readers {
 
         init(_ members: Reader...) { self.members = members }
 
-        func read(_ input: inout Input,
+        func read(_ vm: VM,
+                  _ input: inout Input,
                   _ output: inout Output,
-                  _ location: inout Location) -> Bool {
-            members.contains { $0.read(&input, &output, &location) }
+                  _ location: inout Location) throws -> Bool {
+            try members.contains { try $0.read(vm, &input, &output, &location) }
         }
     }
 }

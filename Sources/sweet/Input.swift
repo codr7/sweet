@@ -17,6 +17,8 @@ struct Input {
         data.isEmpty ? nil : data.removeFirst()
     }
 
+    mutating func dropChar() { data.removeFirst() }
+
     mutating func pushChar(_ char: Character) {
         data.insert(char, at: data.startIndex)
     }
