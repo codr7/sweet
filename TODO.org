@@ -3,6 +3,11 @@
 * add Int reader
 ** add Int type
 
+* add Method
+
+* add NumericTrait
+** add + - * / methods to core
+
 * fib
 
 * port fix from sharpl

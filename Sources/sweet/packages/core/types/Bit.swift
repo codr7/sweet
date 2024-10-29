@@ -2,6 +2,7 @@ extension packages.Core {
     class BitType: BaseType<Bit>, ValueType {
         override init(_ id: String, _ parents: [any ValueType]) {
             super.init(id, parents)
+            typeLookup[typeId] = self
             let t = self
 
             dump = {(vm, value) in value.cast(t) ? "T" : "F"}

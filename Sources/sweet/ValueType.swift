@@ -1,4 +1,6 @@
 protocol ValueType {
+    typealias Parents = [TypeId:Int]
+
     var id: String {get}
 
     typealias Call = (_ vm: VM,
@@ -18,7 +20,7 @@ protocol ValueType {
     var eq: Eq? {get}
     
     func equals(_ other: any ValueType) -> Bool 
-    var parents: [ValueType] {get}
+    var parents: Parents {get}
 
     typealias FindId = (_ source: Value, _ id: String) -> Value?
     var findId: FindId? {get}
