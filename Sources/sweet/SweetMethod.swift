@@ -1,28 +1,4 @@
-class SweetMethod: BaseMethod, Method {
-    struct Argument {
-        let id: String
-        let target: Register
-        let value: Value?
-
-        init(_ id: String, _ target: Register, _ value: Value? = nil) {
-            self.id = id
-            self.target = target
-            self.value = value
-        }
-    }
-
-    struct Closure {
-        let id: String
-        let target: Register
-        let value: Value
-
-        init(_ id: String, _ target: Register, _ value: Value) {
-            self.id = id
-            self.target = target
-            self.value = value
-        }
-    }
-    
+class SweetMethod: BaseMethod, Method {    
     let sweetArguments: [Argument]
     let result: Register
     let location: Location
@@ -70,5 +46,29 @@ class SweetMethod: BaseMethod, Method {
         }
 
         vm.pc = startPc
-   }
+    }
+}
+
+struct Argument {
+    let id: String
+    let target: Register
+    let value: Value?
+
+    init(_ id: String, _ target: Register, _ value: Value? = nil) {
+        self.id = id
+        self.target = target
+        self.value = value
+    }
+}
+
+struct Closure {
+    let id: String
+    let target: Register
+    let value: Value
+
+    init(_ id: String, _ target: Register, _ value: Value) {
+        self.id = id
+        self.target = target
+        self.value = value
+    }
 }

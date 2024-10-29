@@ -1,9 +1,3 @@
-* backup/restore SweetMethod registers before/after call
-
-* add PrepareClosure op
-* remove VM.frames/beginFrame/endFrame?
-** rethink
-
 * add ^ macro
 ** add vm.doPackage
 

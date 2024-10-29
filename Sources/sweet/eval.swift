@@ -19,6 +19,19 @@ extension VM {
                 try t.call(self, arguments, r, l)
             case .Goto:
                 pc = ops.Goto.pc(op)
+            case .InitMethod:
+                let t = registers[ops.InitMethod.target(op)]
+                let m = t.cast(packages.Core.methodType) as! SweetMethod
+                
+                m.closure = m.closure.map {c in
+                    (c.value.type == packages.Core.registerType)
+                      ? Closure(c.id,
+                                c.target,
+                                registers[c.value.cast(packages.Core.registerType)])
+                      : c
+                }
+
+                pc = ops.InitMethod.skip(op)
             case .Return:
                 let c = calls.removeLast()
                 for (r, v) in c.frame { registers[r] = v }
