@@ -1,10 +1,4 @@
-* finish SweetMethod.call (wipl)
-** commit method
-
-* add core method type
-** implement call method
-
-* add call struct / vm.calls / beginCall/endCall
+* add vm.endCall (wipl)
 
 * add PrepareClosure op
 * remove VM.frames/beginFrame/endFrame?

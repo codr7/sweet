@@ -12,9 +12,11 @@ struct Value: Equatable {
     func call(_ vm: VM,
               _ arguments: [Value],
               _ result: Register,
-              _ location: Location) { type.call!(vm, self, arguments, result, location) }
+              _ location: Location) throws {
+        try type.call!(vm, self, arguments, result, location)
+    }
  
-    func cast<TT, T>(_ _: TT) -> T where TT: BaseType<T> { data as! T }
+    func cast<T, TT>(_ _: TT) -> T where TT: BaseType<T> { data as! T }
     func dump(_ vm: VM) -> String { type.dump!(vm, self) }
 
     func emit(_ vm: VM, _ result: Register, _ location: Location) throws {

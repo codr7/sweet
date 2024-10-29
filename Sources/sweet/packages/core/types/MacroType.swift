@@ -4,7 +4,7 @@ extension packages.Core {
             super.init(id, parents)
             typeLookup[typeId] = self
             let t = self
-            eq = {(value1, value2) -> Bool in value1.cast(t).id == value2.cast(t).id}
+            eq = {(value1, value2) in value1.cast(t).id == value2.cast(t).id}
         }
 
             func emitCall(_ vm: VM,

@@ -7,7 +7,7 @@ protocol ValueType {
                       _ target: Value,
                       _ arguments: [Value],
                       _ result: Register,
-                      _ location: Location) -> Void
+                      _ location: Location) throws -> Void
     var call: Call? {get}
     
     typealias Dump = (_ vm: VM, _ value: Value) -> String

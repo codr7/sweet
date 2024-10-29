@@ -1,4 +1,6 @@
 protocol Method {
+    var id: String {get}
+    
     func call(_ vm: VM,
 	      _ arguments: [Value],
 	      _ result: Register,
@@ -6,6 +8,8 @@ protocol Method {
 }
 
 class BaseMethod: CustomStringConvertible {
+    static func == (l: BaseMethod, r: BaseMethod) -> Bool { l.id == r.id }
+
     struct Options {
         let isConst = true
         let isVararg = false
@@ -102,7 +106,7 @@ class SweetMethod: BaseMethod, Method {
             let v = vm.currentPackage[id]
             if v == nil { throw EmitError("Unknown id: \(id)", location) }
             return Closure(id, r, v!)
-        };
+        }
     }
     
     func call(_ vm: VM,

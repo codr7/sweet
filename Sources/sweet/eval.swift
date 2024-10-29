@@ -1,5 +1,5 @@
 extension VM {
-    func eval(_ startPc: PC) throws(EvalError) {
+    func eval(_ startPc: PC) throws {
         pc = startPc
         
         NEXT:
@@ -16,7 +16,7 @@ extension VM {
                 var arguments: [Value] = []
                 for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
 
-                t.call(self, arguments, r, l)
+                try t.call(self, arguments, r, l)
             case .Goto:
                 pc = ops.Goto.pc(op)
             case .SetRegister:
