@@ -1,4 +1,5 @@
-class VM {    
+class VM {
+    var calls: [Call] = []
     var code: [Op] = []
 
     let reader = readers.OneOf(
@@ -17,10 +18,17 @@ class VM {
     
     init() {
         currentPackage = user
-        core.setup(self)
-        user.setup(self)
+        core.initBindings(self)
+        user.initBindings(self)
     }
 
+    func beginCall(_ target: SweetMethod,
+                   _ returnPc: PC,
+                   _ result: Register,
+                   _ location: Location) {
+        calls.append(Call(target, returnPc, result, location))
+    }
+    
     @discardableResult
     func emit(_ op: Op) -> PC {
         let result = emitPc

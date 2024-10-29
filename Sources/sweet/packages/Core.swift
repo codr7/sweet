@@ -15,7 +15,7 @@ extension packages {
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
         
-        override func setup(_ vm: VM) {
+        override func initBindings(_ vm: VM) {
             bind(Core.anyType)
             bind(Core.bitType)
             bind(Core.macroType)

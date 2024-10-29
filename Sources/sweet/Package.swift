@@ -42,7 +42,7 @@ class Package: CustomStringConvertible, Sequence {
         self.parent = parent
     }
 
-    func setup(_ vm: VM) {}
+    func initBindings(_ vm: VM) {}
 
     func bind(_ value: Macro) {
         self[value.id] = Value(packages.Core.macroType, value)

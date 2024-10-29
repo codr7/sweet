@@ -16,7 +16,6 @@ extension VM {
                 var arguments: [Value] = []
                 for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
 
-                pc += 1
                 t.call(self, arguments, r, l)
             case .Goto:
                 pc = ops.Goto.pc(op)

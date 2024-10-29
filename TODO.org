@@ -1,7 +1,20 @@
+* finish SweetMethod.call (wipl)
+** commit method
+
+* add core method type
+** implement call method
+
+* add call struct / vm.calls / beginCall/endCall
+
+* add PrepareClosure op
+* remove VM.frames/beginFrame/endFrame?
+** rethink
+
+* add ^ macro
+** add vm.doPackage
+
 * add Int reader
 ** add Int type
-
-* add Method
 
 * add NumericTrait
 ** add + - * / methods to core
