@@ -7,9 +7,11 @@ extension packages {
         static let macroType = MacroType("Macro", [anyType])
         static let metaType = MetaType("Meta", [anyType])
         static let packageType = PackageType("Package", [anyType])
+        static let pairType = PairType("Pair", [anyType])
         static let registerType = RegisterType("Register", [anyType])
         
         static let NIL = Value(Core.nilType, ())
+        
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
         
@@ -20,6 +22,7 @@ extension packages {
             bind(Core.metaType)
             bind(Core.nilType)
             bind(Core.packageType)
+            bind(Core.pairType)
             bind(Core.registerType)
 
             self["_"] = Core.NIL
@@ -28,7 +31,7 @@ extension packages {
 
             bindMacro("import!", ["source", "id1?"],
                       {(vm, arguments, result, location) in
-                          vm.register(result, Core.NIL)
+                          vm.registers[result] = Core.NIL
                           let sf = arguments.first!
                           try sf.eval(vm, result)
                           let s = vm.register(result)

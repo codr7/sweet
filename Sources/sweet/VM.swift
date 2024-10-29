@@ -8,7 +8,7 @@ class VM {
     
     var pc: PC = 0
     var registers: [Value] = []
-    var tags: [Value] = []
+    var tags: [Any] = []
 
     let core = packages.Core("core")
     var user = Package("user")
@@ -27,7 +27,7 @@ class VM {
         return result
     }
 
-    var emitPc: PC { get {PC(code.count)} }
+    var emitPc: PC { code.count }
 
     var nextRegister: Register {
         let result = registers.count
@@ -35,20 +35,24 @@ class VM {
         return Register(result)
     }
 
+    func nextRegisters(_ n: Int) -> Register {
+        let result = nextRegister
+        registers += Array(repeating: packages.Core.NIL, count: n)
+        return result
+    }
+    
     func read(_ input: inout Input, _ location: inout Location) -> [Form] {
         var result: [Form] = []
         while reader.read(&input, &result, &location) {}
         return result
     }
     
-    func register(_ i: Register, _ value: Value) { registers[Int(i)] = value }
+    func setRegister(_ i: Register, _ value: Value) { registers[Int(i)] = value }
     func register(_ i: Register) -> Value { registers[Int(i)] }
 
-    func tag(_ value: Value) -> Tag {
+    func tag(_ value: Any) -> Tag {
         let result = tags.count
         tags.append(value)
-        return Tag(result)
+        return result
     }
-
-    func tag(_ i: Tag) -> Value { tags[Int(i)] }
 }

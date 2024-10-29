@@ -26,6 +26,10 @@ class BaseType<T> {
     let _parents: [any ValueType]
     let typeId: TypeId
 
+    var call: ValueType.Call? = {(vm, target, arguments, result, location) in
+        vm.setRegister(result, target)
+    }
+    
     var dump: ValueType.Dump? = {(vm, value) in "\(value.data)" }
     var eq: ValueType.Eq? = nil
     var findId: ValueType.FindId? = nil

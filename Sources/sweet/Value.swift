@@ -9,9 +9,19 @@ struct Value: Equatable {
         self.data = data
     }
 
+    func call(_ vm: VM,
+              _ arguments: [Value],
+              _ result: Register,
+              _ location: Location) { type.call!(vm, self, arguments, result, location) }
+ 
     func cast<TT, T>(_ _: TT) -> T where TT: BaseType<T> { data as! T }
     func dump(_ vm: VM) -> String { type.dump!(vm, self) }
-    func emit(_ vm: VM, _ result: Register) { type.emit(vm, self, result) } 
+    func emit(_ vm: VM, _ result: Register) throws { try type.emit(vm, self, result) } 
+
+    func emitCall(_ vm: VM,
+                  _ arguments: [Form],
+                  _ result: Register) throws { try type.emit(vm, self, result) }
+    
     func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
     func findId(_ id: String) -> Value? { type.findId!(self, id) }
     func toBit() -> Bit { type.toBit!(self) }

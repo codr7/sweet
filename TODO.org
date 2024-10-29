@@ -1,9 +1,4 @@
-* rename Id.swift to IdForm.swift
-
-* add Call form
-
-* add Bit type
-** bind T/F
+* add call reader
 
 * add Literal Form
 

@@ -29,9 +29,11 @@ extension forms {
         func emit(_ vm: VM, _ result: Register) throws {
             let v = Id.find(vm, vm.currentPackage, value);
             if v == nil { throw EmitError("Unknown id: \(value)", location) }
-            v!.emit(vm, result)
+            try v!.emit(vm, result)
         }
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
+
+        var isNil: Bool { value == "_" }
     }
 }

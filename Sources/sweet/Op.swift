@@ -1,17 +1,20 @@
 typealias Op = UInt128;
 
 enum OpCode: UInt8 {
+    case Call
     case Goto
     case SetRegister
     case SwapRegisters
     case Stop
+    case Unzip
+    case Zip
 }
 
 struct ops {
-    static let opCodeWidth: UInt8 = 8;
-    static let pcWidth: UInt8 = 32;
-    static let registerWidth: UInt8 = 32;
-    static let tagWidth: UInt8 = 32;
+    static let opCodeWidth: UInt8 = 6
+    static let pcWidth: UInt8 = 20
+    static let registerWidth: UInt8 = 20
+    static let tagWidth: UInt8 = 20
 
     static func encode<T>(_ value: T, _ offset: UInt8, _ width: UInt8) -> Op
       where T: BinaryInteger {
@@ -28,8 +31,17 @@ struct ops {
     static func decode(_ op: Op) -> OpCode {
         OpCode(rawValue: UInt8(decode(op, 0, opCodeWidth)))!
     }
-    
 
+    
+    static func encodeFlag(_ value: Bool, _ offset: UInt8) -> Op {
+        encode(value ? 1 : 0, offset, 1)
+    }
+
+    static func decodeFlag(_ op: Op, _ offset: UInt8) -> Bool {
+        decode(op, offset, 1) == 1
+    }
+
+    
     static func encodePc(_ value: PC, _ offset: UInt8) -> Op {
         encode(value, offset, pcWidth)
     }

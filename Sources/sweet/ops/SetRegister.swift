@@ -1,8 +1,8 @@
 extension ops {
     struct SetRegister {
-        static let targetStart = opCodeWidth;
-        static let targetWidth = registerWidth;
-        static let valueStart = targetStart + targetWidth;
+        static let targetStart = opCodeWidth
+        static let targetWidth = registerWidth
+        static let valueStart = targetStart + targetWidth
         static let valueWidth = tagWidth
 
         static func target(_ op: Op) -> Register { decodeRegister(op, targetStart) }
