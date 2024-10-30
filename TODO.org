@@ -1,5 +1,6 @@
+* add Package parent init logic from wipl
+
 * add ^ macro
-** add vm.doPackage
 
 * add NumericTrait
 ** add + - * / methods to core
