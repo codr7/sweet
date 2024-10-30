@@ -1,8 +1,8 @@
+* skip binding of _ method args in call
+** add extenstion String.isNil
+
 * add ^ macro
 ** add vm.doPackage
-
-* add Int reader
-** add Int type
 
 * add NumericTrait
 ** add + - * / methods to core

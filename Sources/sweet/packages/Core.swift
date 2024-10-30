@@ -4,6 +4,7 @@ extension packages {
         static let anyType = AnyType("Any")
 
         static let bitType = BitType("Bit", [anyType])
+        static let intType = IntType("Int", [anyType])
         static let macroType = MacroType("Macro", [anyType])
         static let metaType = MetaType("Meta", [anyType])
         static let methodType = MethodType("Method", [anyType])
@@ -19,6 +20,7 @@ extension packages {
         override func initBindings(_ vm: VM) {
             bind(Core.anyType)
             bind(Core.bitType)
+            bind(Core.intType)
             bind(Core.macroType)
             bind(Core.metaType)
             bind(Core.methodType)

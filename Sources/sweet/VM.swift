@@ -4,6 +4,7 @@ class VM {
 
     let reader = readers.OneOf(
       readers.Whitespace.instance,
+      readers.IntReader.instance,
       readers.Call.instance,
       readers.Id.instance
     )
