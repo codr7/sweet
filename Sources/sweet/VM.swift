@@ -23,6 +23,13 @@ class VM {
         user.initBindings(self)
     }
 
+    func doPackage<T>(_ bodyPackage: Package?, _ body: () -> T) -> T {
+        let pp = currentPackage
+        currentPackage = bodyPackage ?? Package(currentPackage.id, currentPackage)
+        defer { currentPackage = pp }
+        return body()
+    }
+    
     @discardableResult
     func emit(_ op: Op) -> PC {
         let result = emitPc

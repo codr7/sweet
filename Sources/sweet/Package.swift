@@ -37,7 +37,7 @@ class Package: CustomStringConvertible, Sequence {
         set(value) {bindings[id] = value}
     }
 
-    init(_ id: String, parent: Package? = nil) {
+    init(_ id: String, _ parent: Package? = nil) {
         self.id = id
         self.parent = parent
     }
