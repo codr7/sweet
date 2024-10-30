@@ -14,7 +14,11 @@ struct Call {
         self.returnPc = returnPc
         self.result = result
         self.location = location
-        for a in target.sweetArguments { frame.append((a.target, vm.registers[a.target])) }
+
+        for a in target.sweetArguments {
+            if !a.id.isNil { frame.append((a.target, vm.registers[a.target])) }
+        }
+        
         if target.options.resultType != nil { frame.append((result, vm.registers[result])) }
     }
 }
