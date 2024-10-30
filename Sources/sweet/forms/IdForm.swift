@@ -1,3 +1,7 @@
+extension String {
+    var isNil: Bool { self == "_" } 
+}
+
 extension forms {
     class Id: BaseForm, Form {
         static func find(_ vm: VM, _ source: Package, _ id: String) -> Value? {
@@ -34,6 +38,6 @@ extension forms {
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 
-        var isNil: Bool { value == "_" }
+        var isNil: Bool { value.isNil }
     }
 }

@@ -41,8 +41,7 @@ class SweetMethod: BaseMethod, Method {
 
         for i in 0..<min(arguments.count, sweetArguments.count) {
             let a = sweetArguments[i]
-            let v = arguments[i]
-            vm.registers[a.target] = v
+            if !a.id.isNil {vm.registers[a.target] = arguments[i]}
         }
 
         vm.pc = startPc
