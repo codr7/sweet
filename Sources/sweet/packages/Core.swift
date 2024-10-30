@@ -39,7 +39,7 @@ extension packages {
                       {(vm, arguments, result, location) in
                           var args = arguments
                           var f = args.removeFirst()
-                          var id = ""
+                          var id = "_"
                           
                           if let idf = f.cast(forms.Id.self) {
                               id = idf.value
@@ -61,9 +61,14 @@ extension packages {
                               }
                           }
                           
-                          var ids = Set<String>()
-                          var mos = BaseMethod.Options()
-
+                          let mos = BaseMethod.Options()
+                          let m = SweetMethod(id, mas, mos, result, location)
+                          let mpc = vm.emit(ops.Stop.make())
+                          let v = Value(Core.methodType, m)
+                          if !id.isNil { vm.currentPackage[id] = v }
+                          try vm.doPackage(nil) { try args.emit(vm, result); }
+                          vm.emit(ops.Return.make())
+                          vm.code[mpc] = ops.InitMethod.make(vm, v, vm.emitPc)
                       })
             
             bindMacro("import", ["source", "id1?"],

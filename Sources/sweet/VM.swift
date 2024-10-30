@@ -24,11 +24,11 @@ class VM {
         user.initBindings(self)
     }
 
-    func doPackage<T>(_ bodyPackage: Package?, _ body: () -> T) -> T {
+    func doPackage<T>(_ bodyPackage: Package?, _ body: () throws -> T) throws -> T {
         let pp = currentPackage
         currentPackage = bodyPackage ?? Package(currentPackage.id, currentPackage)
         defer { currentPackage = pp }
-        return body()
+        return try body()
     }
     
     @discardableResult

@@ -1,6 +1,10 @@
-* finish ^ macro
-** wipl
-** commit
+* test core/^
+
+(^foo [] 42)
+
+(^foo [x] x)
+
+* set result to m in ^-macro if id.isNil
 
 * add tests
 ** add core/= method
