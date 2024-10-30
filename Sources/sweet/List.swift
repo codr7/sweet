@@ -1,15 +1,21 @@
-typealias List = [Value]
+class List {
+    typealias Items = [Value]
 
-extension List {
-    func dump(_ vm: VM) -> String { "[\(map({$0.dump(vm)}).joined(separator: " "))]" }
-}
+    static func ==(l: List, r: List) -> Bool {
+        if l.items.count != r.items.count { return false }
 
-func ==(l: List, r: List) -> Bool {
-    if l.count != r.count { return false }
+        for i in 0..<min(l.items.count, r.items.count) {
+            if l.items[i] != r.items[i] { return false; }
+        }
 
-    for i in 0..<min(l.count, r.count) {
-        if l[i] != r[i] { return false; }
+        return true
     }
 
-    return true
+    var items: Items
+
+    init(repeating: Value, count: Int) {
+        items = Array(repeating: repeating, count: count)
+    }
+    
+    func dump(_ vm: VM) -> String { "[\(items.map({$0.dump(vm)}).joined(separator: " "))]" }
 }

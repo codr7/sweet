@@ -30,7 +30,7 @@ protocol ValueType {
     typealias FindId = (_ source: Value, _ id: String) -> Value?
     var findId: FindId? {get}
 
-    typealias SetItem = (_ source: Value, _ index: Int, _ value: Value) -> Void
+    typealias SetItem = (_ target: Value, _ index: Int, _ value: Value) -> Void
     var setItem: SetItem? {get}
 
     typealias ToBit = (_ value: Value) -> Bit

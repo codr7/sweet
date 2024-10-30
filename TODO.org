@@ -1,5 +1,4 @@
 * finish ^ macro
-** override List setItem
 ** add list reader
 ** commit
 
