@@ -3,8 +3,10 @@ typealias Op = UInt128;
 enum OpCode: UInt8 {
     case Call
     case Goto
+    case InitList
     case InitMethod
     case Return
+    case SetItem
     case SetRegister
     case SwapRegisters
     case Stop
@@ -17,7 +19,9 @@ struct ops {
     static let pcWidth: UInt8 = 20
     static let registerWidth: UInt8 = 20
     static let tagWidth: UInt8 = 20
-
+    static let countWidth: UInt8 = 20
+    static let indexWidth: UInt8 = 20
+    
     static func encode<T>(_ value: T, _ offset: UInt8, _ width: UInt8) -> Op
       where T: BinaryInteger {
         (Op(value) & ((Op(1) << width) - 1)) << offset

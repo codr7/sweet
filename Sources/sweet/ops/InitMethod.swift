@@ -9,7 +9,7 @@ extension ops {
         static func skip(_ op: Op) -> PC { decodePc(op, skipStart) }
         
         static func make(_ target: Register, _ skip: PC) -> Op {
-            return encode(OpCode.InitMethod) +
+            encode(OpCode.InitMethod) +
               encodeRegister(target, targetStart) +
               encodePc(skip, skipStart); 
         }

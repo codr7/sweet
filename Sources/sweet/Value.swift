@@ -1,5 +1,5 @@
 struct Value: Equatable {
-    static func == (l: Value, r: Value) -> Bool { l.eq(r) }
+    static func ==(l: Value, r: Value) -> Bool { l.eq(r) }
 
     let data: Any
     let type: any ValueType
@@ -30,5 +30,6 @@ struct Value: Equatable {
     
     func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
     func findId(_ id: String) -> Value? { type.findId!(self, id) }
+    func setItem(_ index: Int, _ value: Value) { type.setItem!(self, index, value) }
     func toBit() -> Bit { type.toBit!(self) }
 }

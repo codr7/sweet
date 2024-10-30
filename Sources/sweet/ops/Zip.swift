@@ -14,7 +14,7 @@ extension ops {
         static func result(_ op: Op) -> Register { decodeRegister(op, resultStart) }
         
         static func make(_ left: Register, _ right: Register, _ result: Register) -> Op {
-            return encode(OpCode.Zip) +
+            encode(OpCode.Zip) +
               encodeRegister(left, leftStart) +
               encodeRegister(right, rightStart) +
               encodeRegister(result, resultStart)

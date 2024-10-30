@@ -22,7 +22,7 @@ extension ops {
         }
         
         static func make(_ target: Register, _ left: Register?, _ right: Register?) -> Op {
-            return encode(OpCode.Unzip) +
+            encode(OpCode.Unzip) +
               encodeRegister(target, targetStart) +
               encodeFlag(left != nil, leftFlag) +
               ((left == nil) ? 0 : encodeRegister(left!, leftStart)) +

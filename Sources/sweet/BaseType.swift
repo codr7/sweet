@@ -18,6 +18,7 @@ class BaseType<T> {
     var dump: ValueType.Dump? = {(vm, value) in "\(value.data)" }
     var eq: ValueType.Eq? = nil
     var findId: ValueType.FindId? = nil
+    var setItem: ValueType.SetItem? = nil
     var toBit: ValueType.ToBit? = {(value) in true }
 
     init(_ id: String, _ parents: [any ValueType] = []) {

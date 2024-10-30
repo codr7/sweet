@@ -5,6 +5,7 @@ extension packages {
 
         static let bitType = BitType("Bit", [anyType])
         static let intType = IntType("Int", [anyType])
+        static let listType = ListType("List", [anyType])
         static let macroType = MacroType("Macro", [anyType])
         static let metaType = MetaType("Meta", [anyType])
         static let methodType = MethodType("Method", [anyType])
@@ -21,6 +22,7 @@ extension packages {
             bind(Core.anyType)
             bind(Core.bitType)
             bind(Core.intType)
+            bind(Core.listType)
             bind(Core.macroType)
             bind(Core.metaType)
             bind(Core.methodType)
@@ -33,7 +35,38 @@ extension packages {
             self["T"] = Core.T
             self["F"] = Core.F
 
-            bindMacro("import!", ["source", "id1?"],
+            bindMacro("^", ["arg"],
+                      {(vm, arguments, result, location) in
+                          var args = arguments
+                          var f = args.removeFirst()
+                          var id = ""
+                          
+                          if let idf = f.cast(forms.Id.self) {
+                              id = idf.value
+
+                              if args.isEmpty {
+                                  throw EmitError("Missing arguments", idf.location)
+                              }
+                              
+                              f = args.removeFirst()
+                          }
+
+                          var mas: [Argument] = []
+
+                          if let lf = f.cast(forms.List.self) {
+                              for af in lf.items {
+                                  if let idf = af.cast(forms.Id.self) {
+                                      mas.append(Argument(idf.value, vm.nextRegister))
+                                  }
+                              }
+                          }
+                          
+                          var ids = Set<String>()
+                          var mos = BaseMethod.Options()
+
+                      })
+            
+            bindMacro("import", ["source", "id1?"],
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NIL
                           let sf = arguments.first!

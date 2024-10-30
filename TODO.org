@@ -1,11 +1,21 @@
-* add Package parent init logic from wipl
+* finish ^ macro
+** override List setItem
+** add list reader
+** commit
 
-* add ^ macro
+* add tests
+** add core/= method
+** add check macro
+** add load support
 
 * add NumericTrait
 ** add + - * / methods to core
 
 * fib
+
+* add reuturn macro
+** tail call (sharpl)
+** fib tail
 
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols
