@@ -19,6 +19,26 @@ extension VM {
                     for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
                     try t.call(self, arguments, r, l)
                 }
+            case .Check:
+                do {
+                    let ev = registers[ops.Check.expected(op)]
+                    var av = registers[ops.Check.result(op)]
+                    let opAv = av
+
+                    if ev.type == packages.Core.bitType &&
+                         av.type != packages.Core.bitType {
+                        av = Value(packages.Core.bitType, av.toBit())
+                    }
+
+                    if (av != ev) {
+                        let evs = ev.dump(self)
+                        let avs = opAv.dump(self)
+                        throw EvalError("Check failed: expected \(evs), actual: \(avs)",
+                                        tags[ops.Check.location(op)] as! Location)
+                    }
+
+                    pc += 1
+                }
             case .Copy:
                 do {
                     let from = ops.Copy.from(op)

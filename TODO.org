@@ -1,12 +1,18 @@
-(^foo [] 42)
-(^foo [x] x)
+(check 42
+  (^foo [] 42)
+  (foo))
+ 
+(check 42
+  (^foo [x] x)
+  (foo 42))
 
-(= 42 43)
-(= 42 42)
+(check (= 42 42))
+(check (not (= 42 43)))
 
 * add tests
-** add check macro
 ** add load support
+
+* add not method
 
 * add ops.isConst func
 ** only allow isConst ops in isConst methoda

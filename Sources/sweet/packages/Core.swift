@@ -97,6 +97,24 @@ extension packages {
 
                            vm.registers[result] = Value(Core.bitType, v)
                       })
+
+            bindMacro("check", ["x"],
+                      {(vm, arguments, result, location) in
+                          let er = vm.nextRegister
+
+                          if arguments.count == 1 {
+                              try Core.T.emit(vm, er, location)
+                              try arguments[0].emit(vm, result)
+                          } else {
+                              try arguments[0].emit(vm, er)
+
+                              try vm.doPackage(nil) {
+                                  try Forms(arguments[1...]).emit(vm, result)
+                              }
+                          }
+                          
+                          vm.emit(ops.Check.make(vm, er, result, location))
+                      })
             
             bindMacro("import", ["source", "id1?"],
                       {(vm, arguments, result, location) in
