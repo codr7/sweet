@@ -75,10 +75,12 @@ extension VM {
                 do {
                     let c = calls.removeLast()
                     for (r, v) in c.frame { registers[r] = v }
-                    
-                    if (c.result != c.target.result) {
-                        registers[c.result] = registers[c.target.result]
-                    }
+                    let t = c.target
+                    let tr = t.result
+
+                    registers[c.result] = (t.options.resultType != nil && c.result != tr)
+                      ? registers[tr]
+                      : packages.Core.NIL
                     
                     pc = c.returnPc
                 }

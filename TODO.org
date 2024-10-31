@@ -1,3 +1,10 @@
+* add result type support to ^
+** add Package.getType(id)
+*** return any if id is nil
+
+(^foo [] 42)
+(^foo [;Int] 42)
+
 * add not method
 (check (not (= 42 43)))
 
