@@ -17,6 +17,7 @@ class BaseType<T> {
     
     var dump: ValueType.Dump? = {(vm, value) in "\(value.data)" }
     var eq: ValueType.Eq? = nil
+    var eqv: ValueType.Eq?
     var findId: ValueType.FindId? = nil
     var setItem: ValueType.SetItem? = nil
     var toBit: ValueType.ToBit? = {(value) in true }
@@ -25,6 +26,9 @@ class BaseType<T> {
         self.id = id
         typeId = nextTypeId
         nextTypeId += 1
+
+        eqv = {[self] in eq!($0, $1)}
+        
         self.parents[typeId] = 1
         for p in parents { addParent(p) }
     }

@@ -82,6 +82,21 @@ extension packages {
                           vm.code[mpc] = ops.InitMethod.make(vm, m, vm.emitPc)
                           vm.emit(ops.SetRegister.make(vm, result, v))
                       })
+
+            bindMethod("=", ["x", "y", "z?"],
+                       {(vm, arguments, result, location) in
+                           let l = arguments.first!
+                           var v = true
+                           
+                           for r in arguments[1...] {
+                               if !l.eqv(r) {
+                                   v = false
+                                   break
+                               }
+                           }
+
+                           vm.registers[result] = Value(Core.bitType, v)
+                      })
             
             bindMacro("import", ["source", "id1?"],
                       {(vm, arguments, result, location) in
@@ -108,6 +123,21 @@ extension packages {
                           vm.currentPackage.importFrom(s.cast(Core.packageType), ids)
                       })
 
+            bindMethod("is", ["x", "y", "z?"],
+                       {(vm, arguments, result, location) in
+                           let l = arguments.first!
+                           var v = true
+                           
+                           for r in arguments[1...] {
+                               if !l.eq(r) {
+                                   v = false
+                                   break
+                               }
+                           }
+
+                           vm.registers[result] = Value(Core.bitType, v)
+                      })
+            
             bindMacro("swap!", ["left1", "right1"],
                       {(vm, arguments, result, location) in
                           for i in stride(from: 0, to: arguments.count, by: 2) {

@@ -24,6 +24,9 @@ protocol ValueType {
     typealias Eq = (_ value1: Value, _ value2: Value) -> Bool
     var eq: Eq? {get}
     
+    typealias Eqv = (_ value1: Value, _ value2: Value) -> Bool
+    var eqv: Eqv? {get}
+
     func equals(_ other: any ValueType) -> Bool 
     var parents: Parents {get}
 

@@ -1,8 +1,10 @@
 (^foo [] 42)
 (^foo [x] x)
 
+(= 42 43)
+(= 42 42)
+
 * add tests
-** add core/= method
 ** add check macro
 ** add load support
 
@@ -15,6 +17,8 @@
 ** use to init closure in ^
 
 * call SweetMethod.initClosure after creation in ^
+
+* implement eqv for pair/list
 
 * add NumericTrait
 ** add + - * / methods to core

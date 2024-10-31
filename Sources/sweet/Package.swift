@@ -60,6 +60,20 @@ class Package: CustomStringConvertible, Sequence {
         self[id] = Value(packages.Core.macroType, Macro(id, arguments, body))
     }
 
+    func bindMethod(_ id: String,
+                    _ arguments: [String],
+                    _ body: @escaping SwiftMethod.Body,
+                    _ isConst: Bool = true,
+                    _ isVararg: Bool = false,
+                    _ resultType: ValueType? = nil) {
+        let options = BaseMethod.Options(isConst: isConst,
+                                         isVararg: isVararg,
+                                         resultType: resultType)
+        
+        self[id] = Value(packages.Core.methodType,
+                         SwiftMethod(id, arguments, options, body))
+    }
+
     var ids: [String] { Array(bindings.keys) }
     
     func importFrom(_ source: Package, _ ids: [String]) {
