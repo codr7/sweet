@@ -6,5 +6,13 @@ extension packages.Core {
             let t = self
             eq = {(value1, value2) -> Bool in value1.cast(t) == value2.cast(t)}
         }
+
+        override func emit(_ vm: VM,
+                           _ target: Value,
+                           _ result: Register,
+                           _ location: Location) throws {
+            let r = target.cast(self)
+            if (r != result) { vm.emit(ops.Copy.make(r, result)) }
+        }
     }
 }

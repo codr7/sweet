@@ -35,6 +35,12 @@ extension forms {
             if v == nil { throw EmitError("Unknown id: \(value)", location) }
             try v!.emit(vm, result, location)
         }
+
+        func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws {
+            let v = Id.find(vm, vm.currentPackage, value);
+            if v == nil { throw EmitError("Unknown id: \(value)", location) }
+            try v!.emitCall(vm, arguments, result, location)            
+        }
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 

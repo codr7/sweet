@@ -18,7 +18,5 @@ struct Call {
         for a in target.sweetArguments {
             if !a.id.isNil { frame.append((a.target, vm.registers[a.target])) }
         }
-        
-        if target.options.resultType != nil { frame.append((result, vm.registers[result])) }
     }
 }

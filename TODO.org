@@ -1,7 +1,4 @@
-* test core/^
-
 (^foo [] 42)
-
 (^foo [x] x)
 
 * set result to m in ^-macro if id.isNil
@@ -11,12 +8,22 @@
 ** add check macro
 ** add load support
 
+* add ops.isConst func
+** only allow isConst ops in isConst methoda
+*** ceck on emit
+
+* add Form.collectIds
+** implement for all forms
+** use to init closure in ^
+
+* call SweetMethod.initClosure after creation in ^
+
 * add NumericTrait
 ** add + - * / methods to core
 
 * fib
 
-* add reuturn macro
+* add return macro
 ** tail call (sharpl)
 ** fib tail
 

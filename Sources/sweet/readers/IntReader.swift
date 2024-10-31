@@ -13,8 +13,9 @@ extension readers {
                   _ location: inout Location) -> Int {
             var result = 0
             
-            while let c = input.popChar() {
+            while let c = input.peekChar() {
                 if !c.isNumber { break }
+                input.dropChar()
                 result = result * base + IntReader.charValues[c]!
                 location.column += 1
             }

@@ -23,7 +23,6 @@ extension forms {
             }
 
             try t.emitCall(vm, Array(arguments[1...]), result)
-
             t = arguments.first!
             p = t.cast(Pair.self)
 

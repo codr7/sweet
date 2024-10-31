@@ -13,7 +13,7 @@ protocol Form {
 extension Form {
     func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws {
         let tr = vm.nextRegister
-        try arguments.first!.emit(vm, tr)
+        try emit(vm, tr)
         let arity = vm.nextRegisters(arguments.count-1)
         let ar = vm.nextRegisters(arguments.count-1)
         for i in 1..<arguments.count { try arguments[i].emit(vm, ar+i) }

@@ -56,19 +56,30 @@ extension packages {
                           if let lf = f.cast(forms.List.self) {
                               for af in lf.items {
                                   if let idf = af.cast(forms.Id.self) {
-                                      mas.append(Argument(idf.value, vm.nextRegister))
+                                      let ar = idf.isNil ?  -1 : vm.nextRegister 
+                                      mas.append(Argument(idf.value, ar))
                                   }
                               }
                           }
                           
                           let mos = BaseMethod.Options()
-                          let m = SweetMethod(id, mas, mos, result, location)
+                          let m = SweetMethod(id, mas, vm.nextRegister, mos, location)
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)
                           if !id.isNil { vm.currentPackage[id] = v }
-                          try vm.doPackage(nil) { try args.emit(vm, result); }
+                          
+                          try vm.doPackage(nil) {
+                              for a in mas {
+                                  if !a.id.isNil {
+                                      vm.currentPackage[a.id] =
+                                        Value(Core.registerType, a.target)
+                                  }
+                              }
+
+                              try args.emit(vm, m.result);
+                          }
                           vm.emit(ops.Return.make())
-                          vm.code[mpc] = ops.InitMethod.make(vm, v, vm.emitPc)
+                          vm.code[mpc] = ops.InitMethod.make(vm, m, vm.emitPc)
                       })
             
             bindMacro("import", ["source", "id1?"],

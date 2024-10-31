@@ -7,8 +7,8 @@ class SweetMethod: BaseMethod, Method {
     
     init(_ id: String,
          _ arguments: [Argument],
-         _ options: Options,
          _ result: Register,
+         _ options: Options,
          _ location: Location) {
         self.sweetArguments = arguments
         self.result = result

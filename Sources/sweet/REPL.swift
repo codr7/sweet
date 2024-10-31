@@ -26,9 +26,9 @@ class REPL {
                     try vm.eval(startPc)
                     print("\(vm.register(result).dump(vm))\n")
                     input.reset()
-                } catch {
-                    print("\(error)\n")
-                }
+                } /*catch {
+                    throw error
+                }*/
                 
                 prompt = 1
             } else {

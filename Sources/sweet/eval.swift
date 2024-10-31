@@ -5,7 +5,8 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-
+            //print("\(ops.decode(op))")
+            
             switch ops.decode(op) {
             case .Call:
                 do {
@@ -16,9 +17,14 @@ extension VM {
                     
                     var arguments: [Value] = []
                     for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
-
+                    print("ARGUMENTS: \(arguments)")
                     try t.call(self, arguments, r, l)
                 }
+            case .Copy:
+                let from = ops.Copy.from(op)
+                let to = ops.Copy.to(op)
+                registers[to] = registers[from]
+                pc += 1
             case .Goto:
                 pc = ops.Goto.pc(op)
             case .InitList:
@@ -26,11 +32,11 @@ extension VM {
                     let c = ops.InitList.count(op)
                     let v = List(repeating: packages.Core.NIL, count: c)
                     registers[ops.InitList.target(op)] = Value(packages.Core.listType, v)
+                    pc += 1
                 }
             case .InitMethod:
                 do {
-                    let t = registers[ops.InitMethod.target(op)]
-                    let m = t.cast(packages.Core.methodType) as! SweetMethod
+                    let m = tags[ops.InitMethod.target(op)] as! SweetMethod
                     
                     m.closure = m.closure.map {c in
                         (c.value.type == packages.Core.registerType)
@@ -46,6 +52,11 @@ extension VM {
                 do {
                     let c = calls.removeLast()
                     for (r, v) in c.frame { registers[r] = v }
+                    
+                    if (c.result != c.target.result) {
+                        registers[c.result] = registers[c.target.result]
+                    }
+                    
                     pc = c.returnPc
                 }
             case .SetItem:
