@@ -20,10 +20,12 @@ extension VM {
                     try t.call(self, arguments, r, l)
                 }
             case .Copy:
-                let from = ops.Copy.from(op)
-                let to = ops.Copy.to(op)
-                registers[to] = registers[from]
-                pc += 1
+                do {
+                    let from = ops.Copy.from(op)
+                    let to = ops.Copy.to(op)
+                    registers[to] = registers[from]
+                    pc += 1
+                }
             case .Goto:
                 pc = ops.Goto.pc(op)
             case .InitList:
