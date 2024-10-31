@@ -22,10 +22,10 @@ extension Form {
 
     func eval(_ vm: VM, _ result: Register) throws {
         let skipPc = vm.emit(ops.Stop.make())
-        let startPc = vm.pc
+        let startPc = vm.emitPc
         try emit(vm, result)
         vm.emit(ops.Stop.make())
-        vm.code[skipPc] = ops.Goto.make(startPc)
+        vm.code[skipPc] = ops.Goto.make(vm.emitPc)
         try vm.eval(startPc)
     }
 

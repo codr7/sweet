@@ -1,7 +1,18 @@
+import Foundation
+import SystemPackage
+
+extension FileHandle {
+    func readAll() throws -> String {
+        let d = try readToEnd()!
+        return String(decoding: d, as: UTF8.self)
+    }
+}
+
 class VM {
     var calls: [Call] = []
     var code: [Op] = []
-
+    var loadPath: FilePath = ""
+    
     let reader = readers.OneOf(
       readers.Whitespace.instance,
       readers.IntReader.instance,
@@ -42,6 +53,21 @@ class VM {
 
     func endCall() -> Call { calls.removeLast() }
 
+    func load(_ path: FilePath, _ result: Register) throws {
+        let prevLoadPath = vm.loadPath
+        let p = vm.loadPath.appending("\(path)")
+        vm.loadPath.append("\(path.removingLastComponent())")
+        defer { vm.loadPath = prevLoadPath }
+        let fh = FileHandle(forReadingAtPath: "\(p)")!
+        defer { try! fh.close() }
+        var input = Input(try fh.readAll())
+        var location = Location("\(p)")
+        let fs = try read(&input, &location)
+        vm.emit(ops.SetLoadPath.make(self, p))
+        try fs.emit(self, result)
+        vm.emit(ops.SetLoadPath.make(self, prevLoadPath))
+    }
+    
     var nextRegister: Register {
         let result = registers.count
         registers.append(packages.Core.NIL)

@@ -1,3 +1,5 @@
+import SystemPackage
+
 extension VM {
     func eval(_ startPc: PC) throws {
         pc = startPc
@@ -5,7 +7,7 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-            //print("\(ops.decode(op))")
+            print("\(pc) \(ops.decode(op))")
             
             switch ops.decode(op) {
             case .Call:
@@ -88,6 +90,9 @@ extension VM {
                     registers[t].setItem(i, v)
                     pc += 1
                 }
+            case .SetLoadPath:
+                loadPath = tags[ops.SetLoadPath.path(op)] as! FilePath;
+                pc += 1
             case .SetRegister:
                 do {
                     let t = ops.SetRegister.target(op)

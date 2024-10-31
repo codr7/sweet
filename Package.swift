@@ -12,11 +12,14 @@ let package = Package(
   ],
 
   dependencies: [
+    .package(url: "https://github.com/apple/swift-system", from: "1.4.0"),
   ],
   
   targets: [
     .executableTarget(
       name: "sweet",
-      dependencies: []),
+      dependencies: [
+        .product(name: "SystemPackage", package: "swift-system"),
+      ]),
   ]
 )

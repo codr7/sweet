@@ -9,6 +9,7 @@ enum OpCode: UInt8 {
     case InitMethod
     case Return
     case SetItem
+    case SetLoadPath
     case SetRegister
     case SwapRegisters
     case Stop
