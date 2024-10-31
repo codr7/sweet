@@ -3,7 +3,7 @@ protocol Form {
     func cast<T>(_ type: T.Type) -> T?
     func dump(_ vm: VM) -> String
     func emit(_ vm: VM, _ result: Register) throws
-    func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws
+    func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
     func getRegister(_ vm: VM) -> Register?
     func getValue(_ vm: VM) -> Value?
@@ -11,7 +11,7 @@ protocol Form {
 }
 
 extension Form {
-    func emitCall(_ vm: VM, _ arguments: [Form], _ result: Register) throws {
+    func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws {
         let tr = vm.nextRegister
         try emit(vm, tr)
         let arity = vm.nextRegisters(arguments.count-1)
@@ -49,7 +49,7 @@ class BaseForm {
     func getValue(_ vm: VM) -> Value? { nil }
 }
 
-extension [Form] {
+extension Forms {
     func emit(_ vm: VM, _ result: Register) throws {
         for f in self { try f.emit(vm, result) }
     }
@@ -57,4 +57,7 @@ extension [Form] {
 
 class EmitError: BaseError {}
 
+typealias Forms = [Form]
+
 struct forms {}
+

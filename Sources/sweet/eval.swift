@@ -17,7 +17,6 @@ extension VM {
                     
                     var arguments: [Value] = []
                     for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
-                    print("ARGUMENTS: \(arguments)")
                     try t.call(self, arguments, r, l)
                 }
             case .Copy:

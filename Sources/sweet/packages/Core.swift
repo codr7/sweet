@@ -35,31 +35,30 @@ extension packages {
             self["T"] = Core.T
             self["F"] = Core.F
 
-            bindMacro("^", ["arg"],
+            bindMacro("^", ["id", "args"],
                       {(vm, arguments, result, location) in
-                          var args = arguments
-                          var f = args.removeFirst()
-                          var id = "_"
+                          let idf = arguments.first!
                           
-                          if let idf = f.cast(forms.Id.self) {
-                              id = idf.value
-
-                              if args.isEmpty {
-                                  throw EmitError("Missing arguments", idf.location)
-                              }
-                              
-                              f = args.removeFirst()
-                          }
-
+                          let id =
+                            if let idf = idf.cast(forms.Id.self) { idf.value }
+                            else {
+                                throw EmitError("Expected id: \(idf.dump(vm))",
+                                                idf.location)
+                            }
+                          
                           var mas: [Argument] = []
-
-                          if let lf = f.cast(forms.List.self) {
-                              for af in lf.items {
+                          let asf = arguments[1]
+                          
+                          if let asf = asf.cast(forms.List.self) {
+                              for af in asf.items {
                                   if let idf = af.cast(forms.Id.self) {
                                       let ar = idf.isNil ?  -1 : vm.nextRegister 
                                       mas.append(Argument(idf.value, ar))
                                   }
                               }
+                          } else {
+                              throw EmitError("Expected argument list: \(asf.dump(vm))",
+                                              asf.location)
                           }
                           
                           let mos = BaseMethod.Options()
@@ -76,10 +75,12 @@ extension packages {
                                   }
                               }
 
-                              try args.emit(vm, m.result);
+                              try Forms(arguments[2...]).emit(vm, m.result);
                           }
+
                           vm.emit(ops.Return.make())
                           vm.code[mpc] = ops.InitMethod.make(vm, m, vm.emitPc)
+                          vm.emit(ops.SetRegister.make(vm, result, v))
                       })
             
             bindMacro("import", ["source", "id1?"],
