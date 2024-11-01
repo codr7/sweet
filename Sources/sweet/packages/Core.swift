@@ -82,9 +82,17 @@ extension packages {
                                               asf.location)
                           }
                           
+                          let body = Forms(arguments[2...])
+                          
                           let m = SweetMethod(id, mas, vm.nextRegister, mos, location)
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)
+
+                          if mos.isConst && !body.isConst(vm) {
+                              throw EmitError("Const method with non-const body: \(m)",
+                                              location)
+                          }
+
                           if !id.isNone { vm.currentPackage[id] = v }
                           
                           try vm.doPackage(nil) {
@@ -95,7 +103,7 @@ extension packages {
                                   }
                               }
 
-                              try Forms(arguments[2...]).emit(vm, m.result);
+                              try body.emit(vm, m.result);
                           }
 
                           vm.emit(ops.Return.make())

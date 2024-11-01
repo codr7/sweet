@@ -1,5 +1,7 @@
 * add load macro
 ** wipl
+** add string reader
+** add core/path method
 ** extract method-tests.sw
 
 * add splat form
@@ -14,11 +16,13 @@
 ** add Form.collectIds
 *** implement for all forms
 
-* add ops.isConst func
-** only allow isConst ops in isConst methoda
-*** ceck on emit
-
 * fib
+
+* add Op.bumpPc(deltaPc) Op
+** bump all pcs
+
+* add Op.swapRegisters([Register:Register]) Op
+** change all registers
 
 * add forms.List/Pair.getValue
 

@@ -8,6 +8,7 @@ protocol Form {
     func getRegister(_ vm: VM) -> Register?
     func getType(_ vm: VM) -> ValueType?
     func getValue(_ vm: VM) -> Value?
+    func isConst(_ vm: VM) -> Bool
     var isNone: Bool {get}
     var isSeparator: Bool {get}
 }
@@ -31,6 +32,7 @@ extension Form {
         try vm.eval(startPc)
     }
 
+    func isConst(_ vm: VM) -> Bool {true}
     var isNone: Bool { false }
     var isSeparator: Bool { false }
 }
@@ -53,15 +55,17 @@ class BaseForm {
     func getValue(_ vm: VM) -> Value? { nil }
 }
 
+typealias Forms = [Form]
+
 extension Forms {
     func emit(_ vm: VM, _ result: Register) throws {
         for f in self { try f.emit(vm, result) }
     }
+
+    func isConst(_ vm: VM) -> Bool { self.allSatisfy {$0.isConst(vm)} }
 }
 
 class EmitError: BaseError {}
-
-typealias Forms = [Form]
 
 struct forms {}
 

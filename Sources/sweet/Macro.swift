@@ -17,6 +17,8 @@ class Macro: CustomStringConvertible {
         self.body = body
     }
 
+    var isConst: Bool { id.last! != "!" }
+    
     func emit(_ vm: VM,
               _ arguments: [Form],
               _ result: Register,

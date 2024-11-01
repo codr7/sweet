@@ -38,5 +38,19 @@ extension forms {
                 p = t.cast(Pair.self)
             }
         }
+
+        func isConst(_ vm: VM) -> Bool {
+            if let v = arguments.first!.getValue(vm) {
+                if v.type == packages.Core.macroType {
+                    return v.cast(packages.Core.macroType).isConst
+                }
+                
+                if v.type == packages.Core.methodType {
+                    return v.cast(packages.Core.methodType).options.isConst
+                }
+            }
+            
+            return true
+        }        
     }
 }
