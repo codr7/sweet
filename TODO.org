@@ -2,6 +2,14 @@
 ** wipl
 ** extract method-tests.sw
 
+* add splat form
+** add splat reader
+** *
+
+* add support for splat source in core/import macro
+
+(import core*)
+
 * add ops.isConst func
 ** only allow isConst ops in isConst methoda
 *** ceck on emit
@@ -26,7 +34,3 @@
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols
 ** add NumericTrait
-
-if let nickname {
-    print("Hey, \(nickname)")
-}
