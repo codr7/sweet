@@ -70,13 +70,13 @@ class VM {
     
     var nextRegister: Register {
         let result = registers.count
-        registers.append(packages.Core.NIL)
+        registers.append(packages.Core.NONE)
         return Register(result)
     }
 
     func nextRegisters(_ n: Int) -> Register {
         let result = nextRegister
-        registers += Array(repeating: packages.Core.NIL, count: n)
+        registers += Array(repeating: packages.Core.NONE, count: n)
         return result
     }
     

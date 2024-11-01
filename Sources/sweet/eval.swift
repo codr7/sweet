@@ -53,7 +53,7 @@ extension VM {
             case .InitList:
                 do {
                     let c = ops.InitList.count(op)
-                    let v = List(repeating: packages.Core.NIL, count: c)
+                    let v = List(repeating: packages.Core.NONE, count: c)
                     registers[ops.InitList.target(op)] = Value(packages.Core.listType, v)
                     pc += 1
                 }
@@ -80,7 +80,7 @@ extension VM {
 
                     registers[c.result] = (t.options.resultType != nil && c.result != tr)
                       ? registers[tr]
-                      : packages.Core.NIL
+                      : packages.Core.NONE
                     
                     pc = c.returnPc
                 }

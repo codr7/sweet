@@ -1,5 +1,5 @@
 extension packages.Core {
-    class NilType: BaseType<Void>, ValueType {
+    class NoneType: BaseType<Void>, ValueType {
         override init(_ id: String, _ parents: [any ValueType]) {
             super.init(id, parents)
             typeLookup[typeId] = self

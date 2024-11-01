@@ -14,6 +14,6 @@ extension forms {
         }
 
         override func getValue(_ vm: VM) -> Value? { value }
-        var isNil: Bool { value == packages.Core.NIL }
+        var isNil: Bool { value == packages.Core.NONE }
     }
 }

@@ -1,6 +1,6 @@
 extension packages {
     class Core: Package {
-        static let nilType = NilType("Nil", [])
+        static let noneType = NoneType("None", [])
         static let anyType = AnyType("Any")
 
         static let bitType = BitType("Bit", [anyType])
@@ -13,7 +13,7 @@ extension packages {
         static let pairType = PairType("Pair", [anyType])
         static let registerType = RegisterType("Register", [anyType])
         
-        static let NIL = Value(Core.nilType, ())
+        static let NONE = Value(Core.noneType, ())
         
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
@@ -26,12 +26,12 @@ extension packages {
             bind(Core.macroType)
             bind(Core.metaType)
             bind(Core.methodType)
-            bind(Core.nilType)
+            bind(Core.noneType)
             bind(Core.packageType)
             bind(Core.pairType)
             bind(Core.registerType)
 
-            self["_"] = Core.NIL
+            self["_"] = Core.NONE
             self["T"] = Core.T
             self["F"] = Core.F
 
@@ -118,7 +118,7 @@ extension packages {
             
             bindMacro("import", ["source", "id1?"],
                       {(vm, arguments, result, location) in
-                          vm.registers[result] = Core.NIL
+                          vm.registers[result] = Core.NONE
                           let sf = arguments.first!
                           try sf.eval(vm, result)
                           let s = vm.register(result)

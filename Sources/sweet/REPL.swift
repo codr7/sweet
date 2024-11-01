@@ -22,7 +22,7 @@ class REPL {
                     let startPc = vm.emitPc
                     try fs.emit(vm, result)
                     vm.emit(ops.Stop.make())
-                    vm.registers[result] = packages.Core.NIL
+                    vm.registers[result] = packages.Core.NONE
                     try vm.eval(startPc)
                     print("\(vm.register(result).dump(vm))\n")
                     input.reset()
