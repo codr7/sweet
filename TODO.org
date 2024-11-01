@@ -1,3 +1,12 @@
+* Improve isConst check
+** only allow accessing internal bindings/args
+*** store nextRegisterIndex in method
+*** add maxRegister arg to isConst
+*** check in IdForm.isConst
+*** remove callForm.isConst
+** check all sub forms (call/list/pair)
+** improve readme example
+
 * add load macro
 ** wipl
 ** add string reader

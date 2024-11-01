@@ -9,7 +9,7 @@ if CommandLine.arguments.count == 1 {
     vm.user.importFrom(vm.core, vm.core.ids)
     try REPL(vm).run()
 } else {
-    vm.user.importFrom(vm.core, ["import"])
+    vm.user.importFrom(vm.core, ["import!"])
     let result = vm.nextRegister
     let startPc = vm.emitPc
     for p in CommandLine.arguments[1...] { try vm.load(FilePath(p), result) }

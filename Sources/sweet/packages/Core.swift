@@ -144,7 +144,7 @@ extension packages {
                           vm.emit(ops.Check.make(vm, er, result, location))
                       })
             
-            bindMacro("import", ["source", "id1?"],
+            bindMacro("import!", ["source", "id1?"],
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NONE
                           let sf = arguments.first!
