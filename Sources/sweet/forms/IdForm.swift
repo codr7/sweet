@@ -1,5 +1,5 @@
 extension String {
-    var isNil: Bool { self == "_" } 
+    var isNone: Bool { self == "_" } 
 }
 
 extension forms {
@@ -44,6 +44,6 @@ extension forms {
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 
-        var isNil: Bool { value.isNil }
+        var isNone: Bool { value.isNone }
     }
 }

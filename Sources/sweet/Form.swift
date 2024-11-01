@@ -7,7 +7,7 @@ protocol Form {
     func eval(_ vm: VM, _ result: Register) throws
     func getRegister(_ vm: VM) -> Register?
     func getValue(_ vm: VM) -> Value?
-    var isNil: Bool {get}
+    var isNone: Bool {get}
 }
 
 extension Form {
@@ -29,7 +29,7 @@ extension Form {
         try vm.eval(startPc)
     }
 
-    var isNil: Bool { false }
+    var isNone: Bool { false }
 }
 
 class BaseForm {

@@ -52,7 +52,7 @@ extension packages {
                           if let asf = asf.cast(forms.List.self) {
                               for af in asf.items {
                                   if let idf = af.cast(forms.Id.self) {
-                                      let ar = idf.isNil ?  -1 : vm.nextRegister 
+                                      let ar = idf.isNone ?  -1 : vm.nextRegister 
                                       mas.append(Argument(idf.value, ar))
                                   }
                               }
@@ -65,11 +65,11 @@ extension packages {
                           let m = SweetMethod(id, mas, vm.nextRegister, mos, location)
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)
-                          if !id.isNil { vm.currentPackage[id] = v }
+                          if !id.isNone { vm.currentPackage[id] = v }
                           
                           try vm.doPackage(nil) {
                               for a in mas {
-                                  if !a.id.isNil {
+                                  if !a.id.isNone {
                                       vm.currentPackage[a.id] =
                                         Value(Core.registerType, a.target)
                                   }

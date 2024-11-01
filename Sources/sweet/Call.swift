@@ -16,7 +16,7 @@ struct Call {
         self.location = location
 
         for a in target.sweetArguments {
-            if !a.id.isNil { frame.append((a.target, vm.registers[a.target])) }
+            if !a.id.isNone { frame.append((a.target, vm.registers[a.target])) }
         }
     }
 }

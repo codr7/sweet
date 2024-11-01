@@ -16,8 +16,8 @@ extension forms {
             var p: Pair? = t.cast(Pair.self)
 
             while p != nil {
-                if p!.left.isNil { t = p!.left }
-                else if p!.right.isNil { t = p!.right }
+                if p!.left.isNone { t = p!.left }
+                else if p!.right.isNone { t = p!.right }
                 else { break }
                 p = t.cast(Pair.self)
             }
@@ -27,10 +27,10 @@ extension forms {
             p = t.cast(Pair.self)
 
             while p != nil {
-                if p!.left.isNil {
+                if p!.left.isNone {
                     vm.emit(ops.Unzip.make(result, nil, result))
                     t = p!.right
-                } else if p!.right.isNil {
+                } else if p!.right.isNone {
                     vm.emit(ops.Unzip.make(result, result, nil))
                     t = p!.left
                 } else { break }
