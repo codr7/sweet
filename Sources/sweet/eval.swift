@@ -78,7 +78,7 @@ extension VM {
                     let t = c.target
                     let tr = t.result
 
-                    registers[c.result] = (t.options.resultType != nil && c.result != tr)
+                    registers[c.result] = (t.resultType != nil && c.result != tr)
                       ? registers[tr]
                       : packages.Core.NONE
                     

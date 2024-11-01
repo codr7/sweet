@@ -50,7 +50,9 @@ extension packages {
                             }
                           
                           var mas: [Argument] = []
-                          var mos = BaseMethod.Options()
+                          let isConst = !id.isEmpty && id.last! != "!"
+                          let isVararg = false
+                          var resultType: ValueType? = nil
                           let asf = arguments[1]
                           
                           if let asf = asf.cast(forms.List.self) {
@@ -61,7 +63,7 @@ extension packages {
                                       if asf.items.count == i+1 { break }
 
                                       if let rt = asf.items[i+1].getType(vm) {
-                                          mos.resultType = rt
+                                          resultType = rt
                                       }
 
                                       if asf.items.count > i+2 {
@@ -84,11 +86,15 @@ extension packages {
                           
                           let body = Forms(arguments[2...])
                           
-                          let m = SweetMethod(id, mas, vm.nextRegister, mos, location)
+                          let m = SweetMethod(id, mas, vm.nextRegister, location,
+                                              isConst: isConst,
+                                              isVararg: isVararg,
+                                              resultType: resultType)
+                          
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)
 
-                          if mos.isConst, let cv = body.getConstViolation(vm) {
+                          if m.isConst, let cv = body.getConstViolation(vm) {
                               throw EmitError("Const violation in \(m): \(cv.dump(vm))",
                                               cv.location)
                           }

@@ -1,6 +1,3 @@
-* inline method options
-** convert to optional args
-
 * improve const violation check
 ** only allow accessing internal bindings?
 *** store nextRegisterIndex in method

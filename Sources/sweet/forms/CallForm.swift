@@ -45,7 +45,7 @@ extension forms {
                      !v.cast(packages.Core.macroType).isConst { return self }
                 
                 if v.type == packages.Core.methodType &&
-                     v.cast(packages.Core.methodType).options.isConst { return self }
+                     v.cast(packages.Core.methodType).isConst { return self }
             }
 
             for a in arguments {

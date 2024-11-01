@@ -1,28 +1,24 @@
 class BaseMethod: CustomStringConvertible {
     static func == (l: BaseMethod, r: BaseMethod) -> Bool { l.id == r.id }
 
-    struct Options {
-        var isConst: Bool
-        var isVararg: Bool
-        var resultType: ValueType?
-
-        init(isConst: Bool = true, isVararg: Bool = false, resultType: ValueType? = nil) {
-            self.isConst = isConst
-            self.isVararg = isVararg
-            self.resultType = resultType
-        }
-    }
-        
     let id: String
     let arguments: [String]
     let minArgumentCount: Int
     var description: String { "(\(id) [\(arguments.joined(separator: " "))])" }
-    let options: Options
+    var isConst: Bool
+    var isVararg: Bool
+    var resultType: ValueType?
 
-    init(_ id: String, _ arguments: [String], _ options: Options) {
+    init(_ id: String,
+         _ arguments: [String],
+         isConst: Bool = true,
+         isVararg: Bool = false,
+         resultType: ValueType? = nil) {
         self.id = id
         self.arguments = arguments
         self.minArgumentCount = arguments.count(where: {$0.last != "?"})
-        self.options = options
+        self.isConst = isConst
+        self.isVararg = isVararg
+        self.resultType = resultType
     }
 }

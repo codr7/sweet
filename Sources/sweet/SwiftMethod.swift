@@ -6,9 +6,19 @@ class SwiftMethod: BaseMethod, Method {
 
     let body: Body
 
-    init(_ id: String, _ arguments: [String], _ options: Options, _ body: @escaping Body) {
+    init(_ id: String,
+         _ arguments: [String],
+         _ body: @escaping Body,
+         isConst: Bool = true,
+         isVararg: Bool = false,
+         resultType: ValueType? = nil) {
         self.body = body
-        super.init(id, arguments, options)
+        
+        super.init(id,
+                   arguments,
+                   isConst: isConst,
+                   isVararg: isVararg,
+                   resultType: resultType)
     }
 
     func call(_ vm: VM,

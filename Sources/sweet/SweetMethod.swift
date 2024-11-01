@@ -8,14 +8,17 @@ class SweetMethod: BaseMethod, Method {
     init(_ id: String,
          _ arguments: [Argument],
          _ result: Register,
-         _ options: Options,
-         _ location: Location) {
+         _ location: Location,
+         isConst: Bool = true,
+         isVararg: Bool = false,
+         resultType: ValueType? = nil) {
         self.sweetArguments = arguments
         self.result = result
         self.location = location
         self.startPc = vm.emitPc+1
-        super.init(id, arguments.map({$0.id}), options)
-
+        
+        super.init(id, arguments.map({$0.id}),
+                   isConst: isConst, isVararg: isVararg, resultType: resultType)
     }
 
     func initClosure(_ vm: VM, _ ids: Set<String>) throws {
