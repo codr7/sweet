@@ -14,7 +14,6 @@
 ** add Form.collectIds
 *** implement for all forms
 
-
 * add ops.isConst func
 ** only allow isConst ops in isConst methoda
 *** ceck on emit

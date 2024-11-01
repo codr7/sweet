@@ -41,6 +41,7 @@ extension forms {
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 
         override func getType(_ vm: VM) -> ValueType? {
+            if value.isAny { return packages.Core.anyType }
             let v = getValue(vm)
 
             return v != nil && (v!.type == packages.Core.metaType)

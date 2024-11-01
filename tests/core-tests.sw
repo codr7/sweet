@@ -11,12 +11,12 @@
   (foo))
  
 (check 42
-  (^foo [x;Int] x)
+  (^foo [x;@] x)
   (foo 42))
 
 (check 42
-  (^foo [x;Int]
-    (^bar [;Int] x)
+  (^foo [x;@]
+    (^bar [;@] x)
     (bar))
     
   (foo 42))

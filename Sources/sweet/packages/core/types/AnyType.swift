@@ -1,9 +1,12 @@
 extension packages.Core {
     class AnyType: BaseType<Any>, ValueType {
-        init(_ id: String) {
-            super.init(id)
+        override init(_ id: String, _ parents: [any ValueType]) {
+            super.init(id, parents)
             typeLookup[typeId] = self
+            dump = {(vm, value) in "@"}
+            eq = {(value1, value2) in true }
+            toBit = {(value) in true }
         }
-        
     }
 }
+

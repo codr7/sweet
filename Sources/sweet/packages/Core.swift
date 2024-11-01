@@ -1,7 +1,7 @@
 extension packages {
     class Core: Package {
         static let noneType = NoneType("None", [])
-        static let anyType = AnyType("Any")
+        static let anyType = AnyType("Any", [])
 
         static let bitType = BitType("Bit", [anyType])
         static let intType = IntType("Int", [anyType])
@@ -14,6 +14,7 @@ extension packages {
         static let registerType = RegisterType("Register", [anyType])
         
         static let NONE = Value(Core.noneType, ())
+        static let ANY = Value(Core.anyType, ())
         
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
@@ -32,6 +33,8 @@ extension packages {
             bind(Core.registerType)
 
             self["_"] = Core.NONE
+            self["@"] = Core.ANY
+
             self["T"] = Core.T
             self["F"] = Core.F
 
