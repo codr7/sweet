@@ -10,17 +10,18 @@
 
 (import core*)
 
+* call SweetMethod.initClosure after creation in ^
+** add Form.collectIds
+*** implement for all forms
+
+
 * add ops.isConst func
 ** only allow isConst ops in isConst methoda
 *** ceck on emit
 
-* add Form.collectIds
-** implement for all forms
-** use to init closure in ^
-
-* call SweetMethod.initClosure after creation in ^
-
 * fib
+
+* add forms.List/Pair.getValue
 
 * implement eqv for pair/list
 
