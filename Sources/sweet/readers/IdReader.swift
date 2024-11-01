@@ -13,7 +13,7 @@ extension readers {
                 if c.isWhitespace ||
                      c == "(" || c == ")" ||
                      c == "[" || c == "]" ||
-                     c == ":" || (c == ";" && !result.isEmpty) || c == "#" {
+                     c == ":" || (c == ";" && !result.isEmpty) || c == "#" || c == "*" {
                     input.pushChar(c)
                     break
                 }
@@ -23,7 +23,7 @@ extension readers {
                 if c == "^" || c == ";" {break}
             }
             
-            if result == "" { return false }
+            if result.isEmpty { return false }
             output.append(forms.Id(result, startLocation))
             return true
         }

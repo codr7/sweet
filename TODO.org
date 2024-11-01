@@ -1,7 +1,4 @@
-* add splat form
-** add splat reader
-** *
-** add support for splat source in core/import macro
+* add support for splat source in core/import macro
 
 (import core*)
 

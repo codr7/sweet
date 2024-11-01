@@ -20,7 +20,8 @@ class VM {
       readers.Count.instance,
       readers.Id.instance,
       readers.List.instance,
-      readers.Pair.instance
+      readers.Pair.instance,
+      readers.Splat.instance
     )
     
     var pc: PC = 0
