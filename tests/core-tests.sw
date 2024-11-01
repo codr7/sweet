@@ -13,3 +13,10 @@
 (check 42
   (^foo [x;Int] x)
   (foo 42))
+
+(check 42
+  (^foo [x;Int]
+    (^bar [;Int] x)
+    (bar))
+    
+  (foo 42))
