@@ -6,6 +6,7 @@ extension readers {
                   _ input: inout Input,
                   _ output: inout Output,
                   _ location: inout Location) throws -> Bool {
+            Whitespace.instance.read(vm, &input, &output, &location)
             if output.isEmpty || input.peekChar() != ":" { return false }
             let startLocation = location
             input.dropChar()

@@ -15,6 +15,12 @@ extension readers {
                 throw ReadError("Invalid count", location)
             }
 
+            Whitespace.instance.read(vm, &input, &output, &location)
+
+            if input.peekChar() == ":" {
+                _ = try Pair.instance.read(vm, &input, &output, &location)
+            }
+
             let t = output.removeLast()
 
             output.append(forms.Call([forms.Id("core/count", startLocation), t],

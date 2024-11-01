@@ -1,3 +1,11 @@
+## Counting
+Values that support counting may be counted by prefixing with `#`.
+
+```
+#1:2:3
+```
+`3`
+
 ## Const
 Operations come in two flavors, const and non-const. You can tell them apart syntactically by the non-const `!`-suffix. Const operations are not allowed to perform non-const operations.
 
