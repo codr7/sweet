@@ -13,7 +13,7 @@ extension readers {
                 if c.isWhitespace ||
                      c == "(" || c == ")" ||
                      c == "[" || c == "]" ||
-                     (c == ";" && !result.isEmpty) {
+                     c == ":" || (c == ";" && !result.isEmpty) || c == "#" {
                     input.pushChar(c)
                     break
                 }

@@ -17,8 +17,10 @@ class VM {
       readers.Whitespace.instance,
       readers.IntReader.instance,
       readers.Call.instance,
+      readers.Count.instance,
       readers.Id.instance,
-      readers.List.instance
+      readers.List.instance,
+      readers.Pair.instance
     )
     
     var pc: PC = 0

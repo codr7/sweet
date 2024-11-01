@@ -149,6 +149,22 @@ extension packages {
                           
                           vm.emit(ops.Check.make(vm, er, result, location))
                       })
+
+            bindMethod("count", ["x", "y?"],
+                       {(vm, arguments, result, location) in
+                           var n = 0
+                           
+                           for a in arguments {
+                               if let ct = a.type as? CountTrait { n += ct.count!(a) }
+                               else {
+                                   throw EvalError("Not countable: \(a.dump(vm))",
+                                                   location)
+                               }
+                           }
+
+                           vm.registers[result] = Value(Core.intType, n)
+                      })
+
             
             bindMacro("import!", ["source", "id1?"],
                       {(vm, arguments, result, location) in

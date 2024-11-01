@@ -4,14 +4,13 @@ extension forms {
             var s = Value(packages.Core.packageType, source)
             var sid = id
             
-            while true {
-                let i = id.firstIndex(of: "/")
-                if i == nil {break}
-                let lid = String(sid[..<i!])
-                let lv = s.findId(lid)
-                if lv == nil {return nil}
-                s = lv!
-                sid = String(sid[sid.index(after: i!)...])
+            while let i = sid.firstIndex(of: "/") {
+                if let lv = s.findId(String(sid[..<i])) {
+                    s = lv
+                    sid = String(sid[sid.index(after: i)...])
+                } else {
+                    break
+                }
             }
 
             return s.findId(sid)

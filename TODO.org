@@ -1,3 +1,18 @@
+* add count
+** implement trait for pair
+** readme
+** commit count
+
+(check 3
+  #1:2:3)
+
+* add splat form
+** add splat reader
+** *
+** add support for splat source in core/import macro
+
+(import core*)
+
 * improve const violation check
 ** only allow accessing internal bindings?
 *** store nextRegisterIndex in method
@@ -14,13 +29,6 @@
 ** emit before return if result type is set and != any
 ** skip if method result binding type is same
 ** throw error if different types
-
-* add splat form
-** add splat reader
-** *
-** add support for splat source in core/import macro
-
-(import core*)
 
 * call SweetMethod.initClosure after creation in ^
 ** add Form.collectIds
