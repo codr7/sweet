@@ -88,9 +88,9 @@ extension packages {
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)
 
-                          if mos.isConst && !body.isConst(vm) {
-                              throw EmitError("Const method with non-const body: \(m)",
-                                              location)
+                          if mos.isConst, let cv = body.getConstViolation(vm) {
+                              throw EmitError("Const violation in \(m): \(cv.dump(vm))",
+                                              cv.location)
                           }
 
                           if !id.isNone { vm.currentPackage[id] = v }

@@ -5,10 +5,10 @@ protocol Form {
     func emit(_ vm: VM, _ result: Register) throws
     func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
+    func getConstViolation(_ vm: VM) -> Form?
     func getRegister(_ vm: VM) -> Register?
     func getType(_ vm: VM) -> ValueType?
     func getValue(_ vm: VM) -> Value?
-    func isConst(_ vm: VM) -> Bool
     var isNone: Bool {get}
     var isSeparator: Bool {get}
 }
@@ -32,7 +32,7 @@ extension Form {
         try vm.eval(startPc)
     }
 
-    func isConst(_ vm: VM) -> Bool {true}
+    func getConstViolation(_ vm: VM) -> Form? { nil }
     var isNone: Bool { false }
     var isSeparator: Bool { false }
 }
@@ -62,7 +62,13 @@ extension Forms {
         for f in self { try f.emit(vm, result) }
     }
 
-    func isConst(_ vm: VM) -> Bool { self.allSatisfy {$0.isConst(vm)} }
+    func getConstViolation(_ vm: VM) -> Form? {
+        for f in self {
+            if let cv = f.getConstViolation(vm) { return cv }
+        }
+
+        return nil
+    }
 }
 
 class EmitError: BaseError {}

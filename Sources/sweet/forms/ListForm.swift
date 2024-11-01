@@ -20,5 +20,13 @@ extension forms {
                 vm.emit(ops.SetItem.make(result, i, ir))
             }
         }
+
+        func getConstViolation(_ vm: VM) -> Form? {
+            for it in items {
+                if let cv = it.getConstViolation(vm) { return cv }
+            }
+
+            return nil
+        }
     }
 }

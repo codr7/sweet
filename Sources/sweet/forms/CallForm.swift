@@ -39,18 +39,20 @@ extension forms {
             }
         }
 
-        func isConst(_ vm: VM) -> Bool {
+        func getConstViolation(_ vm: VM) -> Form? {
             if let v = arguments.first!.getValue(vm) {
-                if v.type == packages.Core.macroType {
-                    return v.cast(packages.Core.macroType).isConst
-                }
+                if v.type == packages.Core.macroType &&
+                     !v.cast(packages.Core.macroType).isConst { return self }
                 
-                if v.type == packages.Core.methodType {
-                    return v.cast(packages.Core.methodType).options.isConst
-                }
+                if v.type == packages.Core.methodType &&
+                     v.cast(packages.Core.methodType).options.isConst { return self }
+            }
+
+            for a in arguments {
+                if let cv = a.getConstViolation(vm) { return cv }
             }
             
-            return true
+            return nil
         }        
     }
 }

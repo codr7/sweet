@@ -18,5 +18,9 @@ extension forms {
             try right.emit(vm, rr)
             vm.emit(ops.Zip.make(lr, rr, result))
         }
+
+        func getConstViolation(_ vm: VM) -> Form? {
+            left.getConstViolation(vm) ?? right.getConstViolation(vm)
+        }
     }
 }

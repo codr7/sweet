@@ -1,20 +1,25 @@
-* Improve form isConst
-** change to getConstViolation(vm) -> Form?
-** only allow accessing internal bindings
-*** store nextRegisterIndex in method
-*** add maxRegister arg to isConst
-*** check in IdForm.isConst
-** check all sub forms (call/list/pair)
-** improve readme
-
 * rename registerType to binding
 ** add Binding struct with optional type: ValueType?
+
+* inline method options
+** convert to optional args
+
+* improve const violation check
+** only allow accessing internal bindings?
+*** store nextRegisterIndex in method
+*** add maxRegister arg to getConstViolation
+** improve readme
 
 * add load macro
 ** wipl
 ** add string reader
 ** add core/path method
 ** extract method-tests.sw
+
+* add type check op
+** emit before return if result type is set and != any
+** skip if method result binding type is same
+** throw error if different types
 
 * add splat form
 ** add splat reader
