@@ -5,7 +5,7 @@
 *** check in IdForm.isConst
 *** remove callForm.isConst
 ** check all sub forms (call/list/pair)
-** improve readme example
+** improve readme
 
 * add load macro
 ** wipl
