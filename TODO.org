@@ -1,11 +1,14 @@
-* Improve isConst check
-** only allow accessing internal bindings/args
+* Improve form isConst
+** change to getConstViolation(vm) -> Form?
+** only allow accessing internal bindings
 *** store nextRegisterIndex in method
 *** add maxRegister arg to isConst
 *** check in IdForm.isConst
-*** remove callForm.isConst
 ** check all sub forms (call/list/pair)
 ** improve readme
+
+* rename registerType to binding
+** add Binding struct with optional type: ValueType?
 
 * add load macro
 ** wipl
@@ -16,8 +19,7 @@
 * add splat form
 ** add splat reader
 ** *
-
-* add support for splat source in core/import macro
+** add support for splat source in core/import macro
 
 (import core*)
 
