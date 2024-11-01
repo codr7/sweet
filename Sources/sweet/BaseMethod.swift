@@ -2,9 +2,9 @@ class BaseMethod: CustomStringConvertible {
     static func == (l: BaseMethod, r: BaseMethod) -> Bool { l.id == r.id }
 
     struct Options {
-        let isConst: Bool
-        let isVararg: Bool
-        let resultType: ValueType?
+        var isConst: Bool
+        var isVararg: Bool
+        var resultType: ValueType?
 
         init(isConst: Bool = true, isVararg: Bool = false, resultType: ValueType? = nil) {
             self.isConst = isConst

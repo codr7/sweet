@@ -6,8 +6,10 @@ protocol Form {
     func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
     func getRegister(_ vm: VM) -> Register?
+    func getType(_ vm: VM) -> ValueType?
     func getValue(_ vm: VM) -> Value?
     var isNone: Bool {get}
+    var isSeparator: Bool {get}
 }
 
 extension Form {
@@ -30,6 +32,7 @@ extension Form {
     }
 
     var isNone: Bool { false }
+    var isSeparator: Bool { false }
 }
 
 class BaseForm {
@@ -45,7 +48,8 @@ class BaseForm {
         if v!.type != packages.Core.registerType { return nil }
         return v!.cast(packages.Core.registerType)
     }
-    
+
+    func getType(_ vm: VM) -> ValueType? { nil }    
     func getValue(_ vm: VM) -> Value? { nil }
 }
 

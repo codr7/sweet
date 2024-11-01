@@ -13,6 +13,12 @@ extension forms {
             try value.emit(vm, result, location);
         }
 
+        override func getType(_ vm: VM) -> ValueType? {
+            (value.type == packages.Core.metaType)
+              ? value.cast(packages.Core.metaType)
+              : nil
+        }
+
         override func getValue(_ vm: VM) -> Value? { value }
         var isNone: Bool { value == packages.Core.NONE }
     }

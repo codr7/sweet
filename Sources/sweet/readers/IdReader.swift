@@ -12,7 +12,8 @@ extension readers {
             while let c = input.popChar() {
                 if c.isWhitespace ||
                      c == "(" || c == ")" ||
-                     c == "[" || c == "]" {
+                     c == "[" || c == "]" ||
+                     (c == ";" && !result.isEmpty) {
                     input.pushChar(c)
                     break
                 }

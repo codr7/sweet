@@ -47,10 +47,28 @@ extension packages {
                             }
                           
                           var mas: [Argument] = []
+                          var mos = BaseMethod.Options()
                           let asf = arguments[1]
                           
                           if let asf = asf.cast(forms.List.self) {
-                              for af in asf.items {
+                              for i in 0..<asf.items.count {
+                                  let af = asf.items[i]
+
+                                  if af.isSeparator {
+                                      if asf.items.count == i+1 { break }
+
+                                      if let rt = asf.items[i+1].getType(vm) {
+                                          mos.resultType = rt
+                                      }
+
+                                      if asf.items.count > i+2 {
+                                          throw EmitError("Invalid result type",
+                                                          asf.items[i+2].location)
+                                      }
+
+                                      break
+                                  }
+                                  
                                   if let idf = af.cast(forms.Id.self) {
                                       let ar = idf.isNone ?  -1 : vm.nextRegister 
                                       mas.append(Argument(idf.value, ar))
@@ -61,7 +79,6 @@ extension packages {
                                               asf.location)
                           }
                           
-                          let mos = BaseMethod.Options()
                           let m = SweetMethod(id, mas, vm.nextRegister, mos, location)
                           let mpc = vm.emit(ops.Stop.make())
                           let v = Value(Core.methodType, m)

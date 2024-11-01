@@ -1,7 +1,3 @@
-extension String {
-    var isNone: Bool { self == "_" } 
-}
-
 extension forms {
     class Id: BaseForm, Form {
         static func find(_ vm: VM, _ source: Package, _ id: String) -> Value? {
@@ -44,6 +40,15 @@ extension forms {
         
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 
+        override func getType(_ vm: VM) -> ValueType? {
+            let v = getValue(vm)
+
+            return v != nil && (v!.type == packages.Core.metaType)
+              ? v!.cast(packages.Core.metaType)
+              : nil
+        }
+
         var isNone: Bool { value.isNone }
+        var isSeparator: Bool { value.isSeparator }
     }
 }

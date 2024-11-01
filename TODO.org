@@ -1,12 +1,6 @@
-* add result type support to ^
-** add Package.getType(id)
-*** return any if id is nil
-
-(^foo [] 42)
-(^foo [;Int] 42)
-
-* add not method
-(check (not (= 42 43)))
+* add load macro
+** wipl
+** extract method-tests.sw
 
 * add ops.isConst func
 ** only allow isConst ops in isConst methoda
@@ -18,12 +12,12 @@
 
 * call SweetMethod.initClosure after creation in ^
 
+* fib
+
 * implement eqv for pair/list
 
-* add NumericTrait
-** add + - * / methods to core
-
-* fib
+* add not method
+(check (not (= 42 43)))
 
 * add return macro
 ** tail call (sharpl)
@@ -31,8 +25,7 @@
 
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols
-
-.sweet
+** add NumericTrait
 
 if let nickname {
     print("Hey, \(nickname)")
