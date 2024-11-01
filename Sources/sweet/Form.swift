@@ -47,8 +47,8 @@ class BaseForm {
         if id == nil { return nil }
         let v = vm.currentPackage[id!.value]
         if v == nil { return nil }
-        if v!.type != packages.Core.registerType { return nil }
-        return v!.cast(packages.Core.registerType)
+        if v!.type != packages.Core.bindingType { return nil }
+        return v!.cast(packages.Core.bindingType).register
     }
 
     func getType(_ vm: VM) -> ValueType? { nil }    

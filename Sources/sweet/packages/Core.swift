@@ -3,6 +3,7 @@ extension packages {
         static let noneType = NoneType("None", [])
         static let anyType = AnyType("Any", [])
 
+        static let bindingType = BindingType("Binding", [anyType])
         static let bitType = BitType("Bit", [anyType])
         static let intType = IntType("Int", [anyType])
         static let listType = ListType("List", [anyType])
@@ -11,7 +12,6 @@ extension packages {
         static let methodType = MethodType("Method", [anyType])
         static let packageType = PackageType("Package", [anyType])
         static let pairType = PairType("Pair", [anyType])
-        static let registerType = RegisterType("Register", [anyType])
         
         static let NONE = Value(Core.noneType, ())
         static let ANY = Value(Core.anyType, ())
@@ -21,6 +21,7 @@ extension packages {
         
         override func initBindings(_ vm: VM) {
             bind(Core.anyType)
+            bind(Core.bindingType)
             bind(Core.bitType)
             bind(Core.intType)
             bind(Core.listType)
@@ -30,7 +31,6 @@ extension packages {
             bind(Core.noneType)
             bind(Core.packageType)
             bind(Core.pairType)
-            bind(Core.registerType)
 
             self["_"] = Core.NONE
             self["@"] = Core.ANY
@@ -99,7 +99,7 @@ extension packages {
                               for a in mas {
                                   if !a.id.isNone {
                                       vm.currentPackage[a.id] =
-                                        Value(Core.registerType, a.target)
+                                        Value(Core.bindingType, Binding(a.target))
                                   }
                               }
 

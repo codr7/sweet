@@ -1,5 +1,5 @@
 extension packages.Core {
-    class RegisterType: BaseType<Register>, ValueType {
+    class BindingType: BaseType<Binding>, ValueType {
         override init(_ id: String, _ parents: [any ValueType]) {
             super.init(id, parents)
             typeLookup[typeId] = self
@@ -11,7 +11,7 @@ extension packages.Core {
                            _ target: Value,
                            _ result: Register,
                            _ location: Location) throws {
-            let r = target.cast(self)
+            let r = target.cast(self).register
             if (r != result) { vm.emit(ops.Copy.make(r, result)) }
         }
     }

@@ -1,6 +1,3 @@
-* rename registerType to binding
-** add Binding struct with optional type: ValueType?
-
 * inline method options
 ** convert to optional args
 

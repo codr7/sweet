@@ -21,7 +21,7 @@ class SweetMethod: BaseMethod, Method {
     func initClosure(_ vm: VM, _ ids: Set<String>) throws {
         try closure = ids.map { id in
             let r = vm.nextRegister
-            vm.currentPackage[id] = Value(packages.Core.registerType, r)
+            vm.currentPackage[id] = Value(packages.Core.bindingType, Binding(r))
             let v = vm.currentPackage[id]
             if v == nil { throw EmitError("Unknown id: \(id)", location) }
             return Closure(id, r, v!)

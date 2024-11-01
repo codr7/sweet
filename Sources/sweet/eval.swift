@@ -62,10 +62,10 @@ extension VM {
                     let m = tags[ops.InitMethod.target(op)] as! SweetMethod
                     
                     m.closure = m.closure.map {c in
-                        (c.value.type == packages.Core.registerType)
-                          ? Closure(c.id,
-                                    c.target,
-                                    registers[c.value.cast(packages.Core.registerType)])
+                        let cr = c.value.cast(packages.Core.bindingType).register
+                        
+                        return (c.value.type == packages.Core.bindingType)
+                          ? Closure(c.id, c.target, registers[cr])
                           : c
                     }
 
