@@ -15,19 +15,19 @@ class SweetMethod: BaseMethod, Method {
         self.sweetArguments = arguments
         self.result = result
         self.location = location
-        self.startPc = vm.emitPc+1
+        self.startPc = vm.emitPc
         
         super.init(id, arguments.map({$0.id}),
                    isConst: isConst, isVararg: isVararg, resultType: resultType)
     }
 
     func initClosure(_ vm: VM, _ ids: Set<String>) throws {
-        try closure = ids.map { id in
-            let r = vm.nextRegister
-            vm.currentPackage[id] = Value(packages.Core.bindingType, Binding(r))
-            let v = vm.currentPackage[id]
-            if v == nil { throw EmitError("Unknown id: \(id)", location) }
-            return Closure(id, r, v!)
+        for id in ids {
+            if let v = vm.currentPackage[id], v.type == packages.Core.bindingType {
+                let r = vm.nextRegister
+                vm.currentPackage[id] = Value(packages.Core.bindingType, Binding(r))
+                closure.append(Closure(id, r, v))
+            }
         }
     }
     

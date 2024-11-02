@@ -1,6 +1,5 @@
-* call SweetMethod.initClosure after creation in ^
-** add Form.collectIds
-*** implement for all forms
+* add Type.isRef
+** List
 
 * add type check op
 ** emit before return if result type is set and != any

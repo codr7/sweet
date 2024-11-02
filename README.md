@@ -13,8 +13,8 @@ Alternatively the value may be prefixed with `#` as a shorthand:
 ```
 `3`
 
-## Const
-Operations come in two flavors, const and non-const. You can tell them apart syntactically by the non-const `!`-suffix. Const operations are not allowed to perform non-const operations.
+## Operations
+Operations (methods and macros) come in two flavors, const and non-const. You can tell them apart syntactically by the non-const `!`-suffix. Const operations are not allowed to perform non-const operations.
 
 ```
 (^foo [] (swap!))
@@ -22,6 +22,20 @@ Operations come in two flavors, const and non-const. You can tell them apart syn
 ```
 Error in repl@1:10: Const violation in (foo []): (swap!)
 ```
+
+## Methods
+Methods may be defined using `^`:
+
+```
+(^foo [;Any] 42) 
+```
+`42`
+
+Methods without a result type always return `_`:
+```
+(^foo [] 42) 
+```
+`_`
 
 ## Packages
 Two packages are defined by default, `core` and `user`.

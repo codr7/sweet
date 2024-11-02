@@ -50,6 +50,10 @@ extension forms {
             }
             
             return nil
-        }        
+        }
+
+        func getIds(_ ids: inout Set<String>) {
+            for f in arguments { f.getIds(&ids) }
+        }
     }
 }

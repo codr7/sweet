@@ -28,5 +28,9 @@ extension forms {
 
             return nil
         }
+
+        func getIds(_ ids: inout Set<String>) {
+            for f in items { f.getIds(&ids) }
+        }
     }
 }

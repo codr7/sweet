@@ -91,13 +91,17 @@ extension packages {
                           }
                           
                           let body = Forms(arguments[2...])
+                          let mpc = vm.emit(ops.Stop.make())
                           
                           let m = SweetMethod(id, mas, vm.nextRegister, location,
                                               isConst: isConst,
                                               isVararg: isVararg,
                                               resultType: resultType)
-                          
-                          let mpc = vm.emit(ops.Stop.make())
+
+                          var bodyIds = body.ids
+                          bodyIds.remove(id)
+                          for a in mas { bodyIds.remove(a.id) }
+                          try m.initClosure(vm, bodyIds)
                           let v = Value(Core.methodType, m)
 
                           if m.isConst, let cv = body.getConstViolation(vm) {

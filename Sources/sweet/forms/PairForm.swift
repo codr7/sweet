@@ -22,5 +22,10 @@ extension forms {
         func getConstViolation(_ vm: VM) -> Form? {
             left.getConstViolation(vm) ?? right.getConstViolation(vm)
         }
+
+        func getIds(_ ids: inout Set<String>) {
+            left.getIds(&ids)
+            right.getIds(&ids)
+        }
     }
 }

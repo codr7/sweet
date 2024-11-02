@@ -6,6 +6,7 @@ protocol Form {
     func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
     func getConstViolation(_ vm: VM) -> Form?
+    func getIds(_ ids: inout Set<String>)
     func getRegister(_ vm: VM) -> Register?
     func getType(_ vm: VM) -> ValueType?
     func getValue(_ vm: VM) -> Value?
@@ -40,6 +41,9 @@ extension Form {
     }
 
     func getConstViolation(_ vm: VM) -> Form? { nil }
+
+    func getIds(_ ids: inout Set<String>) {}
+
     var isNone: Bool { false }
     var isSeparator: Bool { false }
 }
@@ -75,6 +79,12 @@ extension Forms {
         }
 
         return nil
+    }
+
+    var ids: Set<String> {
+        var result: Set<String> = []
+        for f in self { f.getIds(&result) }
+        return result
     }
 }
 

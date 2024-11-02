@@ -36,7 +36,9 @@ extension forms {
             if v == nil { throw EmitError("Unknown id: \(value)", location) }
             try v!.emitCall(vm, arguments, result, location)            
         }
-        
+
+        func getIds(_ ids: inout Set<String>) { ids.insert(value) }
+
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
 
         override func getType(_ vm: VM) -> ValueType? {
