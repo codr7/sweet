@@ -32,5 +32,7 @@ extension forms {
         func getIds(_ ids: inout Set<String>) {
             for f in items { f.getIds(&ids) }
         }
+
+        override func getType(_ vm: VM) -> ValueType? { packages.Core.listType }
     }
 }

@@ -27,7 +27,7 @@ Error in repl@1:10: Const violation in (foo []): (swap!)
 Methods may be defined using `^`:
 
 ```
-(^foo [;Any] 42) 
+(^foo [;Int] 42) 
 ```
 `42`
 
@@ -36,6 +36,30 @@ Methods without a result type always return `_`:
 (^foo [] 42) 
 ```
 `_`
+
+## Types
+`type` may be used to get the most specific type compatible with all arguments:
+
+```
+(type 1 2)
+```
+`Int`
+```
+(type 1 "foo")
+```
+`Any`
+
+`isa´ may be used to check if a value is of the specified (or a derived type):
+
+```
+(isa Int Any)
+```
+`T`
+
+```
+(isa Any Int)
+```
+`F`
 
 ## Packages
 Two packages are defined by default, `core` and `user`.

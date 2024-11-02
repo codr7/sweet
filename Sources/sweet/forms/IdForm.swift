@@ -37,18 +37,13 @@ extension forms {
             try v!.emitCall(vm, arguments, result, location)            
         }
 
+        override func getType(_ vm: VM) -> ValueType? {
+            if let v = getValue(vm) { v.type } else { nil }
+        }
+
         func getIds(_ ids: inout Set<String>) { ids.insert(value) }
 
         override func getValue(_ vm: VM) -> Value? { Id.find(vm, vm.currentPackage, value) }
-
-        override func getType(_ vm: VM) -> ValueType? {
-            if value.isAny { return packages.Core.anyType }
-            let v = getValue(vm)
-
-            return v != nil && (v!.type == packages.Core.metaType)
-              ? v!.cast(packages.Core.metaType)
-              : nil
-        }
 
         var isNone: Bool { value.isNone }
         var isSeparator: Bool { value.isSeparator }

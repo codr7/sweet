@@ -7,12 +7,12 @@
   (foo))
  
 (check 42
-  (^foo [x;@] x)
+  (^foo [x;Int] x)
   (foo 42))
 
 (check 42
-  (^foo [x;@]
-    (^bar [;@] x)
+  (^foo [x;Int]
+    (^bar [;Int] x)
     (bar))
     
   (foo 42))

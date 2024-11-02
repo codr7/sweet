@@ -64,9 +64,14 @@ extension packages {
 
                                   if af.isSeparator {
                                       if asf.items.count == i+1 { break }
+                                      let af = asf.items[i+1]
+                                      let av = af.getValue(vm)
 
-                                      if let rt = asf.items[i+1].getType(vm) {
+                                      if let rt = av?.tryCast(packages.Core.metaType) {
                                           resultType = rt
+                                      } else {
+                                          throw EmitError("Invalid result type: \(af.dump(vm))",
+                                                          af.location)
                                       }
 
                                       if asf.items.count > i+2 {
@@ -223,6 +228,22 @@ extension packages {
                            vm.registers[result] = Value(Core.bitType, v)
                       })
 
+            bindMethod("isa", ["value", "x", "y?"],
+                       {(vm, arguments, result, location) in
+                           let v = arguments[0]
+
+                           let rv = try arguments[1...].allSatisfy {
+                               if let t = $0.tryCast(packages.Core.metaType) { 
+                                   v.type.isDerived(from: t)
+                               } else {
+                                   throw EvalError("Expected type: \($0.dump(vm))",
+                                                   location) 
+                               }
+                           }
+                           
+                           vm.registers[result] = Value(packages.Core.bitType, rv)
+                       })
+            
             bindMacro("load!", ["path1"],
                       {(vm, arguments, result, location) in
                           for f in arguments {
@@ -267,6 +288,23 @@ extension packages {
                               vm.emit(ops.SwapRegisters.make(lr!, rr!))
                           }
                       })
+
+            bindMethod("type", ["x", "y?"],
+                       {(vm, arguments, result, location) in
+                           var ts = Set<TypeId>(arguments[0].type.parents)
+                           
+                           for a in arguments[1...] {
+                               ts = ts.intersection(a.type.parents)
+                           }
+
+                           if ts.isEmpty { vm.registers[result] = packages.Core.NONE }
+                           else {
+                               var sts = Array(ts)
+                               sts.sort()
+                               vm.registers[result] = Value(packages.Core.metaType,
+                                                            typeLookup[sts.last!]!)
+                           }
+                       })
         }
     }
 }

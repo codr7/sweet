@@ -1,14 +1,15 @@
 var nextTypeId: TypeId = 0
 var typeLookup: [TypeId:ValueType] = [:]
 
-class BaseType<T> {    
+class BaseType<T>: CustomStringConvertible {    
     typealias Data = T
 
     static func == (l: BaseType<T>, r: BaseType<T>) -> Bool { l.id == r.id }   
     static func findId(_ id: TypeId) -> ValueType? { typeLookup[id] }
 
+    var description: String { id }
     let id: String
-    var parents: ValueType.Parents = [:]
+    var parents: ValueType.Parents = []
     let typeId: TypeId
 
     var call: ValueType.Call? = {(vm, target, arguments, result, location) in
@@ -30,15 +31,13 @@ class BaseType<T> {
 
         eqv = {[self] in eq!($0, $1)}
         
-        self.parents[typeId] = 1
+        self.parents.insert(typeId)
         for p in parents { addParent(p) }
     }
 
     func addParent(_ parent: any ValueType) {
-        for (pid, w) in parent.parents {
-            let ew = parents[pid]
-            if ew != nil { parents[pid] = ew! + w }
-            else { parents[pid] = w }
+        for pid in parent.parents {
+            parents.insert(pid)
             let p = typeLookup[pid]!
             dump = dump ?? p.dump
             eq = eq ?? p.eq
@@ -62,4 +61,7 @@ class BaseType<T> {
         for i in 0..<arity { try arguments[i].emit(vm, ar+i) }
         vm.emit(ops.Call.make(vm, tr, ar, arity, result, location))
     }
+
+    func getType(_ vm: VM) -> ValueType? { nil }
+    func isDerived(from: ValueType) -> Bool { parents.contains(from.typeId) }
 }

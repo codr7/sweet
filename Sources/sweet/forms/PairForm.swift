@@ -27,5 +27,7 @@ extension forms {
             left.getIds(&ids)
             right.getIds(&ids)
         }
+
+        override func getType(_ vm: VM) -> ValueType? { packages.Core.pairType }
     }
 }

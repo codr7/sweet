@@ -1,9 +1,15 @@
-* add type check op
-** emit before return if result type is set and != any
-** skip if method result binding type is same
-** throw error if different types
+* set register types
+** emitted values
+** method arguments/result
+
+* add optional macro result type
+** set in CallForm.getType
 
 * fib
+
+* add return macro
+** tail call (sharpl)
+** fib tail
 
 * improve const violation check
 ** only allow accessing internal bindings?
@@ -23,10 +29,6 @@
 
 * add not method
 (check (not (= 42 43)))
-
-* add return macro
-** tail call (sharpl)
-** fib tail
 
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols

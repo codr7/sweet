@@ -1,5 +1,5 @@
 protocol ValueType {
-    typealias Parents = [TypeId:Int]
+    typealias Parents = Set<TypeId>
 
     var id: String {get}
 
@@ -21,6 +21,8 @@ protocol ValueType {
                   _ result: Register,
                   _ location: Location) throws
 
+    func getType(_ vm: VM) -> ValueType?
+    func isDerived(from: ValueType) -> Bool
     var isRef: Bool {get}
     var typeId: TypeId {get}
     

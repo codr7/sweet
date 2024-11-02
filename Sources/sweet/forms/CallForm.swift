@@ -55,5 +55,13 @@ extension forms {
         func getIds(_ ids: inout Set<String>) {
             for f in arguments { f.getIds(&ids) }
         }
+
+        override func getType(_ vm: VM) -> ValueType? {
+            if let m = arguments.first!.getValue(vm)?.cast(packages.Core.methodType) {
+                return m.resultType
+            }
+
+            return nil
+        }
     }
 }
