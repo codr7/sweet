@@ -18,7 +18,6 @@ extension packages {
         static let stringType = StringType("String", [anyType])
         
         static let NONE = Value(Core.noneType, ())
-        static let ANY = Value(Core.metaType, anyType)
         
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
@@ -39,8 +38,6 @@ extension packages {
             bind(Core.stringType)
             
             self["_"] = Core.NONE
-            self["@"] = Core.ANY
-
             self["T"] = Core.T
             self["F"] = Core.F
 
@@ -92,7 +89,7 @@ extension packages {
                           
                           let body = Forms(arguments[2...])
                           let mpc = vm.emit(ops.Stop.make())
-                          
+
                           let m = SweetMethod(id, mas, vm.nextRegister, location,
                                               isConst: isConst,
                                               isVararg: isVararg,

@@ -14,5 +14,7 @@ extension packages.Core {
             //setItem = {(target, index, value) in target.cast(t)[index] = value}
             toBit = {(value) in !value.cast(t).isEmpty}
         }
+
+        var isRef: Bool = false
     }
 }

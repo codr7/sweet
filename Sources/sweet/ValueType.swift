@@ -20,6 +20,9 @@ protocol ValueType {
                   _ arguments: [Form],
                   _ result: Register,
                   _ location: Location) throws
+
+    var isRef: Bool {get}
+    var typeId: TypeId {get}
     
     typealias Eq = (_ value1: Value, _ value2: Value) -> Bool
     var eq: Eq? {get}
@@ -41,8 +44,6 @@ protocol ValueType {
 
     typealias ToBit = (_ value: Value) -> Bit
     var toBit: ToBit? {get}
-
-    var typeId: TypeId {get}
 }
 
 extension ValueType {

@@ -11,5 +11,7 @@ extension packages.Core {
             
             eq = {(value1, value2) in value1.cast(t).id == value2.cast(t).id}
         }
+
+        var isRef: Bool = false
     }
 }

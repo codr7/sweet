@@ -14,5 +14,7 @@ extension packages.Core {
                       _ location: Location) throws {
             try target.cast(self).emit(vm, arguments, result, location)
         }
+
+        var isRef: Bool = false         
     }
 }

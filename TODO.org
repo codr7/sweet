@@ -1,6 +1,3 @@
-* add Type.isRef
-** List
-
 * add type check op
 ** emit before return if result type is set and != any
 ** skip if method result binding type is same

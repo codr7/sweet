@@ -10,5 +10,6 @@ extension packages.Core {
             toBit = {(value) in value.cast(t)}
         }
 
+        var isRef: Bool = false 
     }
 }

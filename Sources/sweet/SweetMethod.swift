@@ -1,6 +1,7 @@
 class SweetMethod: BaseMethod, Method {    
     let sweetArguments: [Argument]
     let result: Register
+    let registerOffset: Register
     let location: Location
     var closure: [Closure] = []
     let startPc: PC
@@ -16,6 +17,7 @@ class SweetMethod: BaseMethod, Method {
         self.result = result
         self.location = location
         self.startPc = vm.emitPc
+        registerOffset = vm.registers.count
         
         super.init(id, arguments.map({$0.id}),
                    isConst: isConst, isVararg: isVararg, resultType: resultType)
