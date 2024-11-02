@@ -1,14 +1,3 @@
-
-(import! core*)
-
-(check (= 42 42))
-
-(check 3
-  #1:2:3)
-
-(check 3
-  #[1 2 3])
-
 (check _
   (^foo [] 42)
   (foo))

@@ -1,30 +1,19 @@
-* add Forms vm.read(string)
-* add vm.emit(string)
-** use instead of manual core/count construction
-** use in load?
-
-* add load macro
-** wipl
-** add string reader
-** add core/path method
-** extract method-tests.sw
-
-* improve const violation check
-** only allow accessing internal bindings?
-*** store nextRegisterIndex in method
-*** add maxRegister arg to getConstViolation
-** improve readme
+* call SweetMethod.initClosure after creation in ^
+** add Form.collectIds
+*** implement for all forms
 
 * add type check op
 ** emit before return if result type is set and != any
 ** skip if method result binding type is same
 ** throw error if different types
 
-* call SweetMethod.initClosure after creation in ^
-** add Form.collectIds
-*** implement for all forms
-
 * fib
+
+* improve const violation check
+** only allow accessing internal bindings?
+*** store nextRegisterIndex in method
+*** add maxRegister arg to getConstViolation
+** improve readme
 
 * add Op.bumpPc(deltaPc) Op
 ** bump all pcs

@@ -1,5 +1,12 @@
 ## Counting
-Values with lengths may be counted by prefixing with `#`.
+`count` may be used to get the number of items from a composite value:
+
+```
+(count "foo")
+```
+`3`
+
+Alternatively the value may be prefixed with `#` as a shorthand:
 
 ```
 #1:2:3
@@ -40,4 +47,11 @@ The source package may be splatted to import all ids:
 
 ```
 (import! core*)
+```
+
+## Loading
+`load!` may be used to load code from files, it takes path arguments:
+
+```
+(load! (path "tests/run.sw"))
 ```

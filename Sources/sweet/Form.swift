@@ -32,6 +32,13 @@ extension Form {
         try vm.eval(startPc)
     }
 
+    func eval(_ vm: VM) throws -> Value {
+        let result = vm.nextRegister
+        vm.registers[result] = packages.Core.NONE;
+        try eval(vm, result)
+        return vm.registers[result]
+    }
+
     func getConstViolation(_ vm: VM) -> Form? { nil }
     var isNone: Bool { false }
     var isSeparator: Bool { false }

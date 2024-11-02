@@ -1,3 +1,5 @@
+import SystemPackage
+
 extension packages {
     class Core: Package {
         static let noneType = NoneType("None", [])
@@ -12,6 +14,8 @@ extension packages {
         static let methodType = MethodType("Method", [anyType])
         static let packageType = PackageType("Package", [anyType])
         static let pairType = PairType("Pair", [anyType])
+        static let pathType = PathType("Path", [anyType])
+        static let stringType = StringType("String", [anyType])
         
         static let NONE = Value(Core.noneType, ())
         static let ANY = Value(Core.metaType, anyType)
@@ -31,7 +35,9 @@ extension packages {
             bind(Core.noneType)
             bind(Core.packageType)
             bind(Core.pairType)
-
+            bind(Core.pathType)
+            bind(Core.stringType)
+            
             self["_"] = Core.NONE
             self["@"] = Core.ANY
 
@@ -215,7 +221,31 @@ extension packages {
 
                            vm.registers[result] = Value(Core.bitType, v)
                       })
-            
+
+            bindMacro("load!", ["path1"],
+                      {(vm, arguments, result, location) in
+                          for f in arguments {
+                              if let p = try f.eval(vm).tryCast(Core.pathType) {
+                                  try vm.load(p, result)
+                              } else {
+                                  throw EmitError("Expected path: \(f.dump(vm))",
+                                                  f.location)
+                              }
+                          }
+                      })
+
+            bindMethod("path", ["value"],
+                       {(vm, arguments, result, location) in
+                           let v = arguments.first!
+                           
+                           if let sv = v.tryCast(Core.stringType) {
+                               vm.registers[result] = Value(Core.pathType, FilePath(sv))
+                           } else {
+                               throw EvalError("Expected string: \(v.dump(vm))", location)
+                           }
+                       })
+                           
+                          
             bindMacro("swap!", ["left1", "right1"],
                       {(vm, arguments, result, location) in
                           for i in stride(from: 0, to: arguments.count, by: 2) {

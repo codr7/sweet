@@ -6,9 +6,9 @@ extension readers {
                   _ input: inout Input,
                   _ output: inout Output,
                   _ location: inout Location) throws -> Bool {
-            let startLocation = location
             if input.peekChar() != "[" { return false }
             input.dropChar()
+            let startLocation = location
             location.column += 1
             var items: [Form] = []
             

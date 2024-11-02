@@ -33,6 +33,9 @@ protocol ValueType {
     typealias FindId = (_ source: Value, _ id: String) -> Value?
     var findId: FindId? {get}
 
+    typealias Say = (_ vm: VM, _ target: Value) -> String
+    var say: Say? {get}
+    
     typealias SetItem = (_ target: Value, _ index: Int, _ value: Value) -> Void
     var setItem: SetItem? {get}
 

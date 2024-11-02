@@ -36,6 +36,7 @@ struct Value: Equatable {
     func eq(_ other: Value) -> Bool { type.equals(other.type) && type.eq!(self, other) }
     func eqv(_ other: Value) -> Bool { type.equals(other.type) && type.eqv!(self, other) }
     func findId(_ id: String) -> Value? { type.findId!(self, id) }
+    func say(_ vm: VM) -> String { type.say!(vm, self) }
     func setItem(_ index: Int, _ value: Value) { type.setItem!(self, index, value) }
     func toBit() -> Bit { type.toBit!(self) }
 }

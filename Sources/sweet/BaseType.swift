@@ -19,6 +19,7 @@ class BaseType<T> {
     var eq: ValueType.Eq? = nil
     var eqv: ValueType.Eq?
     var findId: ValueType.FindId? = nil
+    var say: ValueType.Say? = {(vm, target) in target.dump(vm)}
     var setItem: ValueType.SetItem? = nil
     var toBit: ValueType.ToBit? = {(value) in true }
 
