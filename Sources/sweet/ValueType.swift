@@ -48,7 +48,7 @@ extension ValueType {
                _ arguments: [Value],
                _ result: Register,
                _ location: Location) {
-         vm.setRegister(result, target)
+         vm.registers[result] = target
      }
 
     func equals(_ other: any ValueType) -> Bool { other.id == id }

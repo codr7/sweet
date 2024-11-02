@@ -1,4 +1,5 @@
-(import! core _ ^ = check Int)
+
+(import! core*)
 
 (check (= 42 42))
 

@@ -1,18 +1,19 @@
-* add support for splat source in core/import macro
-
-(import core*)
-
-* improve const violation check
-** only allow accessing internal bindings?
-*** store nextRegisterIndex in method
-*** add maxRegister arg to getConstViolation
-** improve readme
+* add Forms vm.read(string)
+* add vm.emit(string)
+** use instead of manual core/count construction
+** use in load?
 
 * add load macro
 ** wipl
 ** add string reader
 ** add core/path method
 ** extract method-tests.sw
+
+* improve const violation check
+** only allow accessing internal bindings?
+*** store nextRegisterIndex in method
+*** add maxRegister arg to getConstViolation
+** improve readme
 
 * add type check op
 ** emit before return if result type is set and != any

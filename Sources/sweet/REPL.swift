@@ -24,7 +24,7 @@ class REPL {
                     vm.emit(ops.Stop.make())
                     vm.registers[result] = packages.Core.NONE
                     try vm.eval(startPc)
-                    print("\(vm.register(result).dump(vm))\n")
+                    print("\(vm.registers[result].dump(vm))\n")
                     input.reset()
                 } /*catch {
                     throw error

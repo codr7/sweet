@@ -95,9 +95,6 @@ class VM {
         return result
     }
 
-    func setRegister(_ i: Register, _ value: Value) { registers[Int(i)] = value }
-    func register(_ i: Register) -> Value { registers[Int(i)] }
-
     func tag(_ value: Any) -> Tag {
         let result = tags.count
         tags.append(value)

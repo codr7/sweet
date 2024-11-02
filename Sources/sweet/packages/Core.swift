@@ -14,7 +14,7 @@ extension packages {
         static let pairType = PairType("Pair", [anyType])
         
         static let NONE = Value(Core.noneType, ())
-        static let ANY = Value(Core.anyType, ())
+        static let ANY = Value(Core.metaType, anyType)
         
         static let T = Value(Core.bitType, true)
         static let F = Value(Core.bitType, false)
@@ -43,7 +43,7 @@ extension packages {
                           let idf = arguments.first!
                           
                           let id =
-                            if let idf = idf.cast(forms.Id.self) { idf.value }
+                            if let idf = idf.tryCast(forms.Id.self) { idf.value }
                             else {
                                 throw EmitError("Expected id: \(idf.dump(vm))",
                                                 idf.location)
@@ -55,7 +55,7 @@ extension packages {
                           var resultType: ValueType? = nil
                           let asf = arguments[1]
                           
-                          if let asf = asf.cast(forms.List.self) {
+                          if let asf = asf.tryCast(forms.List.self) {
                               for i in 0..<asf.items.count {
                                   let af = asf.items[i]
 
@@ -74,7 +74,7 @@ extension packages {
                                       break
                                   }
                                   
-                                  if let idf = af.cast(forms.Id.self) {
+                                  if let idf = af.tryCast(forms.Id.self) {
                                       let ar = idf.isNone ?  -1 : vm.nextRegister 
                                       mas.append(Argument(idf.value, ar))
                                   }
@@ -169,26 +169,36 @@ extension packages {
             bindMacro("import!", ["source", "id1?"],
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NONE
-                          let sf = arguments.first!
-                          try sf.eval(vm, result)
-                          let s = vm.register(result)
+                          var sf = arguments.first!
+                          var isSplat = false
                           
-                          if s.type != Core.packageType {
+                          if let f = sf.tryCast(forms.Splat.self) {
+                              sf = f.target
+                              isSplat = true
+                          }
+                          
+                          try sf.eval(vm, result)
+                          let s = vm.registers[result]
+
+                          if let sp = s.tryCast(Core.packageType) {
+                              let ids: [String] = isSplat
+                                ? sp.ids
+                                : try arguments[1...].map {f in
+                                    let id = f.tryCast(forms.Id.self)
+                                    
+                                    if id == nil {
+                                        throw EmitError("Expected id: \(f)", f.location)
+                                    }
+                                    
+                                    return id!.value
+                                }
+                              
+                              vm.currentPackage.importFrom(s.cast(Core.packageType), ids)
+                          }
+                          else {
                               throw EmitError("Expected package: \(s.dump(vm))",
                                               sf.location)
                           }
-
-                          let ids: [String] = try arguments[1...].map {f in
-                              let id = f.cast(forms.Id.self)
-
-                              if id == nil {
-                                  throw EmitError("Expected id: \(f)", f.location)
-                              }
-
-                              return id!.value
-                          }
-                          
-                          vm.currentPackage.importFrom(s.cast(Core.packageType), ids)
                       })
 
             bindMethod("is", ["x", "y", "z?"],

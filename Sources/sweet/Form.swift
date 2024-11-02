@@ -1,6 +1,6 @@
 protocol Form {
     var location: Location {get}
-    func cast<T>(_ type: T.Type) -> T?
+    func tryCast<T>(_ type: T.Type) -> T?
     func dump(_ vm: VM) -> String
     func emit(_ vm: VM, _ result: Register) throws
     func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
@@ -40,10 +40,10 @@ extension Form {
 class BaseForm {
     let location: Location
     init(_ location: Location) { self.location = location }
-    func cast<T>(_ type: T.Type) -> T? {self as? T}
+    func tryCast<T>(_ type: T.Type) -> T? {self as? T}
 
     func getRegister(_ vm: VM) -> Register? {
-        let id = cast(forms.Id.self)
+        let id = tryCast(forms.Id.self)
         if id == nil { return nil }
         let v = vm.currentPackage[id!.value]
         if v == nil { return nil }

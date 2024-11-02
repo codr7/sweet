@@ -13,18 +13,18 @@ extension forms {
         
         func emit(_ vm: VM, _ result: Register) throws {
             var t = arguments.first!
-            var p: Pair? = t.cast(Pair.self)
+            var p: Pair? = t.tryCast(Pair.self)
 
             while p != nil {
                 if p!.left.isNone { t = p!.left }
                 else if p!.right.isNone { t = p!.right }
                 else { break }
-                p = t.cast(Pair.self)
+                p = t.tryCast(Pair.self)
             }
 
             try t.emitCall(vm, Array(arguments[1...]), result)
             t = arguments.first!
-            p = t.cast(Pair.self)
+            p = t.tryCast(Pair.self)
 
             while p != nil {
                 if p!.left.isNone {
@@ -35,17 +35,14 @@ extension forms {
                     t = p!.left
                 } else { break }
                 
-                p = t.cast(Pair.self)
+                p = t.tryCast(Pair.self)
             }
         }
 
         func getConstViolation(_ vm: VM) -> Form? {
             if let v = arguments.first!.getValue(vm) {
-                if v.type == packages.Core.macroType &&
-                     !v.cast(packages.Core.macroType).isConst { return self }
-                
-                if v.type == packages.Core.methodType &&
-                     v.cast(packages.Core.methodType).isConst { return self }
+                if let m = v.tryCast(packages.Core.macroType), !m.isConst { return self }
+                if let m = v.tryCast(packages.Core.methodType), !m.isConst { return self }
             }
 
             for a in arguments {

@@ -12,7 +12,7 @@ class BaseType<T> {
     let typeId: TypeId
 
     var call: ValueType.Call? = {(vm, target, arguments, result, location) in
-        vm.setRegister(result, target)
+        vm.registers[result] = target
     }
     
     var dump: ValueType.Dump? = {(vm, value) in "\(value.data)" }
