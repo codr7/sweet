@@ -1,28 +1,22 @@
 * fib
+** add if macro
 
-(^ fib-rec [n]
-  (if (< n 2) n (+ (fib-rec (dec n)) (fib-rec (dec n)))))
+(^fib-rec! [n]
+  (if (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
 
-* add if macro
-
+* figure out how to re
 * add return macro
 ** tail call (sharpl)
 ** fib tail
 
 (^ fib-tail [n a b]
-  (if (> n 1) (fib-tail (dec n) b (+ a b)) (if (z? n) a b)))
+  (if (> n 1) (fib-tail (dec! n) b (+ a b)) (if (z? n) a b)))
   
 * improve const violation check
 ** only allow accessing internal bindings?
 *** store nextRegisterIndex in method
 *** add maxRegister arg to getConstViolation
 ** improve readme
-
-* add Op.bumpPc(deltaPc) Op
-** bump all pcs
-
-* add Op.swapRegisters([Register:Register]) Op
-** change all registers
 
 * add forms.List/Pair.getValue
 
