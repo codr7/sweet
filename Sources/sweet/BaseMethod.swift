@@ -11,14 +11,14 @@ class BaseMethod: CustomStringConvertible {
 
     init(_ id: String,
          _ arguments: [String],
+         _ resultType: ValueType?,
          isConst: Bool = true,
-         isVararg: Bool = false,
-         resultType: ValueType? = nil) {
+         isVararg: Bool = false) {
         self.id = id
         self.arguments = arguments
         self.minArgumentCount = arguments.count(where: {$0.last != "?"})
+        self.resultType = resultType
         self.isConst = isConst
         self.isVararg = isVararg
-        self.resultType = resultType
     }
 }

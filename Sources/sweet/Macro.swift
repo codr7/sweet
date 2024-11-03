@@ -9,12 +9,14 @@ class Macro: CustomStringConvertible {
     var description: String { "(\(id) [\(arguments.joined(separator: " "))])" }
     let body: Body
     let id: String
-
-    init(_ id: String, _ arguments: [String], _ body: @escaping Body) {
+    let resultType: ValueType?
+    
+    init(_ id: String, _ arguments: [String], _ resultType: ValueType?, _ body: @escaping Body) {
         self.id = id
         self.arguments = arguments
         self.minArgumentCount = arguments.count(where: {$0.last != "?"})
         self.body = body
+        self.resultType = resultType
     }
 
     var isConst: Bool { id.last! != "!" }

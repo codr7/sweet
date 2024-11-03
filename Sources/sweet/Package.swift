@@ -56,21 +56,23 @@ class Package: CustomStringConvertible, Sequence {
         self[value.id] = Value(packages.Core.metaType, value)
     }
 
-    func bindMacro(_ id: String, _ arguments: [String], _ body: @escaping Macro.Body) {
-        self[id] = Value(packages.Core.macroType, Macro(id, arguments, body))
+    func bindMacro(_ id: String,
+                   _ arguments: [String],
+                   _ resultType: ValueType?,
+                   _ body: @escaping Macro.Body) {
+        self[id] = Value(packages.Core.macroType, Macro(id, arguments, resultType, body))
     }
 
     func bindMethod(_ id: String,
                     _ arguments: [String],
+                    _ resultType: ValueType?,
                     _ body: @escaping SwiftMethod.Body,
                     _ isConst: Bool = true,
-                    _ isVararg: Bool = false,
-                    _ resultType: ValueType? = nil) {
+                    _ isVararg: Bool = false) {
         self[id] = Value(packages.Core.methodType,
-                         SwiftMethod(id, arguments, body,
+                         SwiftMethod(id, arguments, resultType, body,
                                      isConst: isConst,
-                                     isVararg: isVararg,
-                                     resultType: resultType))
+                                     isVararg: isVararg))
     }
 
     var ids: [String] { Array(bindings.keys) }

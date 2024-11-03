@@ -41,7 +41,7 @@ extension packages {
             self["T"] = Core.T
             self["F"] = Core.F
 
-            bindMacro("^", ["id", "args"],
+            bindMacro("^", ["id", "args"], Core.methodType,
                       {(vm, arguments, result, location) in
                           let idf = arguments.first!
                           
@@ -107,10 +107,12 @@ extension packages {
                           let body = Forms(arguments[2...])
                           let mpc = vm.emit(ops.Stop.make())
 
-                          let m = SweetMethod(id, mas, vm.nextRegister, location,
+                          let m = SweetMethod(id,
+                                              mas,
+                                              vm.nextRegister, resultType,
+                                              location,
                                               isConst: isConst,
-                                              isVararg: isVararg,
-                                              resultType: resultType)
+                                              isVararg: isVararg)
 
                           var bodyIds = body.ids
                           bodyIds.remove(id)
@@ -146,7 +148,7 @@ extension packages {
                           vm.emit(ops.SetRegister.make(vm, result, v))
                       })
 
-            bindMethod("=", ["x", "y", "z?"],
+            bindMethod("=", ["x", "y", "z?"], Core.bitType,
                        {(vm, arguments, result, location) in
                            let l = arguments.first!
                            var v = true
@@ -161,7 +163,7 @@ extension packages {
                            vm.registers[result] = Value(Core.bitType, v)
                       })
 
-            bindMacro("check", ["x"],
+            bindMacro("check", ["x"], nil,
                       {(vm, arguments, result, location) in
                           let er = vm.nextRegister
 
@@ -179,7 +181,7 @@ extension packages {
                           vm.emit(ops.Check.make(vm, er, result, location))
                       })
 
-            bindMethod("count", ["x", "y?"],
+            bindMethod("count", ["x", "y?"], Core.intType,
                        {(vm, arguments, result, location) in
                            var n = 0
                            
@@ -195,7 +197,7 @@ extension packages {
                       })
 
             
-            bindMacro("import!", ["source", "id1?"],
+            bindMacro("import!", ["source", "id1?"], nil,
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NONE
                           var sf = arguments.first!
@@ -230,7 +232,7 @@ extension packages {
                           }
                       })
 
-            bindMethod("is", ["x", "y", "z?"],
+            bindMethod("is", ["x", "y", "z?"], Core.bitType,
                        {(vm, arguments, result, location) in
                            let l = arguments.first!
                            var v = true
@@ -245,7 +247,7 @@ extension packages {
                            vm.registers[result] = Value(Core.bitType, v)
                       })
 
-            bindMethod("isa", ["value", "x", "y?"],
+            bindMethod("isa", ["value", "x", "y?"], Core.bitType,
                        {(vm, arguments, result, location) in
                            let v = arguments[0]
 
@@ -261,7 +263,7 @@ extension packages {
                            vm.registers[result] = Value(packages.Core.bitType, rv)
                        })
             
-            bindMacro("load!", ["path1"],
+            bindMacro("load!", ["path1"], nil, 
                       {(vm, arguments, result, location) in
                           for f in arguments {
                               if let p = try f.eval(vm).tryCast(Core.pathType) {
@@ -273,7 +275,7 @@ extension packages {
                           }
                       })
 
-            bindMethod("path", ["value"],
+            bindMethod("path", ["value"], Core.pathType,
                        {(vm, arguments, result, location) in
                            let v = arguments.first!
                            
@@ -285,7 +287,7 @@ extension packages {
                        })
                            
                           
-            bindMacro("swap!", ["left1", "right1"],
+            bindMacro("swap!", ["left1", "right1"], nil, 
                       {(vm, arguments, result, location) in
                           for i in stride(from: 0, to: arguments.count, by: 2) {
                               let lf = arguments[i]
@@ -306,7 +308,7 @@ extension packages {
                           }
                       })
 
-            bindMethod("type", ["x", "y?"],
+            bindMethod("type", ["x", "y?"], vm.maybe(Core.metaType), 
                        {(vm, arguments, result, location) in
                            var ts = Set<TypeId>(arguments[0].type.parents)
                            
@@ -314,8 +316,9 @@ extension packages {
                                ts = ts.intersection(a.type.parents)
                            }
 
-                           if ts.isEmpty { vm.registers[result] = packages.Core.NONE }
-                           else {
+                           if ts.isEmpty {
+                               vm.registers[result] = packages.Core.NONE
+                           } else {
                                var sts = Array(ts)
                                sts.sort()
                                vm.registers[result] = Value(packages.Core.metaType,

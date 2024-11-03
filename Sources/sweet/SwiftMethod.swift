@@ -8,17 +8,17 @@ class SwiftMethod: BaseMethod, Method {
 
     init(_ id: String,
          _ arguments: [String],
+         _ resultType: ValueType?,
          _ body: @escaping Body,
          isConst: Bool = true,
-         isVararg: Bool = false,
-         resultType: ValueType? = nil) {
+         isVararg: Bool = false) {
         self.body = body
         
         super.init(id,
                    arguments,
+                   resultType,
                    isConst: isConst,
-                   isVararg: isVararg,
-                   resultType: resultType)
+                   isVararg: isVararg)
     }
 
     func call(_ vm: VM,

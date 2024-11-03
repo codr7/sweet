@@ -83,6 +83,13 @@ class VM {
         registers += Array(repeating: packages.Core.NONE, count: n)
         return result
     }
+
+    func maybe<T>(_ target: BaseType<T> & ValueType) -> ValueType {
+        if let v = currentPackage["\(target.id)?"] { return v.cast(packages.Core.metaType) }
+        let t = Maybe<T>(target)
+        currentPackage.bind(t)
+        return t
+    }
     
     func read(_ input: inout Input,
               _ output: inout [Form],
