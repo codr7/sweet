@@ -1,9 +1,18 @@
 * fib
 
+(^ fib-rec [n]
+  (if (< n 2) n (+ (fib-rec (dec n)) (fib-rec (dec n)))))
+
+* add + method
+* add dec macro
+
 * add return macro
 ** tail call (sharpl)
 ** fib tail
 
+(^ fib-tail [n a b]
+  (if (> n 1) (fib-tail (dec n) b (+ a b)) (if (z? n) a b)))
+  
 * improve const violation check
 ** only allow accessing internal bindings?
 *** store nextRegisterIndex in method

@@ -163,6 +163,21 @@ extension packages {
                            vm.registers[result] = Value(Core.bitType, v)
                       })
 
+            bindMethod("<", ["x", "y", "z?"], Core.bitType,
+                       {(vm, arguments, result, location) in
+                           let l = arguments.first!.cast(Core.intType)
+                           var rv = true
+                           
+                           for r in arguments[1...] {
+                               if l >= r.cast(Core.intType) {
+                                   rv = false
+                                   break
+                               }
+                           }
+                           
+                           vm.registers[result] = Value(Core.bitType, rv)
+                       })
+
             bindMacro("check", ["x"], nil,
                       {(vm, arguments, result, location) in
                           let er = vm.nextRegister
