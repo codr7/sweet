@@ -48,6 +48,23 @@ extension VM {
                     registers[to] = registers[from]
                     pc += 1
                 }
+            case .Decrement:
+                do {
+                    let dv = if let dr = ops.Decrement.delta(op) {
+                        registers[dr].cast(packages.Core.intType)
+                    } else {
+                        1
+                    }
+                    
+                    let t = ops.Decrement.target(op)
+                    let v = Value(packages.Core.intType,
+                                  registers[t].cast(packages.Core.intType) - dv)
+                    
+                    registers[t] = v
+                    let r = ops.Decrement.result(op)
+                    if r != t { registers[r] = v }
+                    pc += 1
+                }
             case .Goto:
                 pc = ops.Goto.pc(op)
             case .InitList:

@@ -3,8 +3,7 @@
 (^ fib-rec [n]
   (if (< n 2) n (+ (fib-rec (dec n)) (fib-rec (dec n)))))
 
-* add + method
-* add dec macro
+* add if macro
 
 * add return macro
 ** tail call (sharpl)

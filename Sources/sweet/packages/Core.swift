@@ -218,6 +218,31 @@ extension packages {
                            vm.registers[result] = Value(Core.intType, n)
                       })
 
+            bindMacro("dec!", ["value", "delta?"], nil,
+                      {(vm, arguments, result, location) in
+                          let a = arguments[0]
+                          
+                          if let bv = arguments[0].getValue(vm),
+                             let b = bv.tryCast(Core.bindingType) {
+                                 if (b.type ?? Core.intType) != Core.intType {
+                                     throw EmitError("Expected Int: \(bv.dump(vm))",
+                                                     location)
+                                 }
+
+                                 var dr: Register? = nil
+                                 
+                                 if arguments.count > 1 {
+                                     let r = vm.nextRegister
+                                     try arguments[1].emit(vm, r)
+                                     dr = r
+                                 }
+
+                                 vm.emit(ops.Decrement.make(b.register, dr, result))
+                          } else {
+                              throw EmitError("Invalid decrement target: \(a.dump(vm))",
+                                              location)
+                          }
+                      })
             
             bindMacro("import!", ["source", "id1?"], nil,
                       {(vm, arguments, result, location) in
