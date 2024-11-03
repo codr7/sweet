@@ -56,12 +56,12 @@ class SweetMethod: BaseMethod, Method {
 struct Argument {
     let id: String
     let target: Register
-    let value: Value?
+    var type: ValueType?
 
-    init(_ id: String, _ target: Register, _ value: Value? = nil) {
+    init(_ id: String, _ target: Register, _ type: ValueType? = nil) {
         self.id = id
         self.target = target
-        self.value = value
+        self.type = type
     }
 }
 

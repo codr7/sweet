@@ -1,9 +1,5 @@
-* set register types
-** emitted values
-** method arguments/result
-
 * add optional macro result type
-** set in CallForm.getType
+** check in CallForm.getType
 
 * fib
 

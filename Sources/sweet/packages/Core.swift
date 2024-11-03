@@ -59,12 +59,13 @@ extension packages {
                           let asf = arguments[1]
                           
                           if let asf = asf.tryCast(forms.List.self) {
-                              for i in 0..<asf.items.count {
-                                  let af = asf.items[i]
+                              var fs = asf.items
+                              while !fs.isEmpty {
+                                  let af = fs.removeFirst()
 
                                   if af.isSeparator {
-                                      if asf.items.count == i+1 { break }
-                                      let af = asf.items[i+1]
+                                      if fs.isEmpty { break }
+                                      let af = fs.removeFirst()
                                       let av = af.getValue(vm)
 
                                       if let rt = av?.tryCast(packages.Core.metaType) {
@@ -74,16 +75,27 @@ extension packages {
                                                           af.location)
                                       }
 
-                                      if asf.items.count > i+2 {
+                                      if !fs.isEmpty {
                                           throw EmitError("Invalid result type",
-                                                          asf.items[i+2].location)
+                                                          fs.first!.location)
                                       }
 
                                       break
                                   }
-                                  
+
                                   if let idf = af.tryCast(forms.Id.self) {
                                       let ar = idf.isNone ?  -1 : vm.nextRegister 
+                                      var a = Argument(idf.value, ar)
+                                      
+                                      if !fs.isEmpty {
+                                          if let t = fs.first!
+                                               .getValue(vm)?
+                                               .tryCast(packages.Core.metaType) {
+                                              a.type = t
+                                              fs.removeFirst()
+                                          }
+                                      }
+                                      
                                       mas.append(Argument(idf.value, ar))
                                   }
                               }
@@ -117,10 +129,15 @@ extension packages {
                               for a in mas {
                                   if !a.id.isNone {
                                       vm.currentPackage[a.id] =
-                                        Value(Core.bindingType, Binding(a.target))
+                                        Value(Core.bindingType, Binding(a.target, a.type))
                                   }
                               }
 
+                              if let rt = m.resultType {
+                                  vm.currentPackage["result"] =
+                                    Value(Core.bindingType, Binding(m.result, rt))
+                              }
+                              
                               try body.emit(vm, m.result);
                           }
 

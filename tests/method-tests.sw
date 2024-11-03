@@ -7,11 +7,11 @@
   (foo))
  
 (check 42
-  (^foo [x;Int] x)
+  (^foo [x Int;Int] x)
   (foo 42))
 
 (check 42
-  (^foo [x;Int]
+  (^foo [x Int;Int]
     (^bar [;Int] x)
     (bar))
     
