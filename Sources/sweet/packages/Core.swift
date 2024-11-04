@@ -264,10 +264,11 @@ extension packages {
                           try arguments[0].emit(vm, cr)
                           let branchPc = vm.emit(ops.Stop.make())
                           try arguments[1].emit(vm, result)
-                          let elseStartPc = vm.emit(ops.Stop.make())
+                          let elseSkipPc = vm.emit(ops.Stop.make())
+                          let elseStartPc = vm.emitPc
                           try Forms(arguments[2...]).emit(vm, result)
                           let elseEndPc = vm.emitPc 
-                          vm.code[elseStartPc] = ops.Goto.make(elseEndPc)
+                          vm.code[elseSkipPc] = ops.Goto.make(elseEndPc)
                           vm.code[branchPc] = ops.Branch.make(cr, elseStartPc)
                       })
 
