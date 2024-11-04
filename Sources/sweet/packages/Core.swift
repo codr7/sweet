@@ -257,7 +257,20 @@ extension packages {
                           
                           vm.code[branchPc] = ops.Branch.make(cr, vm.emitPc)
                       })
-            
+
+            bindMacro("if-else", ["condition", "left", "right?"], nil,
+                      {(vm, arguments, result, location) in
+                          let cr = vm.nextRegister
+                          try arguments[0].emit(vm, cr)
+                          let branchPc = vm.emit(ops.Stop.make())
+                          try arguments[1].emit(vm, result)
+                          let elseStartPc = vm.emit(ops.Stop.make())
+                          try Forms(arguments[2...]).emit(vm, result)
+                          let elseEndPc = vm.emitPc 
+                          vm.code[elseStartPc] = ops.Goto.make(elseEndPc)
+                          vm.code[branchPc] = ops.Branch.make(cr, elseStartPc)
+                      })
+
             bindMacro("import!", ["source", "id1?"], nil,
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NONE
