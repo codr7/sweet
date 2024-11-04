@@ -188,6 +188,7 @@ extension packages {
             bindMacro("check", ["x"], nil,
                       {(vm, arguments, result, location) in
                           let er = vm.nextRegister
+                          vm.emit(ops.ClearRegister.make(result))
 
                           if arguments.count == 1 {
                               try Core.T.emit(vm, er, location)
@@ -242,6 +243,19 @@ extension packages {
                               throw EmitError("Invalid decrement target: \(a.dump(vm))",
                                               location)
                           }
+                      })
+
+            bindMacro("if", ["condition", "body?"], nil,
+                      {(vm, arguments, result, location) in
+                          let cr = vm.nextRegister
+                          try arguments[0].emit(vm, cr)
+                          let branchPc = vm.emit(ops.Stop.make())
+
+                          try vm.doPackage(nil) {
+                              try Forms(arguments[1...]).emit(vm, result)
+                          }
+                          
+                          vm.code[branchPc] = ops.Branch.make(cr, vm.emitPc)
                       })
             
             bindMacro("import!", ["source", "id1?"], nil,

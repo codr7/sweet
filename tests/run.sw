@@ -1,5 +1,6 @@
 (import! core*)
 
+(load! (path "branch-tests.sw"))
 (load! (path "logic-tests.sw"))
 (load! (path "list-tests.sw"))
 (load! (path "math-tests.sw"))

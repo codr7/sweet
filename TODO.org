@@ -1,8 +1,8 @@
 * fib
-** add if macro
+** add if-else macro
 
 (^fib-rec! [n]
-  (if (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
+  (if-else (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
 
 * figure out how to re
 * add return macro

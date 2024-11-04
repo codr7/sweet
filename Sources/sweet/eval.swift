@@ -10,6 +10,9 @@ extension VM {
             print("\(pc) \(ops.decode(op))")
             
             switch ops.decode(op) {
+            case .Branch:
+                if registers[ops.Branch.condition(op)].toBit() { pc += 1 }
+                else { pc = ops.Branch.skip(op) }
             case .Call:
                 do {
                     let t = registers[ops.Call.target(op)]
@@ -41,6 +44,9 @@ extension VM {
 
                     pc += 1
                 }
+            case .ClearRegister:
+                registers[ops.ClearRegister.target(op)] = packages.Core.NONE
+                pc += 1
             case .Copy:
                 do {
                     let from = ops.Copy.from(op)
