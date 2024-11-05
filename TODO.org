@@ -1,13 +1,11 @@
-* shift command to meta
-
 * fib
 ** debug fib-rec!
+*** implement ops::dump(vm , op)
+**** switch on code
 
 (^fib-rec! [n;Int]
-  (say "f" n)
   (if-else (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
 
-* figure out how to re
 * add return macro
 ** tail call (sharpl)
 ** fib tail
