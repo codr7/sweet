@@ -1,10 +1,14 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0.2
 
 import PackageDescription
 
 let package = Package(
   name: "sweet",
 
+  platforms: [
+    .macOS(.v15)
+  ],
+    
   products: [
     .executable(
       name: "sweet",
@@ -24,6 +28,9 @@ let package = Package(
         .product(name: "NIOCore", package: "swift-nio"),
         .product(name: "NIOEmbedded", package: "swift-nio"),
         .product(name: "NIOPosix", package: "swift-nio"),
+      ],
+      swiftSettings: [
+        .swiftLanguageMode(.v6),
       ]),
   ]
 )

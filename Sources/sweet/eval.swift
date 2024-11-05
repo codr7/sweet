@@ -157,4 +157,4 @@ extension VM {
     }
 }
 
-class EvalError: BaseError {}
+final class EvalError: BaseError, @unchecked Sendable {}

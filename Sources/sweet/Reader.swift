@@ -9,4 +9,4 @@ protocol Reader {
 
 struct readers {}
 
-class ReadError: BaseError {}
+final class ReadError: BaseError, @unchecked Sendable {}

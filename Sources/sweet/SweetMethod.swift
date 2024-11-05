@@ -6,7 +6,8 @@ class SweetMethod: BaseMethod, Method {
     var closure: [Closure] = []
     let startPc: PC
     
-    init(_ id: String,
+    init(_ vm: VM,
+         _ id: String,
          _ arguments: [Argument],
          _ result: Register,
          _ resultType: ValueType?,

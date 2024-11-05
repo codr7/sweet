@@ -1,4 +1,4 @@
-class Maybe<T>: BaseType<T?>, ValueType {
+final class Maybe<T>: BaseType<T?>, ValueType {
     let target: BaseType<T> & ValueType
     
     init(_ target: BaseType<T> & ValueType) {

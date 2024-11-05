@@ -1,5 +1,5 @@
 extension packages.Core {
-    class StringType: BaseType<String>, CountTrait, ValueType {
+    final class StringType: BaseType<String>, CountTrait, ValueType {
         var count: CountTrait.Count?
 
         override init(_ id: String, _ parents: [any ValueType]) {

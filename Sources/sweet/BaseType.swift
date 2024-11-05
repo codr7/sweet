@@ -1,5 +1,5 @@
-var nextTypeId: TypeId = 0
-var typeLookup: [TypeId:ValueType] = [:]
+nonisolated(unsafe) var nextTypeId: TypeId = 0
+nonisolated(unsafe) var typeLookup: [TypeId:ValueType] = [:]
 
 class BaseType<T>: CustomStringConvertible {    
     typealias Data = T

@@ -2,25 +2,25 @@ import SystemPackage
 
 extension packages {
     class Core: Package {
-        static let noneType = NoneType("None", [])
-        static let anyType = AnyType("Any", [])
+        nonisolated(unsafe) static let noneType = NoneType("None", [])
+        nonisolated(unsafe) static let anyType = AnyType("Any", [])
 
-        static let bindingType = BindingType("Binding", [anyType])
-        static let bitType = BitType("Bit", [anyType])
-        static let intType = IntType("Int", [anyType])
-        static let listType = ListType("List", [anyType])
-        static let macroType = MacroType("Macro", [anyType])
-        static let metaType = MetaType("Meta", [anyType])
-        static let methodType = MethodType("Method", [anyType])
-        static let packageType = PackageType("Package", [anyType])
-        static let pairType = PairType("Pair", [anyType])
-        static let pathType = PathType("Path", [anyType])
-        static let stringType = StringType("String", [anyType])
+        nonisolated(unsafe) static let bindingType = BindingType("Binding", [anyType])
+        nonisolated(unsafe) static let bitType = BitType("Bit", [anyType])
+        nonisolated(unsafe) static let intType = IntType("Int", [anyType])
+        nonisolated(unsafe) static let listType = ListType("List", [anyType])
+        nonisolated(unsafe) static let macroType = MacroType("Macro", [anyType])
+        nonisolated(unsafe) static let metaType = MetaType("Meta", [anyType])
+        nonisolated(unsafe) static let methodType = MethodType("Method", [anyType])
+        nonisolated(unsafe) static let packageType = PackageType("Package", [anyType])
+        nonisolated(unsafe) static let pairType = PairType("Pair", [anyType])
+        nonisolated(unsafe) static let pathType = PathType("Path", [anyType])
+        nonisolated(unsafe) static let stringType = StringType("String", [anyType])
         
-        static let NONE = Value(Core.noneType, ())
+        nonisolated(unsafe) static let NONE = Value(Core.noneType, ())
         
-        static let T = Value(Core.bitType, true)
-        static let F = Value(Core.bitType, false)
+        nonisolated(unsafe) static let T = Value(Core.bitType, true)
+        nonisolated(unsafe) static let F = Value(Core.bitType, false)
         
         override func initBindings(_ vm: VM) {
             bind(Core.anyType)
@@ -107,7 +107,8 @@ extension packages {
                           let body = Forms(arguments[2...])
                           let mpc = vm.emit(ops.Stop.make())
 
-                          let m = SweetMethod(id,
+                          let m = SweetMethod(vm,
+                                              id,
                                               mas,
                                               vm.nextRegister, resultType,
                                               location,

@@ -88,7 +88,7 @@ extension Forms {
     }
 }
 
-class EmitError: BaseError {}
+final class EmitError: BaseError, @unchecked Sendable {}
 
 struct forms {}
 

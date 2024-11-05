@@ -1,4 +1,4 @@
-class BaseError: CustomStringConvertible, Error {
+class BaseError: CustomStringConvertible, Error, @unchecked Sendable {
     let description: String
     let location: Location
     
