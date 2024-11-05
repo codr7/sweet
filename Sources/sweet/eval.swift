@@ -7,7 +7,7 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-            print("\(pc) \(ops.decode(op))")
+            //print("\(pc) \(ops.decode(op))")
             
             switch ops.decode(op) {
             case .Branch:
@@ -94,14 +94,14 @@ extension VM {
             case .Return:
                 do {
                     let c = calls.removeLast()
-                    for (r, v) in c.frame { registers[r] = v }
                     let t = c.target
                     let tr = t.result
-
-                    registers[c.result] = (t.resultType != nil && c.result != tr)
+                    let rv = (t.resultType != nil && c.result != tr)
                       ? registers[tr]
                       : packages.Core.NONE
                     
+                    for (r, v) in c.frame { registers[r] = v }
+                    registers[c.result] = rv
                     pc = c.returnPc
                 }
             case .SetItem:

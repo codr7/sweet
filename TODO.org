@@ -2,9 +2,9 @@
 
 * fib
 ** debug fib-rec!
-** fix Core type inits
 
-(^fib-rec! [n]
+(^fib-rec! [n;Int]
+  (say "f" n)
   (if-else (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
 
 * figure out how to re

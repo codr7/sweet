@@ -361,7 +361,11 @@ extension packages {
                                throw EvalError("Expected string: \(v.dump(vm))", location)
                            }
                        })
-                           
+
+            bindMethod("say", ["value1"], nil,
+                      {(vm, arguments, result, location) in
+                          print(arguments.map({$0.say(vm)}).joined(separator: " "))
+                      })  
                           
             bindMacro("swap!", ["left1", "right1"], nil, 
                       {(vm, arguments, result, location) in
