@@ -14,5 +14,10 @@ extension ops {
               encodeRegister(condition, conditionStart) +
               encodePc(skip, skipStart);
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let c = condition(op)
+            return "condition: \(c)=\(vm.registers[c].dump(vm)) skip: \(skip(op))"
+        }
     }
 }

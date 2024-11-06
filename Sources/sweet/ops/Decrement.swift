@@ -25,5 +25,12 @@ extension ops {
               ((delta == nil) ? 0 : encodeRegister(delta!, deltaStart)) +
               encodeRegister(result, resultStart)
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let d = delta(op)
+            let r = result(op)     
+            return "target: \(t)=\(vm.registers[t].dump(vm)) delta: \((d == nil) ? "n/a" : vm.registers[d!].dump(vm)) result: \(r)=\(vm.registers[r].dump(vm))"
+        }
     }
 }

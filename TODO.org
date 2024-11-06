@@ -1,7 +1,6 @@
 * fib
 ** debug fib-rec!
-*** implement ops::dump(vm , op)
-**** switch on code
+*** log call info in Return.dump
 
 (^fib-rec! [n;Int]
   (if-else (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))

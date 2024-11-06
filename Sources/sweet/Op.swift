@@ -79,4 +79,43 @@ struct ops {
     static func decodeTag(_ op: Op, _ offset: UInt8) -> Register {
         Tag(decode(op, offset, registerWidth))
     }
+
+    static func dump(_ vm: VM, _ op: Op) -> String {
+        switch decode(op) {
+        case .Branch:
+            Branch.dump(vm, op)
+        case .Call:
+            Call.dump(vm, op)
+        case .Check:
+            ""
+        case .ClearRegister:
+            ClearRegister.dump(vm, op)
+        case .Copy:
+            Copy.dump(vm, op)
+        case .Decrement:
+            Decrement.dump(vm, op)
+        case .Goto:
+            Goto.dump(vm, op)
+        case .InitList:
+            InitList.dump(vm, op)
+        case .InitMethod:
+            InitMethod.dump(vm, op)
+        case .Return:
+            ""
+        case .SetItem:
+            SetItem.dump(vm, op)
+        case .SetLoadPath:
+            SetLoadPath.dump(vm, op)
+        case .SetRegister:
+            SetRegister.dump(vm, op)
+        case .SwapRegisters:
+            SwapRegisters.dump(vm, op)
+        case .Stop:
+            ""
+        case .Unzip:
+            Unzip.dump(vm, op)
+        case .Zip:
+            Zip.dump(vm, op)
+        }
+    }
 }

@@ -7,7 +7,7 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-            print("\(pc) \(ops.decode(op))")
+            print("\(pc) \(ops.decode(op)) \(ops.dump(self, op))")
             
             switch ops.decode(op) {
             case .Branch:

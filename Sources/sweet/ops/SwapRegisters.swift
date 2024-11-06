@@ -13,5 +13,11 @@ extension ops {
               encodeRegister(left, leftStart) +
               encodeRegister(right, rightStart)
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let l = left(op)
+            let r = right(op)
+            return "left: \(l)=\(vm.registers[l].dump(vm)) right: \(r) \(vm.registers[r].dump(vm))"
+        }  
     }
 }

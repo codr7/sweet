@@ -15,5 +15,10 @@ extension ops {
               encodeRegister(target, targetStart) +
               encodeTag(vt, valueStart); 
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            return "target: \(t)=\(vm.registers[t].say(vm)) value: \((vm.tags[value(op)] as! Value).dump(vm))"
+        }
     }
 }

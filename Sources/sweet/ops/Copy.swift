@@ -14,5 +14,10 @@ extension ops {
               encodeRegister(from, fromStart) +
               encodeRegister(to, toStart)
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let f = from(op)
+            return "from: \(f)=\(vm.registers[f].dump(vm)) to: \(to(op))"
+        }
     }
 }

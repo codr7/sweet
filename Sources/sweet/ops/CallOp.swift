@@ -36,5 +36,12 @@ extension ops {
               encodeRegister(result, resultStart) +
               encodeTag(lt, locationStart); 
         }
+
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let a0 = argument(op)
+            let arguments = a0..<a0+arity(op)
+            return "target: \(t)=\(vm.registers[t].dump(vm)) arguments: [\(arguments.map({"\($0)=\(vm.registers[$0].dump(vm))"}).joined(separator: " "))]"
+        }
     }
 }
