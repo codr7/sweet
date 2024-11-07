@@ -97,12 +97,20 @@ extension VM {
                     let t = c.target
                     let tr = t.result
                     
-                    let rv = (t.resultType != nil && c.result != tr) 
+                    let rv = (t.resultType != nil) 
                       ? registers[tr]
                       : packages.Core.NONE
                     
                     for (r, v) in c.frame { registers[r] = v }
-                    if t.resultType != nil && c.result != tr { registers[c.result] = rv }
+
+                    if calls.isEmpty {
+                        if c.result != tr { registers[c.result] = rv }
+                    } else {
+                        let cn = calls.last!
+                        let ntr = cn.target.result
+                        registers[ntr] = rv
+                    }
+
                     pc = c.returnPc
                 }
             case .SetItem:

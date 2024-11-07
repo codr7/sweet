@@ -101,7 +101,7 @@ struct ops {
         case .InitMethod:
             InitMethod.dump(vm, op)
         case .Return:
-            ""
+            Return.dump(vm, op)
         case .SetItem:
             SetItem.dump(vm, op)
         case .SetLoadPath:

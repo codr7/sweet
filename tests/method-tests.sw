@@ -16,3 +16,9 @@
     (bar))
     
   (foo 42))
+
+(check 42
+  (^rec! [n;Int]
+    (if-else (= n 10) 42 (rec! (+ n 1))))
+
+  (rec! 0))
