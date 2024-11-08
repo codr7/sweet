@@ -10,7 +10,7 @@ extension ops {
         static func result(_ op: Op) -> Register { decodeRegister(op, resultStart) }
         
         static func make(_ n: Register, _ result: Register) -> Op {
-            encode(OpCode.Call) +
+            encode(OpCode.Benchmark) +
               encodeRegister(n, nStart) +
               encodeRegister(result, resultStart)
         }

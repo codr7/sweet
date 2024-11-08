@@ -203,6 +203,14 @@ extension packages {
                            vm.registers[result] = Value(Core.intType, rv)
                        })
 
+            bindMacro("benchmark", ["n", "body?"], nil,
+                      {(vm, arguments, result, location) in
+                          try arguments[0].emit(vm, result)
+                          vm.emit(ops.Benchmark.make(result, result))
+                          try Forms(arguments[1...]).emit(vm, result)
+                          vm.emit(ops.Stop.make())
+                      })
+            
             bindMacro("check", ["x"], nil,
                       {(vm, arguments, result, location) in
                           let er = vm.nextRegister

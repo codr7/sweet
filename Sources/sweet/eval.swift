@@ -13,12 +13,12 @@ extension VM {
             case .Benchmark:
                 do {
                     let startPc = pc + 1
-                    let n = ops.Benchmark.n(op);
+                    let n = registers[ops.Benchmark.n(op)].cast(packages.Core.intType);
 
                     let t = try ContinuousClock().measure {
                         for _ in 0..<n { try eval(startPc) }
                     } 
-
+                    
                     registers[ops.Benchmark.result(op)] = Value(packages.Core.timeType, t)
                 }
             case .Branch:
