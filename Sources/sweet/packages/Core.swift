@@ -16,6 +16,7 @@ extension packages {
         nonisolated(unsafe) static let pairType = PairType("Pair", [anyType])
         nonisolated(unsafe) static let pathType = PathType("Path", [anyType])
         nonisolated(unsafe) static let stringType = StringType("String", [anyType])
+        nonisolated(unsafe) static let timeType = TimeType("Time", [anyType])
         
         nonisolated(unsafe) static let NONE = Value(Core.noneType, ())
         
@@ -36,6 +37,7 @@ extension packages {
             bind(Core.pairType)
             bind(Core.pathType)
             bind(Core.stringType)
+            bind(Core.timeType)
             
             self["_"] = Core.NONE
             self["T"] = Core.T

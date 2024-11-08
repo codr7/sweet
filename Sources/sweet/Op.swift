@@ -1,6 +1,7 @@
 typealias Op = UInt128;
 
 enum OpCode: UInt8 {
+    case Benchmark
     case Branch
     case Call
     case Check
@@ -82,6 +83,8 @@ struct ops {
 
     static func dump(_ vm: VM, _ op: Op) -> String {
         switch decode(op) {
+        case .Benchmark:
+            Benchmark.dump(vm, op)
         case .Branch:
             Branch.dump(vm, op)
         case .Call:

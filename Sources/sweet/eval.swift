@@ -10,6 +10,17 @@ extension VM {
             print("\(pc) \(ops.decode(op)) \(ops.dump(self, op))")
             
             switch ops.decode(op) {
+            case .Benchmark:
+                do {
+                    let startPc = pc + 1
+                    let n = ops.Benchmark.n(op);
+
+                    let t = try ContinuousClock().measure {
+                        for _ in 0..<n { try eval(startPc) }
+                    } 
+
+                    registers[ops.Benchmark.result(op)] = Value(packages.Core.timeType, t)
+                }
             case .Branch:
                 if registers[ops.Branch.condition(op)].toBit() { pc += 1 }
                 else { pc = ops.Branch.skip(op) }
