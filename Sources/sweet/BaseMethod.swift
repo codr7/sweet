@@ -4,7 +4,14 @@ class BaseMethod: CustomStringConvertible {
     let id: String
     let arguments: [String]
     let minArgumentCount: Int
-    var description: String { "(\(id) [\(arguments.joined(separator: " "))])" }
+
+    var description: String {
+        var d = "(\(id) [\(arguments.joined(separator: " "))"
+        if resultType != nil { d += "; \(resultType!)"}
+        d += "])"
+        return d
+    }
+    
     var isConst: Bool
     var isVararg: Bool
     var resultType: ValueType?

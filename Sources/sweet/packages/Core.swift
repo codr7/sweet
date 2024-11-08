@@ -179,6 +179,21 @@ extension packages {
                            vm.registers[result] = Value(Core.bitType, rv)
                        })
 
+            bindMethod(">", ["x", "y", "z?"], Core.bitType,
+                       {(vm, arguments, result, location) in
+                           let l = arguments.first!.cast(Core.intType)
+                           var rv = true
+                           
+                           for r in arguments[1...] {
+                               if l <= r.cast(Core.intType) {
+                                   rv = false
+                                   break
+                               }
+                           }
+                           
+                           vm.registers[result] = Value(Core.bitType, rv)
+                       })
+
             bindMethod("+", ["x", "y?"], Core.intType,
                        {(vm, arguments, result, location) in
                            var rv = arguments.first!.cast(Core.intType)

@@ -41,7 +41,8 @@ extension ops {
             let t = target(op)
             let a0 = argument(op)
             let arguments = a0..<a0+arity(op)
-            return "target: \(t)=\(vm.registers[t].dump(vm)) arguments: [\(arguments.map({"\($0)=\(vm.registers[$0].dump(vm))"}).joined(separator: " "))]"
+            let r = result(op)
+            return "target: \(t)=\(vm.registers[t].dump(vm)) arguments: [\(arguments.map({"\($0)=\(vm.registers[$0].dump(vm))"}).joined(separator: " "))] result: \(r)=\(vm.registers[r].dump(vm))"
         }
     }
 }

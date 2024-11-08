@@ -38,10 +38,12 @@ class SweetMethod: BaseMethod, Method {
 	      _ arguments: [Value],
 	      _ result: Register,
 	      _ location: Location) throws {
+        
         if arguments.count < minArgumentCount {
             throw EvalError("Not enough arguments: \(self)", location)
         }
 
+        print("SWEETMETHOD result: \(result)")
         vm.calls.append(Call(vm, self, vm.pc + 1, result, location))
         for c in closure { vm.registers[c.target] = c.value }
 

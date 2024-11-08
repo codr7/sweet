@@ -102,13 +102,11 @@ extension VM {
                       : packages.Core.NONE
                     
                     for (r, v) in c.frame { registers[r] = v }
-
-                    if calls.isEmpty {
-                        if c.result != tr { registers[c.result] = rv }
-                    } else {
+                    if c.result != tr { registers[c.result] = rv }
+                    
+                    if !calls.isEmpty {
                         let cn = calls.last!
-                        let ntr = cn.target.result
-                        registers[ntr] = rv
+                        registers[cn.target.result] = rv
                     }
 
                     pc = c.returnPc
