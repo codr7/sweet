@@ -19,7 +19,5 @@ struct Call {
         for a in target.sweetArguments {
             if !a.id.isNone { frame.append((a.target, vm.registers[a.target])) }
         }
-
-        //frame.append((target.result, vm.registers[target.result]))
     }
 }
