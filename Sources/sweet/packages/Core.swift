@@ -399,7 +399,7 @@ extension packages {
                                   let arity = arguments.count
                                   let ar = vm.nextRegisters(arity)
                                   for i in 0..<arity { try arguments[i].emit(vm, ar+i) }
-                                  vm.emit(ops.CallTail.make(vm, m, ar, arity, result, location))
+                                  vm.emit(ops.CallTail.make(vm, m, ar, arity, location))
                               } else {
                                   try f.emit(vm, result)
                                   vm.emit(ops.Return.make())
