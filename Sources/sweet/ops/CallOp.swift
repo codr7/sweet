@@ -42,6 +42,14 @@ extension ops {
             let a0 = argument(op)
             let arguments = a0..<a0+arity(op)
             let r = result(op)
+            return "target: \(t) arguments: [\(arguments.map({"\($0)"}).joined(separator: " "))] result: \(r)"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let a0 = argument(op)
+            let arguments = a0..<a0+arity(op)
+            let r = result(op)
             return "target: \(t)=\(vm.registers[t].dump(vm)) arguments: [\(arguments.map({"\($0)=\(vm.registers[$0].dump(vm))"}).joined(separator: " "))] result: \(r)=\(vm.registers[r].dump(vm))"
         }
     }

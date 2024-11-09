@@ -22,6 +22,12 @@ extension ops {
         static func dump(_ vm: VM, _ op: Op) -> String {
             let t = target(op)
             let v = value(op)
+            return "target: \(t) index: \(index(op)) value: \(v)"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let v = value(op)
             return "target: \(t)=\(vm.registers[t].dump(vm)) index: \(index(op)) value: \(v)=\(vm.registers[v].dump(vm))"
         }
     }

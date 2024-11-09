@@ -18,6 +18,12 @@ extension ops {
         static func dump(_ vm: VM, _ op: Op) -> String {
             let n = n(op)
             let r = result(op)
+            return "n: \(n) result: \(r)"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let n = n(op)
+            let r = result(op)
             return "n: \(n)=\(vm.registers[n].dump(vm)) result: \(r)=\(vm.registers[r].dump(vm))"
         }
     }

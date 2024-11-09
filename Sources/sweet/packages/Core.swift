@@ -269,8 +269,7 @@ extension packages {
 
                                  vm.emit(ops.Decrement.make(b.register, dr, result))
                           } else {
-                              throw EmitError("Invalid decrement target: \(a.dump(vm))",
-                                              location)
+                              throw EmitError("Invalid decrement target: \(a.dump(vm))", location)
                           }
                       })
 
@@ -406,13 +405,13 @@ extension packages {
                                       ar = m.sweetArguments[0].target
 
                                       for i in 0..<Swift.min(arity, m.sweetArguments.count) {
-                                          try arguments[i].emit(vm, ar + i)
+                                          try c.arguments[i+1].emit(vm, ar + i)
                                       }
                                   }
                                   
                                   vm.emit(ops.CallTail.make(vm, m, ar, arity, location))
                               } else {
-                                  try f.emit(vm, result)
+                                  try arguments.emit(vm, result)
                                   vm.emit(ops.Return.make())
                               }
                           }

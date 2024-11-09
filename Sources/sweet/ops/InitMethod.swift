@@ -20,5 +20,7 @@ extension ops {
             let t = target(op)
             return "target: \(t)=\(vm.tags[t] as! SweetMethod) skip: \(skip(op))"
         }
+
+        static func trace(_ vm: VM, _ op: Op) -> String { dump(vm, op) }
     }
 }

@@ -17,7 +17,7 @@ class REPL {
             let line = readLine(strippingNewline: false)
             
             if line == nil || line! == "\n" {
-                do {     
+                //do {     
                     let fs = try vm.read(&input, &location)
                     let startPc = vm.emitPc
                     try fs.emit(vm, result)
@@ -26,7 +26,7 @@ class REPL {
                     try vm.eval(startPc)
                     print("\(vm.registers[result].dump(vm))\n")
                     input.reset()
-                } /*catch {
+                /*} catch {
                     throw error
                 }*/
                 

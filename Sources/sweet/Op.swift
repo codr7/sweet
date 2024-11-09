@@ -4,6 +4,7 @@ enum OpCode: UInt8 {
     case Benchmark
     case Branch
     case Call
+    case CallTag
     case CallTail
     case Check
     case ClearRegister
@@ -90,6 +91,8 @@ struct ops {
             Branch.dump(vm, op)
         case .Call:
             Call.dump(vm, op)
+        case .CallTag:
+            CallTag.dump(vm, op)
         case .CallTail:
             CallTail.dump(vm, op)
         case .Check:
@@ -122,6 +125,51 @@ struct ops {
             Unzip.dump(vm, op)
         case .Zip:
             Zip.dump(vm, op)
+        }
+    }
+
+    static func trace(_ vm: VM, _ op: Op) -> String {
+        switch decode(op) {
+        case .Benchmark:
+            Benchmark.trace(vm, op)
+        case .Branch:
+            Branch.trace(vm, op)
+        case .Call:
+            Call.trace(vm, op)
+        case .CallTag:
+            CallTag.trace(vm, op)
+        case .CallTail:
+            CallTail.trace(vm, op)
+        case .Check:
+            ""
+        case .ClearRegister:
+            ClearRegister.trace(vm, op)
+        case .Copy:
+            Copy.trace(vm, op)
+        case .Decrement:
+            Decrement.trace(vm, op)
+        case .Goto:
+            Goto.trace(vm, op)
+        case .InitList:
+            InitList.trace(vm, op)
+        case .InitMethod:
+            InitMethod.trace(vm, op)
+        case .Return:
+            Return.trace(vm, op)
+        case .SetItem:
+            SetItem.trace(vm, op)
+        case .SetLoadPath:
+            SetLoadPath.trace(vm, op)
+        case .SetRegister:
+            SetRegister.trace(vm, op)
+        case .SwapRegisters:
+            SwapRegisters.trace(vm, op)
+        case .Stop:
+            ""
+        case .Unzip:
+            Unzip.trace(vm, op)
+        case .Zip:
+            Zip.trace(vm, op)
         }
     }
 }

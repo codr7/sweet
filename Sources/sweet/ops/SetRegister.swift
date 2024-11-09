@@ -18,6 +18,11 @@ extension ops {
 
         static func dump(_ vm: VM, _ op: Op) -> String {
             let t = target(op)
+            return "target: \(t) value: \((vm.tags[value(op)] as! Value).dump(vm))"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
             return "target: \(t)=\(vm.registers[t].say(vm)) value: \((vm.tags[value(op)] as! Value).dump(vm))"
         }
     }

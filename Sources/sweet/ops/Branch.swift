@@ -17,6 +17,11 @@ extension ops {
 
         static func dump(_ vm: VM, _ op: Op) -> String {
             let c = condition(op)
+            return "condition: \(c) skip: \(skip(op))"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let c = condition(op)
             return "condition: \(c)=\(vm.registers[c].dump(vm)) skip: \(skip(op))"
         }
     }

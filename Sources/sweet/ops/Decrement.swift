@@ -30,6 +30,13 @@ extension ops {
             let t = target(op)
             let d = delta(op)
             let r = result(op)     
+            return "target: \(t) delta: \((d == nil) ? "n/a" : "\(d!)") result: \(r)"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let d = delta(op)
+            let r = result(op)     
             return "target: \(t)=\(vm.registers[t].dump(vm)) delta: \((d == nil) ? "n/a" : vm.registers[d!].dump(vm)) result: \(r)=\(vm.registers[r].dump(vm))"
         }
     }

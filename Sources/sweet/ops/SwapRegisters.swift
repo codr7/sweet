@@ -17,7 +17,15 @@ extension ops {
         static func dump(_ vm: VM, _ op: Op) -> String {
             let l = left(op)
             let r = right(op)
-            return "left: \(l)=\(vm.registers[l].dump(vm)) right: \(r) \(vm.registers[r].dump(vm))"
+            
+            return "left: \(l) right: \(r)"
+        }  
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let l = left(op)
+            let r = right(op)
+
+            return "left: \(l)=\(vm.registers[l].dump(vm)) right: \(r)=\(vm.registers[r].dump(vm))"
         }  
     }
 }

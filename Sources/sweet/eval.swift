@@ -7,7 +7,7 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-            print("\(pc) \(ops.decode(op)) \(ops.dump(self, op))")
+            //print("\(pc) \(ops.decode(op)) \(ops.trace(self, op))")
             
             switch ops.decode(op) {
             case .Benchmark:
@@ -27,6 +27,17 @@ extension VM {
             case .Call:
                 do {
                     let t = registers[ops.Call.target(op)]
+                    let a = ops.Call.argument(op)
+                    let r = ops.Call.result(op)
+                    let l = tags[ops.Call.location(op)] as! Location
+                    
+                    var arguments: [Value] = []
+                    for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
+                    try t.call(self, arguments, r, l)
+                }
+            case .CallTag:
+                do {
+                    let t = tags[ops.Call.target(op)] as! Value
                     let a = ops.Call.argument(op)
                     let r = ops.Call.result(op)
                     let l = tags[ops.Call.location(op)] as! Location
@@ -89,6 +100,7 @@ extension VM {
                     }
                     
                     let t = ops.Decrement.target(op)
+
                     let v = Value(packages.Core.intType,
                                   registers[t].cast(packages.Core.intType) - dv)
                     

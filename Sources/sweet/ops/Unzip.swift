@@ -35,7 +35,15 @@ extension ops {
             let l = left(op)
             let r = right(op)
             
-            return "target: \(t) \(vm.registers[t].dump(vm)) left: \((l == nil) ? "n/a" : vm.registers[l!].dump(vm)) right: \((r == nil) ? "n/a" : vm.registers[r!].dump(vm))"
+            return "target: \(t) left: \((l == nil) ? "n/a" : "\(l!)") right: \((r == nil) ? "n/a" : "\(r!)")"
+        }
+
+        static func trace(_ vm: VM, _ op: Op) -> String {
+            let t = target(op)
+            let l = left(op)
+            let r = right(op)
+            
+            return "target: \(t)=\(vm.registers[t].dump(vm)) left: \((l == nil) ? "n/a" : vm.registers[l!].dump(vm)) right: \((r == nil) ? "n/a" : vm.registers[r!].dump(vm))"
         }
     }
 }

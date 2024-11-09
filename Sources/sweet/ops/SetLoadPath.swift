@@ -15,5 +15,7 @@ extension ops {
         static func dump(_ vm: VM, _ op: Op) -> String {
             "path: \(vm.tags[path(op)] as! FilePath)"
         }
+
+        static func trace(_ vm: VM, _ op: Op) -> String { dump(vm, op) }
     }
 }

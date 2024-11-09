@@ -54,12 +54,10 @@ class BaseType<T>: CustomStringConvertible {
                   _ arguments: [Form],
                   _ result: Register,
                   _ location: Location) throws {
-        let tr = vm.nextRegister
-        vm.emit(ops.SetRegister.make(vm, tr, target))
         let arity = arguments.count
         let ar = vm.nextRegisters(arity)
         for i in 0..<arity { try arguments[i].emit(vm, ar+i) }
-        vm.emit(ops.Call.make(vm, tr, ar, arity, result, location))
+        vm.emit(ops.CallTag.make(vm, target, ar, arity, result, location))
     }
 
     func getType(_ vm: VM) -> ValueType? { nil }
