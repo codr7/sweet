@@ -11,13 +11,15 @@ extension packages {
         nonisolated(unsafe) static let listType = ListType("List", [anyType])
         nonisolated(unsafe) static let macroType = MacroType("Macro", [anyType])
         nonisolated(unsafe) static let metaType = MetaType("Meta", [anyType])
-        nonisolated(unsafe) static let methodType = MethodType("Method", [anyType])
         nonisolated(unsafe) static let packageType = PackageType("Package", [anyType])
         nonisolated(unsafe) static let pairType = PairType("Pair", [anyType])
         nonisolated(unsafe) static let pathType = PathType("Path", [anyType])
         nonisolated(unsafe) static let stringType = StringType("String", [anyType])
         nonisolated(unsafe) static let timeType = TimeType("Time", [anyType])
-        
+
+        nonisolated(unsafe) static let methodType = MethodType("Method", [anyType])
+        nonisolated(unsafe) static let sweetMethodType = SweetMethodType("SweetMethod", [methodType])
+
         nonisolated(unsafe) static let NONE = Value(Core.noneType, ())
         
         nonisolated(unsafe) static let T = Value(Core.bitType, true)
@@ -37,6 +39,7 @@ extension packages {
             bind(Core.pairType)
             bind(Core.pathType)
             bind(Core.stringType)
+            bind(Core.sweetMethodType)
             bind(Core.timeType)
             
             self["_"] = Core.NONE
@@ -397,8 +400,16 @@ extension packages {
                                  t.type == Core.methodType,
                                  let m = t.data as? SweetMethod {
                                   let arity = arguments.count
-                                  let ar = vm.nextRegisters(arity)
-                                  for i in 0..<arity { try arguments[i].emit(vm, ar+i) }
+                                  var ar = -1
+                                  
+                                  if !m.sweetArguments.isEmpty {
+                                      ar = m.sweetArguments[0].target
+
+                                      for i in 0..<Swift.min(arity, m.sweetArguments.count) {
+                                          try arguments[i].emit(vm, ar + i)
+                                      }
+                                  }
+                                  
                                   vm.emit(ops.CallTail.make(vm, m, ar, arity, location))
                               } else {
                                   try f.emit(vm, result)

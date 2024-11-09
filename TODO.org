@@ -4,6 +4,11 @@
 
 * drop isConst logic
 
+* optimize sweet method call
+** add separate op
+** pass target as tag
+** don't construct value array
+
 * debug fib-rec result
 
 (^fib-rec! [n;Int]
