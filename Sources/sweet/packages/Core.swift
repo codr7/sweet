@@ -387,7 +387,27 @@ extension packages {
                            }
                        })
 
-            bindMethod("say", ["value1"], nil,
+            bindMacro("return", ["value?"], nil,
+                      {(vm, arguments, result, location) in
+                          if !arguments.isEmpty {
+                              let f = arguments.first!
+
+                              if let c = f.tryCast(forms.Call.self),
+                                 let t = c.arguments.first!.getValue(vm),
+                                 t.type == Core.methodType,
+                                 let m = t.data as? SweetMethod {
+                                  let arity = arguments.count
+                                  let ar = vm.nextRegisters(arity)
+                                  for i in 0..<arity { try arguments[i].emit(vm, ar+i) }
+                                  vm.emit(ops.CallTail.make(vm, m, ar, arity, result, location))
+                              } else {
+                                  try f.emit(vm, result)
+                                  vm.emit(ops.Return.make())
+                              }
+                          }
+                      })
+            
+            bindMethod("say!", ["value1"], nil,
                       {(vm, arguments, result, location) in
                           print(arguments.map({$0.say(vm)}).joined(separator: " "))
                       })  

@@ -18,6 +18,13 @@
   (foo 42))
 
 (check 42
+  (^foo [x;Int]
+    (^bar [x;Int] x)
+    (return (bar x)))
+    
+  (foo 42))
+
+(check 42
   (^rec! [n;Int]
     (if-else (= n 10) 42 (rec! (+ n 1))))
 

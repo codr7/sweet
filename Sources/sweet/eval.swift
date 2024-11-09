@@ -35,6 +35,21 @@ extension VM {
                     for i in 0..<ops.Call.arity(op) { arguments.append(registers[a+i]) }
                     try t.call(self, arguments, r, l)
                 }
+            case .CallTail:
+                do {
+                    let c = calls.removeLast()
+                    let a = ops.CallTail.argument(op)
+                    let m = tags[ops.CallTail.target(op)] as! SweetMethod
+                    let l = tags[ops.CallTail.location(op)] as! Location
+                    calls.append(Call(self, m, c.returnPc, c.result, l))
+
+                    for i in 0..<min(m.sweetArguments.count, ops.CallTail.arity(op)) {
+                        let ma = m.sweetArguments[i]
+                        if !ma.id.isNone { registers[ma.target] = registers[a + i] }
+                    }
+
+                    pc = m.startPc
+                }
             case .Check:
                 do {
                     let ev = registers[ops.Check.expected(op)]

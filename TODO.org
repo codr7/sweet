@@ -1,8 +1,8 @@
 1.153279042 seconds
 
-* add return macro
-** tail call (sharpl)
-** fib tail
+* debug tail call benchmark
+
+* drop isConst logic
 
 * debug fib-rec result
 

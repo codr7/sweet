@@ -4,6 +4,7 @@ enum OpCode: UInt8 {
     case Benchmark
     case Branch
     case Call
+    case CallTail
     case Check
     case ClearRegister
     case Copy
@@ -89,6 +90,8 @@ struct ops {
             Branch.dump(vm, op)
         case .Call:
             Call.dump(vm, op)
+        case .CallTail:
+            CallTail.dump(vm, op)
         case .Check:
             ""
         case .ClearRegister:
