@@ -115,7 +115,8 @@ extension packages {
                           let m = SweetMethod(vm,
                                               id,
                                               mas,
-                                              vm.nextRegister, resultType,
+                                              result,
+                                              resultType,
                                               location,
                                               isConst: isConst,
                                               isVararg: isVararg)
@@ -143,10 +144,10 @@ extension packages {
 
                               if let rt = m.resultType {
                                   vm.currentPackage["result"] =
-                                    Value(Core.bindingType, Binding(m.result, rt))
+                                    Value(Core.bindingType, Binding(result, rt))
                               }
                               
-                              try body.emit(vm, m.result);
+                              try body.emit(vm, result);
                           }
 
                           vm.emit(ops.Return.make())
@@ -204,6 +205,17 @@ extension packages {
                            var rv = arguments.first!.cast(Core.intType)
                            for v in arguments[1...] { rv += v.cast(Core.intType) }
                            vm.registers[result] = Value(Core.intType, rv)
+                       })
+
+            bindMethod("-", ["x", "y?"], Core.intType,
+                       {(vm, arguments, result, location) in
+                           if arguments.count == 1 {
+                               vm.registers[result] = Value(Core.intType, -arguments[0].cast(Core.intType))
+                           } else {
+                               var r = arguments[0].cast(Core.intType)
+                               for a in arguments[1...] { r -= a.cast(Core.intType) }
+                               vm.registers[result] = Value(Core.intType, r)
+                           }
                        })
 
             bindMacro("benchmark", ["n", "body?"], nil,
@@ -273,7 +285,7 @@ extension packages {
                           }
                       })
 
-            bindMacro("if", ["condition", "body?"], nil,
+            bindMacro("if", ["condition", "body"], nil,
                       {(vm, arguments, result, location) in
                           let cr = vm.nextRegister
                           try arguments[0].emit(vm, cr)
@@ -286,7 +298,7 @@ extension packages {
                           vm.code[branchPc] = ops.Branch.make(cr, vm.emitPc)
                       })
 
-            bindMacro("if-else", ["condition", "left", "right?"], nil,
+            bindMacro("if-else", ["condition", "left", "right"], nil,
                       {(vm, arguments, result, location) in
                           let cr = vm.nextRegister
                           try arguments[0].emit(vm, cr)
@@ -294,9 +306,8 @@ extension packages {
                           try arguments[1].emit(vm, result)
                           let elseSkipPc = vm.emit(ops.Stop.make())
                           let elseStartPc = vm.emitPc
-                          try Forms(arguments[2...]).emit(vm, result)
-                          let elseEndPc = vm.emitPc 
-                          vm.code[elseSkipPc] = ops.Goto.make(elseEndPc)
+                          try arguments[2].emit(vm, result)
+                          vm.code[elseSkipPc] = ops.Goto.make(vm.emitPc)
                           vm.code[branchPc] = ops.Branch.make(cr, elseStartPc)
                       })
 
@@ -398,7 +409,7 @@ extension packages {
                                  let t = c.arguments.first!.getValue(vm),
                                  t.type == Core.methodType,
                                  let m = t.data as? SweetMethod {
-                                  let arity = arguments.count
+                                  let arity = c.arguments.count-1
                                   var ar = -1
                                   
                                   if !m.sweetArguments.isEmpty {
@@ -409,7 +420,7 @@ extension packages {
                                       }
                                   }
                                   
-                                  vm.emit(ops.CallTail.make(vm, m, ar, arity, location))
+                                  vm.emit(ops.CallTail.make(vm, m, arity, location))
                               } else {
                                   try arguments.emit(vm, result)
                                   vm.emit(ops.Return.make())

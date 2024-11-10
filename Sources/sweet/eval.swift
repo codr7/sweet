@@ -7,7 +7,7 @@ extension VM {
         NEXT:
           do {
             let op = code[Int(pc)]
-            //print("\(pc) \(ops.decode(op)) \(ops.trace(self, op))")
+            print("\(pc) \(ops.decode(op)) \(ops.trace(self, op))")
             
             switch ops.decode(op) {
             case .Benchmark:
@@ -49,16 +49,9 @@ extension VM {
             case .CallTail:
                 do {
                     let c = calls.removeLast()
-                    let a = ops.CallTail.argument(op)
                     let m = tags[ops.CallTail.target(op)] as! SweetMethod
                     let l = tags[ops.CallTail.location(op)] as! Location
                     calls.append(Call(self, m, c.returnPc, c.result, l))
-
-                    for i in 0..<min(m.sweetArguments.count, ops.CallTail.arity(op)) {
-                        let ma = m.sweetArguments[i]
-                        if !ma.id.isNone { registers[ma.target] = registers[a + i] }
-                    }
-
                     pc = m.startPc
                 }
             case .Check:
@@ -133,17 +126,18 @@ extension VM {
                 do {
                     let c = calls.removeLast()
                     let t = c.target
-                    let tr = t.result
+                    let r = t.result
                     
                     let rv = (t.resultType != nil) 
-                      ? registers[tr]
+                      ? registers[r]
                       : packages.Core.NONE
                     
-                    for (r, v) in c.frame { registers[r] = v }
-                    if c.result != tr { registers[c.result] = rv }
+                    for (fr, fv) in c.frame { registers[fr] = fv }
+                    print("RETURN \(r) \(c.result) \(calls.isEmpty) \(t.resultType) \(rv.dump(self))")
                     
-                    if !calls.isEmpty {
-                        let cn = calls.last!
+                    if c.result != r { registers[c.result] = rv }
+                    
+                    if let cn = calls.last, cn.target.resultType != nil  {
                         registers[cn.target.result] = rv
                     }
 

@@ -1,8 +1,12 @@
 extension ops {
     struct Return {
-        static func make() -> Op { encode(OpCode.Return) }
+        static func make() -> Op {
+            encode(OpCode.Return)
+        }
         
-        static func dump(_ vm: VM, _ op: Op) -> String { "" }
+        static func dump(_ vm: VM, _ op: Op) -> String {
+            return ""
+        }
 
         static func trace(_ vm: VM, _ op: Op) -> String {
             let c = vm.calls.last!

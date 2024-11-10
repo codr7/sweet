@@ -4,6 +4,9 @@
 
 * drop isConst logic
 
+* add method call count
+** only backup frame if already called
+
 * optimize sweet method call
 ** add separate op
 ** pass target as tag
