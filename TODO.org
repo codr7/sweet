@@ -1,6 +1,7 @@
 1.153279042 seconds
 
 * debug tail call benchmark
+** allocate separate call tail arguments
 
 * drop isConst logic
 
