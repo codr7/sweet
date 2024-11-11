@@ -1,24 +1,18 @@
-1.153279042 seconds
-
-* debug tail call benchmark
-** allocate separate call tail arguments
+2.061079167 seconds
+0.354720208 seconds
 
 * drop isConst logic
+** also isRef
 
-* replace Argument.target with SweethMethod.argumentRegister
-
-* add method call count
-** only backup frame if already called
+* debug fib-rec result
 
 * optimize sweet method call
 ** add separate op
 ** pass target as tag
 ** don't construct value array
 
-* debug fib-rec result
-
-(^fib-rec! [n;Int]
-  (if-else (< n 2) n (+ (fib-rec! (dec! n)) (fib-rec! (dec! n)))))
+* add method call count?
+** only backup frame if already called
   
 * improve const violation check
 ** only allow accessing internal bindings?

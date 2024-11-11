@@ -381,10 +381,9 @@ extension packages {
                       {(vm, arguments, result, location) in
                           for f in arguments {
                               if let p = try f.eval(vm).tryCast(Core.pathType) {
-                                  try vm.load(p, result)
+                                  try vm.load(p, result, location)
                               } else {
-                                  throw EmitError("Expected path: \(f.dump(vm))",
-                                                  f.location)
+                                  throw EmitError("Expected path: \(f.dump(vm))", f.location)
                               }
                           }
                       })
@@ -413,7 +412,7 @@ extension packages {
                                   var ar = -1
                                   
                                   if !m.sweetArguments.isEmpty {
-                                      ar = m.sweetArguments[0].target
+                                      ar = vm.nextRegisters(arity)
 
                                       for i in stride(from: Swift.min(arity, m.sweetArguments.count) - 1,
                                                       through: 0,
@@ -422,7 +421,7 @@ extension packages {
                                       }
                                   }
                                   
-                                  vm.emit(ops.CallTail.make(vm, m, arity, location))
+                                  vm.emit(ops.CallTail.make(vm, m, ar, arity, location))
                               } else {
                                   try arguments.emit(vm, result)
                                   vm.emit(ops.Return.make())

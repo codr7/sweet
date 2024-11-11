@@ -57,19 +57,23 @@ class VM {
 
     func endCall() -> Call { calls.removeLast() }
 
-    func load(_ path: FilePath, _ result: Register) throws {
+    func load(_ path: FilePath, _ result: Register, _ location: Location) throws {
         let prevLoadPath = loadPath
         let p = loadPath.appending("\(path)")
         loadPath.append("\(path.removingLastComponent())")
         defer { loadPath = prevLoadPath }
-        let fh = FileHandle(forReadingAtPath: "\(p)")!
-        defer { try! fh.close() }
-        var input = Input(try fh.readAll())
-        var location = Location("\(p)")
-        let fs = try read(&input, &location)
-        emit(ops.SetLoadPath.make(self, p))
-        try fs.emit(self, result)
-        emit(ops.SetLoadPath.make(self, prevLoadPath))
+
+        if let fh = FileHandle(forReadingAtPath: "\(p)") {
+            defer { try! fh.close() }
+            var input = Input(try fh.readAll())
+            var location = Location("\(p)")
+            let fs = try read(&input, &location)
+            emit(ops.SetLoadPath.make(self, p))
+            try fs.emit(self, result)
+            emit(ops.SetLoadPath.make(self, prevLoadPath))
+        } else {
+            throw EmitError("File not found: \(p)", location)
+        }
     }
     
     var nextRegister: Register {

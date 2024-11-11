@@ -3,18 +3,23 @@ extension ops {
         static let targetStart = opCodeWidth
         static let targetWidth = tagWidth
 
-        static let arityStart = targetStart + targetWidth
+        static let argumentStart = targetStart + targetWidth
+        static let argumentWidth = registerWidth
+
+        static let arityStart = argumentStart + argumentWidth
         static let arityWidth: UInt8 = 8
 
         static let locationStart = arityStart + arityWidth
         static let locationWidth = tagWidth
         
         static func target(_ op: Op) -> Tag { decodeTag(op, targetStart) }
+        static func argument(_ op: Op) -> Register { decodeRegister(op, argumentStart) }
         static func arity(_ op: Op) -> Int { Int(decode(op, arityStart, arityWidth)) }
         static func location(_ op: Op) -> Tag { decodeTag(op, locationStart) }
         
         static func make(_ vm: VM,
                          _ target: SweetMethod,
+                         _ argument: Register,
                          _ arity: Int,
                          _ location: Location) -> Op {
             let tt = vm.tag(target)
@@ -22,6 +27,7 @@ extension ops {
             
             return encode(OpCode.CallTail) +
               encodeTag(tt, targetStart) +
+              encodeRegister(argument, argumentStart) +
               encode(arity, arityStart, arityWidth) +
               encodeTag(lt, locationStart); 
         }

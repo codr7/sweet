@@ -14,10 +14,20 @@ struct Call {
         self.returnPc = returnPc
         self.result = result
         self.location = location
-        frame.append((result, vm.registers[result]))
 
         for a in target.sweetArguments {
             if !a.id.isNone { frame.append((a.target, vm.registers[a.target])) }
         }
+    }
+
+    init(_ vm: VM,
+         _ source: Call,
+         _ target: SweetMethod,
+         _ location: Location) {
+        self.target = target
+        self.returnPc = source.returnPc
+        self.result = source.result
+        self.location = location
+        frame = source.frame
     }
 }

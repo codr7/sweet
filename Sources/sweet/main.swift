@@ -1,7 +1,9 @@
 import SystemPackage
 
+let location = Location("main")
+
 func load(_ vm: VM, _ offset: Int) throws {
-    for p in CommandLine.arguments[offset...] { try vm.load(FilePath(p), result) }
+    for p in CommandLine.arguments[offset...] { try vm.load(FilePath(p), result, location) }
 }
 
 let vm = VM()
