@@ -4,6 +4,8 @@
 
 * drop isConst logic
 
+* replace Argument.target with SweethMethod.argumentRegister
+
 * add method call count
 ** only backup frame if already called
 

@@ -415,7 +415,9 @@ extension packages {
                                   if !m.sweetArguments.isEmpty {
                                       ar = m.sweetArguments[0].target
 
-                                      for i in 0..<Swift.min(arity, m.sweetArguments.count) {
+                                      for i in stride(from: Swift.min(arity, m.sweetArguments.count) - 1,
+                                                      through: 0,
+                                                      by: -1) {
                                           try c.arguments[i+1].emit(vm, ar + i)
                                       }
                                   }
