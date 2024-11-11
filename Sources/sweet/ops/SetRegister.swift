@@ -9,11 +9,11 @@ extension ops {
         static func value(_ op: Op) -> Tag { decodeTag(op, valueStart) }
         
         static func make(_ vm: VM, _ target: Register, _ value: Value) -> Op {
-            let vt = vm.tag(value)
+            if value == packages.Core.NONE { return ClearRegister.make(target) }
             
             return encode(OpCode.SetRegister) +
               encodeRegister(target, targetStart) +
-              encodeTag(vt, valueStart); 
+              encodeTag(vm.tag(value), valueStart); 
         }
 
         static func dump(_ vm: VM, _ op: Op) -> String {

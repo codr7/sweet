@@ -68,7 +68,7 @@ class VM {
             var input = Input(try fh.readAll())
             var location = Location("\(p)")
             let fs = try read(&input, &location)
-            emit(ops.SetLoadPath.make(self, p))
+            emit(ops.SetLoadPath.make(self, loadPath))
             try fs.emit(self, result)
             emit(ops.SetLoadPath.make(self, prevLoadPath))
         } else {

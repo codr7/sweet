@@ -1,12 +1,9 @@
 2.061079167 seconds
 0.354720208 seconds
 
-* debug method test
-(^foo [] 42)(foo)
-
 * debug fib-rec result
 
-* add fib-tail test
+* add fib tests
 
 * optimize sweet method call
 ** add separate op
@@ -14,14 +11,8 @@
 ** don't construct value array
 
 * add method call count?
-** only backup frame if already called
+** only backup frame if already called?
   
-* improve const violation check
-** only allow accessing internal bindings?
-*** store nextRegisterIndex in method
-*** add maxRegister arg to getConstViolation
-** improve readme
-
 * add forms.List/Pair.getValue
 
 * implement eqv for pair/list

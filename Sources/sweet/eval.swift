@@ -140,7 +140,7 @@ extension VM {
                       : packages.Core.NONE
                     
                     for (fr, fv) in c.frame { registers[fr] = fv }
-                    if c.result != r { registers[c.result] = rv }
+                    registers[c.result] = rv
                     if let cn = calls.last, cn.target.resultType != nil  { registers[cn.target.result] = rv }
                     pc = c.returnPc
                 }
