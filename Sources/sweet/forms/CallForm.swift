@@ -39,19 +39,6 @@ extension forms {
             }
         }
 
-        func getConstViolation(_ vm: VM) -> Form? {
-            if let v = arguments.first!.getValue(vm) {
-                if let m = v.tryCast(packages.Core.macroType), !m.isConst { return self }
-                if let m = v.tryCast(packages.Core.methodType), !m.isConst { return self }
-            }
-
-            for a in arguments {
-                if let cv = a.getConstViolation(vm) { return cv }
-            }
-            
-            return nil
-        }
-
         func getIds(_ ids: inout Set<String>) {
             for f in arguments { f.getIds(&ids) }
         }

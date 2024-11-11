@@ -30,8 +30,6 @@ extension packages.Core {
 
             vm.emit(ops.Call.make(vm, tr, ar, arity, result, location))
         }
-        
-        var isRef: Bool = false
     }
 }
 

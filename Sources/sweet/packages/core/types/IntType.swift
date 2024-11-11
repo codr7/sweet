@@ -8,7 +8,5 @@ extension packages.Core {
             eq = {(value1, value2) in value1.cast(t) == value2.cast(t)}
             toBit = {(value) in value.cast(t) != 0}
         }
-
-        var isRef: Bool = false 
     }
 }

@@ -58,7 +58,6 @@ extension packages {
                             }
                           
                           var mas: [Argument] = []
-                          let isConst = !id.isEmpty && id.last! != "!"
                           let isVararg = false
                           var resultType: ValueType? = nil
                           let asf = arguments[1]
@@ -118,7 +117,6 @@ extension packages {
                                               result,
                                               resultType,
                                               location,
-                                              isConst: isConst,
                                               isVararg: isVararg)
 
                           var bodyIds = body.ids
@@ -126,12 +124,6 @@ extension packages {
                           for a in mas { bodyIds.remove(a.id) }
                           try m.initClosure(vm, bodyIds)
                           let v = Value(Core.methodType, m)
-
-                          if m.isConst, let cv = body.getConstViolation(vm) {
-                              throw EmitError("Const violation in \(m): \(cv.dump(vm))",
-                                              cv.location)
-                          }
-
                           if !id.isNone { vm.currentPackage[id] = v }
                           
                           try vm.doPackage(nil) {
@@ -260,7 +252,7 @@ extension packages {
                            vm.registers[result] = Value(Core.intType, n)
                       })
 
-            bindMacro("dec!", ["value", "delta?"], nil,
+            bindMacro("dec", ["value", "delta?"], nil,
                       {(vm, arguments, result, location) in
                           let a = arguments[0]
                           
@@ -311,7 +303,7 @@ extension packages {
                           vm.code[branchPc] = ops.Branch.make(cr, elseStartPc)
                       })
 
-            bindMacro("import!", ["source", "id1?"], nil,
+            bindMacro("import", ["source", "id1?"], nil,
                       {(vm, arguments, result, location) in
                           vm.registers[result] = Core.NONE
                           var sf = arguments.first!
@@ -377,7 +369,7 @@ extension packages {
                            vm.registers[result] = Value(packages.Core.bitType, rv)
                        })
             
-            bindMacro("load!", ["path1"], nil, 
+            bindMacro("load", ["path1"], nil, 
                       {(vm, arguments, result, location) in
                           for f in arguments {
                               if let p = try f.eval(vm).tryCast(Core.pathType) {
@@ -429,12 +421,12 @@ extension packages {
                           }
                       })
             
-            bindMethod("say!", ["value1"], nil,
+            bindMethod("say", ["value1"], nil,
                       {(vm, arguments, result, location) in
                           print(arguments.map({$0.say(vm)}).joined(separator: " "))
                       })  
                           
-            bindMacro("swap!", ["left1", "right1"], nil, 
+            bindMacro("swap", ["left1", "right1"], nil, 
                       {(vm, arguments, result, location) in
                           for i in stride(from: 0, to: arguments.count, by: 2) {
                               let lf = arguments[i]

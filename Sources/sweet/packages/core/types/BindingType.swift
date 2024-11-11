@@ -14,7 +14,5 @@ extension packages.Core {
             let r = target.cast(self).register
             if (r != result) { vm.emit(ops.Copy.make(r, result)) }
         }
-
-        var isRef: Bool = true 
     }
 }

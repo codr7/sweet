@@ -6,7 +6,5 @@ extension packages.Core {
             let t = self
             eq = {(value1, value2) -> Bool in value1.cast(t).id == value2.cast(t).id}
         }
-
-        var isRef: Bool = false
     }
 }

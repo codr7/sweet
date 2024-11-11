@@ -1,10 +1,12 @@
 2.061079167 seconds
 0.354720208 seconds
 
-* drop isConst logic
-** also isRef
+* debug method test
+(^foo [] 42)(foo)
 
 * debug fib-rec result
+
+* add fib-tail test
 
 * optimize sweet method call
 ** add separate op

@@ -7,6 +7,4 @@ final class Maybe<T>: BaseType<T?>, ValueType {
         ps.insert(packages.Core.noneType.typeId)
         super.init("\(target.id)?", Array(ps.map {typeLookup[$0]!}))
     }
-
-    var isRef: Bool { target.isRef }
 }

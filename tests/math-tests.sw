@@ -2,5 +2,5 @@
   (+ 1 2 3))
 
 (check 41
-  (^foo! [x Int;Int] (dec! x))
-  (foo! 42))
+  (^foo [x Int;Int] (dec x))
+  (foo 42))

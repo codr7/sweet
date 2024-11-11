@@ -10,14 +10,12 @@ class SwiftMethod: BaseMethod, Method {
          _ arguments: [String],
          _ resultType: ValueType?,
          _ body: @escaping Body,
-         isConst: Bool = true,
          isVararg: Bool = false) {
         self.body = body
         
         super.init(id,
                    arguments,
                    resultType,
-                   isConst: isConst,
                    isVararg: isVararg)
     }
 

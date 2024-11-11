@@ -12,16 +12,13 @@ class SweetMethod: BaseMethod, Method {
          _ result: Register,
          _ resultType: ValueType?,
          _ location: Location,
-         isConst: Bool = true,
          isVararg: Bool = false) {
         self.sweetArguments = arguments
         self.result = result
         self.location = location
         self.startPc = vm.emitPc
         registerOffset = vm.registers.count
-        
-        super.init(id, arguments.map({$0.id}), resultType,
-                   isConst: isConst, isVararg: isVararg)
+        super.init(id, arguments.map({$0.id}), resultType, isVararg: isVararg)
     }
 
     func initClosure(_ vm: VM, _ ids: Set<String>) throws {

@@ -7,8 +7,6 @@ extension packages.Core {
             eq = {(value1, value2) in true }
             toBit = {(value) in true }
         }
-
-        var isRef: Bool = false 
     }
 }
 

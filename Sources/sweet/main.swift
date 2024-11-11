@@ -16,7 +16,7 @@ if CommandLine.arguments.count == 1 {
     vm.user.importFrom(vm.core, vm.core.ids)
     try REPL(vm).run()
 } else {
-    vm.user.importFrom(vm.core, ["import!"])
+    vm.user.importFrom(vm.core, ["import"])
     let startPc = vm.emitPc
 
     switch CommandLine.arguments[1] {

@@ -67,12 +67,9 @@ class Package: CustomStringConvertible, Sequence {
                     _ arguments: [String],
                     _ resultType: ValueType?,
                     _ body: @escaping SwiftMethod.Body,
-                    _ isConst: Bool = true,
                     _ isVararg: Bool = false) {
         self[id] = Value(packages.Core.methodType,
-                         SwiftMethod(id, arguments, resultType, body,
-                                     isConst: isConst,
-                                     isVararg: isVararg))
+                         SwiftMethod(id, arguments, resultType, body, isVararg: isVararg))
     }
 
     var ids: [String] { Array(bindings.keys) }

@@ -27,15 +27,6 @@ Methods without a result type always return `_`:
 ```
 `_`
 
-## Operations
-Operations (methods and macros) come in two flavors, const and non-const. You can tell them apart syntactically by the non-const `!`-suffix. Const operations are not allowed to perform non-const operations.
-
-```
-(^foo [] (swap!))
-```
-```
-Error in repl@1:10: Const violation in (foo []): (swap!)
-```
 
 ## Types
 `type` may be used to get the most specific type compatible with all arguments:
@@ -66,25 +57,25 @@ Definitions in other packages may be accessed using fully qualified ids:
 ```
 `T`
 
-Or imported into the current package using `import!`:
+Or imported into the current package using `import`:
 
 ```
-(import! core =)
+(import core =)
 (= 42 42)
 ```
 `T`
 
-When launching the REPL, the entire `core` package is imported automagically. Otherwise only `import!`, `core`, and `user` are defined; anything else needs to be imported/fully qualified.
+When launching the REPL, the entire `core` package is imported automagically. Otherwise only `import`, `core`, and `user` are defined; anything else needs to be imported/fully qualified.
 
 The package may be splatted to import all ids:
 
 ```
-(import! core*)
+(import core*)
 ```
 
 ## Loading
-`load!` may be used to load code from files, it takes path arguments:
+`load` may be used to load code from files, it takes path arguments:
 
 ```
-(load! (path "tests/run.sw"))
+(load (path "tests/run.sw"))
 ```

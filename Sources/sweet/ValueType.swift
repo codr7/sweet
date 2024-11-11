@@ -23,7 +23,6 @@ protocol ValueType {
 
     func getType(_ vm: VM) -> ValueType?
     func isDerived(from: ValueType) -> Bool
-    var isRef: Bool {get}
     var typeId: TypeId {get}
     
     typealias Eq = (_ value1: Value, _ value2: Value) -> Bool
