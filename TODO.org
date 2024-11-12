@@ -2,6 +2,7 @@
 0.354720208 seconds
 
 * debug fib-rec result
+3
 
 * add fib tests
 

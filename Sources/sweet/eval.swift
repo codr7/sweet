@@ -141,7 +141,6 @@ extension VM {
                     
                     for (fr, fv) in c.frame { registers[fr] = fv }
                     registers[c.result] = rv
-                    if let cn = calls.last, cn.target.resultType != nil  { registers[cn.target.result] = rv }
                     pc = c.returnPc
                 }
             case .SetItem:
