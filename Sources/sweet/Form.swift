@@ -5,7 +5,6 @@ protocol Form {
     func emit(_ vm: VM, _ result: Register) throws
     func emitCall(_ vm: VM, _ arguments: Forms, _ result: Register) throws
     func eval(_ vm: VM, _ result: Register) throws
-    func getConstViolation(_ vm: VM) -> Form?
     func getIds(_ ids: inout Set<String>)
     func getRegister(_ vm: VM) -> Register?
     func getType(_ vm: VM) -> ValueType?
@@ -40,8 +39,6 @@ extension Form {
         return vm.registers[result]
     }
 
-    func getConstViolation(_ vm: VM) -> Form? { nil }
-
     func getIds(_ ids: inout Set<String>) {}
 
     var isNone: Bool { false }
@@ -71,14 +68,6 @@ typealias Forms = [Form]
 extension Forms {
     func emit(_ vm: VM, _ result: Register) throws {
         for f in self { try f.emit(vm, result) }
-    }
-
-    func getConstViolation(_ vm: VM) -> Form? {
-        for f in self {
-            if let cv = f.getConstViolation(vm) { return cv }
-        }
-
-        return nil
     }
 
     var ids: Set<String> {

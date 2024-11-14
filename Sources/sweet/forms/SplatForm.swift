@@ -13,10 +13,6 @@ extension forms {
             throw EmitError("Not supported", location)
         }
 
-        func getConstViolation(_ vm: VM) -> Form? {
-            target.getConstViolation(vm)
-        }
-
         func getIds(_ ids: inout Set<String>) { target.getIds(&ids) }
     }
 }

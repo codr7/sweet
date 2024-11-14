@@ -24,3 +24,14 @@
 * port fix from sharpl
 ** https://developer.apple.com/documentation/swift/numeric-protocols
 ** add NumericTrait
+
+4
+3
+2
+1
+0
+1
+2
+1
+0
+2

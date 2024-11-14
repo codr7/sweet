@@ -21,14 +21,6 @@ extension forms {
             }
         }
 
-        func getConstViolation(_ vm: VM) -> Form? {
-            for it in items {
-                if let cv = it.getConstViolation(vm) { return cv }
-            }
-
-            return nil
-        }
-
         func getIds(_ ids: inout Set<String>) {
             for f in items { f.getIds(&ids) }
         }
